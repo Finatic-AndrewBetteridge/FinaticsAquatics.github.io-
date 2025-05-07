@@ -140,8 +140,24 @@ section h2 {
 }
 
 .fish-card p {
-  margin: 0 0 1rem;
+  margin: 0 0 0.5rem;
   font-size: 0.95rem;
+}
+
+.reserve-button {
+  display: inline-block;
+  margin: 0.5rem 0 1rem;
+  padding: 0.5rem 1rem;
+  background-color: #0077b6;
+  color: white;
+  text-decoration: none;
+  border-radius: 4px;
+  font-weight: bold;
+  transition: background-color 0.3s ease;
+}
+
+.reserve-button:hover {
+  background-color: #023e8a;
 }
 
 /* Footer */
@@ -160,20 +176,4 @@ footer a {
 
 footer a:hover {
   text-decoration: underline;
-}
-
-.reserve-button {
-  display: inline-block;
-  margin: 0.5rem 0 1rem;
-  padding: 0.5rem 1rem;
-  background-color: #0077b6;
-  color: white;
-  text-decoration: none;
-  border-radius: 4px;
-  font-weight: bold;
-  transition: background-color 0.3s ease;
-}
-
-.reserve-button:hover {
-  background-color: #023e8a;
 }
