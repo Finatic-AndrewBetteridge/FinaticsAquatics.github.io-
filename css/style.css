@@ -1,18 +1,14 @@
-/* Import Google Font */
-@import url('https://fonts.googleapis.com/css2?family=Poppins:wght@400;600&display=swap');
-
+/* Base styles */
 body {
-  font-family: 'Poppins', sans-serif;
+  font-family: Arial, sans-serif;
   margin: 0;
+  padding: 0;
   background-color: #f7f9fc;
   color: #333;
-  line-height: 1.6;
 }
 
-/* Hero Section */
 header.hero {
   position: relative;
-  width: 100%;
   height: 60vh;
   overflow: hidden;
 }
@@ -21,44 +17,33 @@ header.hero {
   width: 100%;
   height: 100%;
   object-fit: cover;
-  display: block;
 }
 
 .hero-overlay {
   position: absolute;
   top: 0;
   left: 0;
-  width: 100%;
-  height: 100%;
-  background: rgba(0, 0, 0, 0.4);
+  right: 0;
+  bottom: 0;
+  background-color: rgba(0, 0, 0, 0.5);
   color: white;
   display: flex;
   flex-direction: column;
-  justify-content: center;
   align-items: center;
+  justify-content: center;
   text-align: center;
-  padding: 1rem;
 }
 
 .hero-logo {
-  width: 120px;
-  max-width: 20%;
+  max-width: 150px;
   margin-bottom: 1rem;
 }
 
 .hero-title {
   font-size: 2rem;
-  font-weight: bold;
-  line-height: 1.4;
+  margin: 0;
 }
 
-@media (min-width: 768px) {
-  .hero-title {
-    font-size: 3rem;
-  }
-}
-
-/* Navigation */
 nav {
   background-color: #023e8a;
 }
@@ -68,132 +53,92 @@ nav ul {
   justify-content: center;
   list-style: none;
   margin: 0;
-  padding: 0.75rem 0;
+  padding: 1rem 0;
 }
 
 nav ul li {
-  margin: 0 1.2rem;
+  margin: 0 1rem;
 }
 
 nav ul li a {
   color: white;
   text-decoration: none;
-  font-weight: 600;
-  transition: color 0.3s ease;
+  font-weight: bold;
 }
 
 nav ul li a:hover {
-  color: #90e0ef;
+  text-decoration: underline;
 }
 
-/* Layout */
 main {
-  max-width: 960px;
-  margin: 2rem auto;
-  padding: 0 1rem;
+  padding: 2rem 1rem;
+  max-width: 1200px;
+  margin: 0 auto;
 }
 
 section {
-  background: white;
-  padding: 1.5rem;
-  margin-bottom: 1.5rem;
-  border-radius: 10px;
-  box-shadow: 0 4px 8px rgba(0,0,0,0.05);
+  margin-bottom: 3rem;
 }
 
-section h2 {
+h2 {
   color: #0077b6;
+  margin-bottom: 1rem;
 }
 
-/* Fish Cards */
 .fish-grid {
   display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
-  gap: 1.5rem;
-  margin-top: 1rem;
+  grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+  gap: 2rem;
 }
 
 .fish-card {
   background: white;
-  border-radius: 8px;
-  overflow: hidden;
-  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+  border-radius: 10px;
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.05);
+  padding: 1rem;
   text-align: center;
-  transition: transform 0.3s ease;
-}
-
-.fish-card:hover {
-  transform: translateY(-5px);
 }
 
 .fish-card img {
-  width: 100%;
-  height: auto;
+  max-width: 100%;
   max-height: 200px;
   object-fit: contain;
-  background: #fff;
+  border-radius: 6px;
+  background-color: #f1f1f1;
 }
 
 .fish-card h3 {
-  margin: 0.75rem 0 0.25rem;
+  margin: 1rem 0 0.5rem;
   color: #0077b6;
 }
 
-.fish-card p {
-  margin: 0 0 0.5rem;
-  font-size: 0.95rem;
+.stock-table {
+  list-style: none;
+  padding: 0;
+  margin: 0;
 }
 
-.reserve-button {
-  display: inline-block;
-  margin: 0.5rem 0 1rem;
-  padding: 0.5rem 1rem;
-  background-color: #0077b6;
-  color: white;
-  text-decoration: none;
-  border-radius: 4px;
-  font-weight: bold;
-  transition: background-color 0.3s ease;
-}
-
-.reserve-button:hover {
-  background-color: #023e8a;
-}
-
-/* Footer */
-footer {
-  text-align: center;
-  padding: 1rem;
-  background-color: #023e8a;
-  color: white;
-  font-size: 0.9rem;
-}
-
-footer a {
-  color: #90e0ef;
-  text-decoration: none;
-}
-
-footer a:hover {
-  text-decoration: underline;
+.stock-table li {
+  margin-bottom: 0.5rem;
 }
 
 .reserve-form {
-  max-width: 500px;
-  margin: 2rem auto;
+  max-width: 600px;
+  margin: 0 auto;
   display: flex;
   flex-direction: column;
   gap: 1rem;
 }
 
 .reserve-form label {
-  font-weight: 600;
+  font-weight: bold;
 }
 
 .reserve-form input,
 .reserve-form select,
 .reserve-form button {
   padding: 0.5rem;
+  font-size: 1rem;
   border-radius: 4px;
   border: 1px solid #ccc;
 }
@@ -209,4 +154,21 @@ footer a:hover {
 
 .reserve-form button:hover {
   background-color: #023e8a;
+}
+
+footer {
+  background-color: #023e8a;
+  color: white;
+  text-align: center;
+  padding: 1rem;
+  font-size: 0.9rem;
+}
+
+footer a {
+  color: #90e0ef;
+  text-decoration: none;
+}
+
+footer a:hover {
+  text-decoration: underline;
 }
