@@ -1,39 +1,84 @@
+/* Import Google Font */
+@import url('https://fonts.googleapis.com/css2?family=Poppins:wght@400;600&display=swap');
+
 body {
-    font-family: Arial, sans-serif;
-    margin: 0;
-    padding: 0;
-    line-height: 1.6;
-    background-color: #f0f8ff;
-    color: #333;
-  }
-  header, footer {
-    background: #006994;
-    color: white;
-    padding: 1em;
-    text-align: center;
-  }
-  nav ul {
-    background: #e0f0ff;
-    list-style: none;
-    display: flex;
-    justify-content: center;
-    padding: 0;
-    margin: 0;
-  }
-  nav ul li {
-    margin: 0 1em;
-  }
-  nav ul li a {
-    text-decoration: none;
-    color: #006994;
-    font-weight: bold;
-  }
-  main {
-    padding: 1em;
-    max-width: 800px;
-    margin: auto;
-  }
-  section {
-    margin-bottom: 2em;
-  }
-  
+  font-family: 'Poppins', sans-serif;
+  margin: 0;
+  background-color: #f7f9fc;
+  color: #333;
+  line-height: 1.6;
+}
+
+header {
+  background: linear-gradient(to right, #0077b6, #00b4d8);
+  color: white;
+  padding: 2rem 1rem;
+  text-align: center;
+}
+
+header h1 {
+  margin: 0;
+  font-size: 2.5rem;
+}
+
+nav {
+  background-color: #023e8a;
+}
+
+nav ul {
+  display: flex;
+  justify-content: center;
+  list-style: none;
+  margin: 0;
+  padding: 0.75rem 0;
+}
+
+nav ul li {
+  margin: 0 1.2rem;
+}
+
+nav ul li a {
+  color: white;
+  text-decoration: none;
+  font-weight: 600;
+  transition: color 0.3s ease;
+}
+
+nav ul li a:hover {
+  color: #90e0ef;
+}
+
+main {
+  max-width: 960px;
+  margin: 2rem auto;
+  padding: 0 1rem;
+}
+
+section {
+  background: white;
+  padding: 1.5rem;
+  margin-bottom: 1.5rem;
+  border-radius: 10px;
+  box-shadow: 0 4px 8px rgba(0,0,0,0.05);
+}
+
+section h2 {
+  color: #0077b6;
+}
+
+footer {
+  text-align: center;
+  padding: 1rem;
+  background-color: #023e8a;
+  color: white;
+  font-size: 0.9rem;
+}
+
+footer a {
+  color: #90e0ef;
+  text-decoration: none;
+}
+
+footer a:hover {
+  text-decoration: underline;
+}
