@@ -5,12 +5,15 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <meta name="description" content="Finatics Aquatics - African Cichlid Breeders">
   <title>Finatics Aquatics</title>
-  <link rel="stylesheet" href="style.css">
+  <link rel="stylesheet" href="css/style.css">
 </head>
 <body>
-  <header>
-    <h1>Finatics Aquatics</h1>
-    <p>Breeding stunning African cichlids with care and passion.</p>
+  <header class="hero">
+    <img src="images/FinaticsCoveringPhoto.png" alt="Finatics Aquatics Banner" class="hero-image">
+    <div class="hero-overlay">
+      <img src="images/FinaticsAquaticsLogoV2.png" alt="Finatics Aquatics Logo" class="hero-logo">
+      <h1 class="hero-title">Bred With Passion. <br>Raised With Care.</h1>
+    </div>
   </header>
 
   <nav>
@@ -25,11 +28,23 @@
   <main>
     <section id="available">
       <h2>Available Fish</h2>
-      <ul>
-        <li><strong>Blue Livingstonii</strong> - Available now - £5 each</li>
-        <li><strong>Yellow Labs</strong> - Growing out - Reserve now</li>
-        <li><strong>OB Cichlids</strong> - Expected soon</li>
-      </ul>
+      <div class="fish-grid">
+        <div class="fish-card">
+          <img src="images/blue-livingstonii.jpg" alt="Blue Livingstonii">
+          <h3>Blue Livingstonii</h3>
+          <p>Available now - £5 each</p>
+        </div>
+        <div class="fish-card">
+          <img src="images/yellow-labs.jpg" alt="Yellow Labs">
+          <h3>Yellow Labs</h3>
+          <p>Growing out - Reserve now</p>
+        </div>
+        <div class="fish-card">
+          <img src="images/ob-cichlids.jpg" alt="OB Cichlids">
+          <h3>OB Cichlids</h3>
+          <p>Expected soon</p>
+        </div>
+      </div>
     </section>
 
     <section id="setup">
