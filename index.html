@@ -6,6 +6,7 @@
   <meta name="description" content="Finatics Aquatics - African Cichlid Breeders">
   <title>Finatics Aquatics</title>
   <link rel="stylesheet" href="css/style.css">
+  <script defer src="scripts/stock.js"></script>
 </head>
 <body>
   <header class="hero">
@@ -32,22 +33,45 @@
         <div class="fish-card">
           <img src="images/blue-livingstonii.jpg" alt="Blue Livingstonii">
           <h3>Blue Livingstonii</h3>
-          <p>Available now - £5 each</p>
-          <a href="https://wa.me/44XXXXXXXXXX?text=Hi%2C%20I'm%20interested%20in%20the%20Blue%20Livingstonii." class="reserve-button" target="_blank">Reserve Now</a>
+          <ul class="stock-table" id="stock-blue-livingstonii"></ul>
         </div>
         <div class="fish-card">
           <img src="images/yellow-labs.jpg" alt="Yellow Labs">
           <h3>Yellow Labs</h3>
-          <p>Growing out - Reserve now</p>
-          <a href="https://wa.me/44XXXXXXXXXX?text=Hi%2C%20I'd%20like%20to%20reserve%20a%20Yellow%20Lab." class="reserve-button" target="_blank">Reserve Now</a>
+          <ul class="stock-table" id="stock-yellow-labs"></ul>
         </div>
         <div class="fish-card">
           <img src="images/ob-cichlids.jpg" alt="OB Cichlids">
           <h3>OB Cichlids</h3>
-          <p>Expected soon</p>
-          <a href="https://wa.me/44XXXXXXXXXX?text=Hi%2C%20please%20notify%20me%20when%20OB%20Cichlids%20are%20available." class="reserve-button" target="_blank">Reserve Now</a>
+          <ul class="stock-table" id="stock-ob-cichlids"></ul>
         </div>
       </div>
+    </section>
+
+    <section id="reserve">
+      <h2>Reserve Your Fish</h2>
+      <form action="https://formspree.io/f/your-form-id" method="POST" class="reserve-form">
+        <label for="name">Your Name</label>
+        <input type="text" id="name" name="name" required>
+
+        <label for="email">Email</label>
+        <input type="email" id="email" name="email" required>
+
+        <label for="fish">Fish Species</label>
+        <select id="fish" name="fish" required>
+          <option value="Blue Livingstonii">Blue Livingstonii</option>
+          <option value="Yellow Labs">Yellow Labs</option>
+          <option value="OB Cichlids">OB Cichlids</option>
+        </select>
+
+        <label for="size">Preferred Size</label>
+        <input type="text" id="size" name="size" placeholder="e.g. 2 inch" required>
+
+        <label for="quantity">Quantity</label>
+        <input type="number" id="quantity" name="quantity" min="1" required>
+
+        <button type="submit" class="reserve-button">Submit Reservation</button>
+      </form>
     </section>
 
     <section id="setup">
