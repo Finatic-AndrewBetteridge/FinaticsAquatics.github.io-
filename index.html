@@ -86,7 +86,45 @@
       }
     }
 
-    document.addEventListener('DOMContentLoaded', fetchStock);
+    document.addEventListener('DOMContentLoaded', () => {
+  fetchStock();
+
+  const cart = [];
+  const addToCartBtn = document.getElementById('add-to-cart');
+  const cartItems = document.getElementById('cart-items');
+  const cartTotal = document.getElementById('cart-total');
+
+  addToCartBtn.addEventListener('click', () => {
+    const fish = document.getElementById('fish').value;
+    const size = document.getElementById('size').value;
+    const quantity = parseInt(document.getElementById('quantity').value);
+
+    if (!fish || !size || isNaN(quantity) || quantity <= 0) {
+      alert('Please select a fish, size, and quantity.');
+      return;
+    }
+
+    const entry = stockData[fish].find(e => e.size === size);
+    const price = entry ? entry.price : 0;
+    cart.push({ fish, size, quantity, price });
+
+    renderCart();
+  });
+
+  function renderCart() {
+    cartItems.innerHTML = '';
+    let total = 0;
+    cart.forEach((item) => {
+      const li = document.createElement('li');
+      const subtotal = item.quantity * item.price;
+      li.textContent = `${item.quantity} x ${item.fish} (${item.size}) - £${subtotal}`;
+      total += subtotal;
+      cartItems.appendChild(li);
+    });
+    cartTotal.textContent = total > 0 ? `Total: £${total}` : '';
+  }
+});
+
   </script>
 </head>
 <body>
@@ -135,7 +173,15 @@
         <label for="quantity">Quantity</label>
         <input type="number" id="quantity" name="quantity" min="1" required />
 
+        <button type="button" id="add-to-cart" class="reserve-button">Add to Cart</button>
         <button type="submit" class="reserve-button">Submit Reservation</button>
+
+        <section id="cart">
+            <h3>Cart</h3>
+            <ul id="cart-items"></ul>
+            <p id="cart-total"></p>
+          </section>
+          
       </form>
     </section>
 
