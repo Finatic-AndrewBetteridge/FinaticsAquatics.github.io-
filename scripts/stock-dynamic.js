@@ -9,10 +9,14 @@ async function fetchStock() {
     const formSelect = document.getElementById('fish');
     const addedToForm = new Set();
 
+    // Clear previous content
+    grid.innerHTML = '';
+    formSelect.innerHTML = '';
+
     for (const fish in data) {
       const items = data[fish];
 
-      // Create the fish card
+      // Create fish card
       const card = document.createElement('div');
       card.className = 'fish-card';
 
@@ -24,15 +28,17 @@ async function fetchStock() {
       list.className = 'stock-table';
 
       items.forEach(entry => {
-        const li = document.createElement('li');
-        li.innerHTML = `${entry.size} — £${entry.price} — <strong>In Stock: ${entry.stock}</strong>`;
-        list.appendChild(li);
+        if (entry.size && entry.price !== undefined && entry.stock !== undefined) {
+          const li = document.createElement('li');
+          li.innerHTML = `${entry.size} — £${entry.price} — <strong>In Stock: ${entry.stock}</strong>`;
+          list.appendChild(li);
+        }
       });
 
       card.appendChild(list);
       grid.appendChild(card);
 
-      // Add to reservation form dropdown
+      // Add to dropdown if not already added
       if (!addedToForm.has(fish)) {
         const option = document.createElement('option');
         option.value = fish;
@@ -41,7 +47,6 @@ async function fetchStock() {
         addedToForm.add(fish);
       }
     }
-
   } catch (error) {
     console.error('Failed to load stock data:', error);
   }
