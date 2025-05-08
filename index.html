@@ -17,11 +17,8 @@
         const subtotal = item.quantity * item.price;
         totalAmount += subtotal;
         return `${item.quantity} x ${item.fish} (${item.size}) — £${subtotal}`;
-      }).join('
-');
-      const fullSummary = `${orderSummary}
-
-Total: £${totalAmount}`;
+      }).join('\n');
+      const fullSummary = `${orderSummary}\n\nTotal: £${totalAmount}`;
       const orderInput = document.getElementById('order-summary');
       if (orderInput) orderInput.value = fullSummary;
     }
@@ -35,9 +32,7 @@ Total: £${totalAmount}`;
         document.getElementById('cart-items').innerHTML = '';
         document.getElementById('cart-total').textContent = '';
       });
-
-      
-      });
+    });
     });
   </script>
 </head>
