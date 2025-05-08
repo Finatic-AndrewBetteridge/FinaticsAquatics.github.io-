@@ -79,12 +79,25 @@ function fetchStock() {
           video.src = `images/${baseName}.mov`;
           video.muted = true;
           video.loop = true;
-          video.autoplay = true;
           video.playsInline = true;
+          video.style.display = 'none';
 
           mediaWrapper.appendChild(img);
           mediaWrapper.appendChild(video);
           card.appendChild(mediaWrapper);
+
+          // Hover logic to show video
+          mediaWrapper.addEventListener('mouseenter', () => {
+            img.style.display = 'none';
+            video.style.display = 'block';
+            video.play();
+          });
+          mediaWrapper.addEventListener('mouseleave', () => {
+            video.style.display = 'none';
+            img.style.display = 'block';
+            video.pause();
+            video.currentTime = 0;
+          });
 
           const title = document.createElement('h3');
           title.textContent = fish;
