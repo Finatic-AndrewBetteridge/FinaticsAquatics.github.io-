@@ -15,6 +15,7 @@
       try {
         const res = await fetch(sheetUrl);
         stockData = await res.json();
+        console.log("Fetched stock data:", stockData);
 
         const grid = document.getElementById('fish-grid');
         grid.innerHTML = '';
@@ -32,7 +33,7 @@
             img.onerror = null;
             img.src = `images/${baseName}.png`;
             img.onerror = () => {
-              img.src = 'images/fallback.jpg';
+              img.src = 'images/fallback.png';
             };
           };
           card.appendChild(img);
