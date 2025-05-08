@@ -133,6 +133,8 @@
     }
 
     const formData = new FormData();
+    formData.append('name', document.getElementById('customer-name').value);
+    formData.append('email', document.getElementById('customer-email').value);
     formData.append('order', JSON.stringify(cart));
 
     fetch('https://formspree.io/f/xjvndvgz', {
@@ -141,7 +143,7 @@
     })
       .then(response => {
         if (response.ok) {
-          alert('Order submitted successfully!');
+          document.getElementById('cart').insertAdjacentHTML('beforeend', '<p class="success-message">Thank you! Your order has been received.</p>');
           cart.length = 0;
           localStorage.removeItem('cart');
           document.getElementById('cart-items').innerHTML = '';
@@ -186,6 +188,10 @@
 
     <section id="cart">
   <h3>Cart</h3>
+  <label for="customer-name">Name</label>
+  <input type="text" id="customer-name" name="name" placeholder="Your name" required>
+  <label for="customer-email">Email</label>
+  <input type="email" id="customer-email" name="email" placeholder="Your email" required>
   <ul id="cart-items"></ul>
   <p id="cart-total"></p>
   <button id="clear-cart">Clear Cart</button>
