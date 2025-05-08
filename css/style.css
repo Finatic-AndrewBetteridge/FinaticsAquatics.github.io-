@@ -1,204 +1,150 @@
-/* Base styles */
+/* General Layout */
 body {
-  font-family: Arial, sans-serif;
+  font-family: 'Segoe UI', sans-serif;
   margin: 0;
-  padding: 0;
-  background-color: #f7f9fc;
+  background-color: #f9f9f9;
   color: #333;
 }
 
-header.hero {
-  position: relative;
-  height: 60vh;
-  overflow: hidden;
+h2 {
+  border-bottom: 2px solid #ccc;
+  padding-bottom: 0.3em;
+  margin-top: 2em;
 }
 
-.hero-image {
-  width: 100%;
-  height: 100%;
-  object-fit: cover;
-}
-
-.hero-overlay {
-  position: absolute;
-  top: 0;
-  left: 0;
-  right: 0;
-  bottom: 0;
-  background-color: rgba(0, 0, 0, 0.5);
-  color: white;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
-  text-align: center;
-}
-
-.hero-logo {
-  max-width: 150px;
-  margin-bottom: 1rem;
-}
-
-.hero-title {
-  font-size: 2rem;
-  margin: 0;
-}
-
+/* Navigation */
 nav {
-  background-color: #023e8a;
+  background: #222;
+  padding: 0.5em;
 }
 
 nav ul {
-  display: flex;
-  justify-content: center;
   list-style: none;
+  display: flex;
+  flex-wrap: wrap;
+  gap: 1rem;
+  padding: 0;
   margin: 0;
-  padding: 1rem 0;
+  justify-content: center;
 }
 
-nav ul li {
-  margin: 0 1rem;
-}
-
-nav ul li a {
-  color: white;
+nav li a {
+  color: #fff;
   text-decoration: none;
-  font-weight: bold;
+  padding: 0.4em 0.8em;
+  border-radius: 4px;
+  transition: background 0.2s;
 }
 
-nav ul li a:hover {
-  text-decoration: underline;
+nav li a:hover {
+  background: #444;
 }
 
-main {
-  padding: 2rem 1rem;
-  max-width: 1200px;
-  margin: 0 auto;
-}
-
-section {
-  margin-bottom: 3rem;
-}
-
-h2 {
-  color: #0077b6;
-  margin-bottom: 1rem;
-}
-
+/* Fish Cards */
 .fish-grid {
   display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
-  gap: 2rem;
+  grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+  gap: 1rem;
+  padding: 1rem;
 }
 
 .fish-card {
   background: white;
-  border-radius: 10px;
-  box-shadow: 0 0 10px rgba(0, 0, 0, 0.05);
-  padding: 1rem;
-  text-align: center;
+  border: 1px solid #ddd;
+  border-radius: 8px;
+  overflow: hidden;
+  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.05);
+  padding: 1em;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
 }
 
 .fish-card img {
   max-width: 100%;
-  max-height: 200px;
+  height: auto;
   object-fit: contain;
-  border-radius: 6px;
-  background-color: #f1f1f1;
+  border-radius: 4px;
+  margin-bottom: 0.5em;
 }
 
-.fish-card h3 {
-  margin: 1rem 0 0.5rem;
-  color: #0077b6;
-}
-
-.stock-table {
-  list-style: none;
-  padding: 0;
-  margin: 0;
-}
-
-.stock-table li {
-  margin-bottom: 0.5rem;
-}
-
-.reserve-form {
-  max-width: 600px;
-  margin: 0 auto;
+.selector {
   display: flex;
   flex-direction: column;
-  gap: 1rem;
+  gap: 0.5em;
+  width: 100%;
+  margin-top: 0.5em;
 }
 
-.reserve-form label {
-  font-weight: bold;
-}
-
-.reserve-form input,
-.reserve-form select,
-.reserve-form button {
-  padding: 0.5rem;
-  font-size: 1rem;
+.selector select,
+.selector input {
+  padding: 0.4em;
   border-radius: 4px;
   border: 1px solid #ccc;
+  font-size: 1em;
 }
 
-.reserve-form button {
-  background-color: #0077b6;
+.selector button {
+  background: #0077cc;
   color: white;
-  font-weight: bold;
   border: none;
+  padding: 0.5em;
+  border-radius: 4px;
   cursor: pointer;
-  transition: background-color 0.3s ease;
+  transition: background 0.2s;
 }
 
-.reserve-form button:hover {
-  background-color: #023e8a;
+.selector button:hover {
+  background: #005fa3;
 }
 
+/* Cart */
 #cart {
-  max-width: 600px;
-  margin: 2rem auto;
+  padding: 2em;
   background: #fff;
-  border: 1px solid #ccc;
-  border-radius: 6px;
-  padding: 1rem;
+  margin: 2em auto;
+  max-width: 600px;
+  border-radius: 8px;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.05);
 }
 
 #cart h3 {
   margin-top: 0;
-  color: #0077b6;
 }
 
-#cart-items {
-  list-style: none;
-  padding: 0;
-  margin-bottom: 1rem;
+#cart input,
+#cart select,
+#cart button {
+  width: 100%;
+  margin-top: 0.5em;
+  padding: 0.6em;
+  border-radius: 4px;
+  border: 1px solid #ccc;
+  font-size: 1em;
 }
 
-#cart-items li {
-  margin-bottom: 0.5rem;
-}
-
-#cart-total {
-  font-weight: bold;
-  text-align: right;
-  color: #023e8a;
-}
-
-footer {
-  background-color: #023e8a;
+#cart button {
+  background-color: #28a745;
   color: white;
+  border: none;
+  cursor: pointer;
+  transition: background 0.2s;
+}
+
+#cart button:hover {
+  background-color: #218838;
+}
+
+/* Footer */
+footer {
   text-align: center;
-  padding: 1rem;
-  font-size: 0.9rem;
+  padding: 1.5em;
+  background: #222;
+  color: #fff;
+  margin-top: 2em;
 }
 
 footer a {
-  color: #90e0ef;
+  color: #61dafb;
   text-decoration: none;
-}
-
-footer a:hover {
-  text-decoration: underline;
 }
