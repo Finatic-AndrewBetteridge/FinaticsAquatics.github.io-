@@ -6,11 +6,11 @@
   <meta name="description" content="Finatics Aquatics - African Cichlid Breeders" />
   <title>Finatics Aquatics</title>
   <link rel="stylesheet" href="css/style.css" />
-  <script defer>
+  <script>
     const sheetUrl = 'https://script.google.com/macros/s/AKfycby7R9zrOBS-pg0AwxU_yRaKLo6VUWM8oPjLFkZhiJyl2SkTVw98ENSsO3iC3ISHYqSd/exec';
     let stockData = {};
     let cart = JSON.parse(localStorage.getItem('cart')) || [];
-
+  
     function fetchStock() {
       fetch(sheetUrl)
         .then(response => response.json())
@@ -19,13 +19,13 @@
           document.getElementById('loading').style.display = 'none';
           const grid = document.getElementById('fish-grid');
           grid.innerHTML = '';
-
+  
           const sortedFish = Object.keys(stockData).sort();
           for (const fish of sortedFish) {
             const items = stockData[fish];
             const card = document.createElement('div');
             card.className = 'fish-card';
-
+  
             const img = document.createElement('img');
             const baseName = fish.toLowerCase().replace(/\s+/g, '-');
             img.src = `images/${baseName}.jpg`;
@@ -38,14 +38,14 @@
               };
             };
             card.appendChild(img);
-
+  
             const title = document.createElement('h3');
             title.textContent = fish;
             card.appendChild(title);
-
+  
             const selector = document.createElement('div');
             selector.className = 'selector';
-
+  
             const sizeSelect = document.createElement('select');
             sizeSelect.style.width = '200px';
             sizeSelect.innerHTML = '<option value="">Choose a size</option>';
@@ -56,13 +56,13 @@
               opt.textContent = `${entry.size} — £${entry.price} — Stock: ${entry.stock}`;
               sizeSelect.appendChild(opt);
             });
-
+  
             const qtyInput = document.createElement('input');
             qtyInput.type = 'number';
             qtyInput.min = '1';
             qtyInput.value = '1';
             qtyInput.placeholder = 'Qty';
-
+  
             const addBtn = document.createElement('button');
             addBtn.textContent = 'Add to Cart';
             addBtn.addEventListener('click', () => {
@@ -72,30 +72,30 @@
                 alert('Please select a size and quantity.');
                 return;
               }
-
+  
               const { size, price } = JSON.parse(selected);
               cart.push({ fish, size, quantity, price });
               renderCart();
             });
-
+  
             selector.appendChild(sizeSelect);
             selector.appendChild(qtyInput);
             selector.appendChild(addBtn);
             card.appendChild(selector);
             grid.appendChild(card);
           }
-
+  
           renderCart();
         })
         .catch(err => console.error('Failed to fetch stock:', err));
     }
-
+  
     function renderCart() {
       const cartItems = document.getElementById('cart-items');
       const cartTotal = document.getElementById('cart-total');
       cartItems.innerHTML = '';
       let totalAmount = 0;
-
+  
       cart.forEach((item, index) => {
         const subtotal = item.quantity * item.price;
         const li = document.createElement('li');
@@ -103,10 +103,10 @@
         cartItems.appendChild(li);
         totalAmount += subtotal;
       });
-
+  
       cartTotal.textContent = totalAmount > 0 ? `Total: £${totalAmount}` : '';
       localStorage.setItem('cart', JSON.stringify(cart));
-
+  
       document.querySelectorAll('.remove-btn').forEach(btn => {
         btn.addEventListener('click', (e) => {
           const index = parseInt(e.target.getAttribute('data-index'));
@@ -115,7 +115,7 @@
         });
       });
     }
-
+  
     function updateOrderSummaryField() {
       let totalAmount = 0;
       const orderSummary = cart.map(item => {
@@ -127,14 +127,14 @@
       const orderInput = document.getElementById('order-summary');
       if (orderInput) orderInput.value = fullSummary;
     }
-
+  
     function appendDeliveryToURL() {
       const form = document.getElementById('order-form');
       const delivery = document.getElementById('delivery').value;
       form.action += `?delivery=${encodeURIComponent(delivery)}`;
       return true;
     }
-
+  
     document.addEventListener('DOMContentLoaded', () => {
       fetchStock();
       document.getElementById('clear-cart').addEventListener('click', () => {
@@ -144,7 +144,7 @@
         document.getElementById('cart-total').textContent = '';
       });
     });
-  </script>
+  </script>  
 </head>
 <body>
   <!-- Your body content goes here -->
