@@ -1,8 +1,25 @@
 // js/main.js
 
 const sheetUrl = 'https://script.google.com/macros/s/AKfycby7R9zrOBS-pg0AwxU_yRaKLo6VUWM8oPjLFkZhiJyl2SkTVw98ENSsO3iC3ISHYqSd/exec';
+const pushoverToken = 'aw5814unpeck3oz59f4q9xucs8y3as';
+const pushoverUser = 'u919vjqcq2q4n8g9jto2pns6ctjiew';
 let stockData = {};
 let cart = JSON.parse(localStorage.getItem('cart')) || [];
+
+function sendPushoverNotification(summary) {
+  fetch('https://api.pushover.net/1/messages.json', {
+    method: 'POST',
+    headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
+    body: new URLSearchParams({
+      token: pushoverToken,
+      user: pushoverUser,
+      title: 'New Finatics Order!',
+      message: summary.substring(0, 512)
+    })
+  })
+  .then(res => res.ok ? console.log('Pushover sent') : console.error('Pushover failed'))
+  .catch(err => console.error('Pushover error:', err));
+}
 
 function fetchStock() {
   fetch(sheetUrl)
@@ -76,7 +93,7 @@ function fetchStock() {
           };
 
           const video = document.createElement('video');
-          video.src = `images/${baseName}.mov`;
+          video.src = `images/${baseName}.mp4`;
           video.muted = true;
           video.loop = true;
           video.playsInline = true;
@@ -86,7 +103,6 @@ function fetchStock() {
           mediaWrapper.appendChild(video);
           card.appendChild(mediaWrapper);
 
-          // Hover logic to show video
           mediaWrapper.addEventListener('mouseenter', () => {
             img.style.display = 'none';
             video.style.display = 'block';
@@ -148,6 +164,15 @@ function fetchStock() {
       const loadingEl = document.getElementById('loading');
       if (loadingEl) loadingEl.style.display = 'none';
 
+      const doaSection = document.createElement('section');
+      doaSection.id = 'doa-policy';
+      doaSection.innerHTML = `
+        <h2>DOA & Shipping Policy</h2>
+        <p>We honour any dead-on-arrival (DOA) claims <strong>if</strong> you provide clear video evidence of the parcel being opened on first delivery attempt. Please ensure someone is home to receive the parcel at the time of delivery.</p>
+        <p>For the safety of our fish during transport, we do not feed them for 72 hours before shipping. This prevents excess waste in transit and ensures better water quality on arrival.</p>
+      `;
+      grid.appendChild(doaSection);
+
       renderCart();
     })
     .catch(err => {
@@ -191,6 +216,7 @@ function updateOrderSummaryField() {
   const fullSummary = `${orderSummary}\n\nTotal: £${totalAmount}`;
   const orderInput = document.getElementById('order-summary');
   if (orderInput) orderInput.value = fullSummary;
+  sendPushoverNotification(fullSummary);
 }
 
 function appendDeliveryToURL() {
@@ -210,5 +236,15 @@ document.addEventListener('DOMContentLoaded', () => {
       document.getElementById('cart-items').innerHTML = '';
       document.getElementById('cart-total').textContent = '';
     });
+  }
+
+  const form = document.getElementById('order-form');
+  if (form) {
+    const consentBox = document.createElement('label');
+    consentBox.innerHTML = `
+      <input type="checkbox" name="gdpr" required>
+      I consent to my data being used for order processing and communication in line with GDPR.
+    `;
+    form.insertBefore(consentBox, form.querySelector('button[type="submit"]'));
   }
 });
