@@ -17,14 +17,10 @@
         stockData = await res.json();
 
         const grid = document.getElementById('fish-grid');
-        const cartItems = document.getElementById('cart-items');
-        const cartTotal = document.getElementById('cart-total');
-
         grid.innerHTML = '';
 
         for (const fish in stockData) {
           const items = stockData[fish];
-
           const card = document.createElement('div');
           card.className = 'fish-card';
 
@@ -83,107 +79,91 @@
           selector.appendChild(qtyInput);
           selector.appendChild(addBtn);
           card.appendChild(selector);
-
           grid.appendChild(card);
         }
 
-        function renderCart() {
-          cartItems.innerHTML = '';
-          let total = 0;
-          cart.forEach((item, index) => {
-            const li = document.createElement('li');
-            const subtotal = item.quantity * item.price;
-            li.innerHTML = `${item.quantity} x ${item.fish} (${item.size}) — £${subtotal} <button data-index="${index}" class="remove-btn" style="margin-left: 10px; background-color: #e63946; color: white; border: none; padding: 4px 8px; border-radius: 4px; cursor: pointer;">Remove</button>`;
-            cartItems.appendChild(li);
-            total += subtotal;
-          });
-          cartTotal.textContent = total > 0 ? `Total: £${total}` : '';
-          localStorage.setItem('cart', JSON.stringify(cart));
-
-          document.querySelectorAll('.remove-btn').forEach(btn => {
-            btn.addEventListener('click', (e) => {
-              const index = parseInt(e.target.getAttribute('data-index'));
-              cart.splice(index, 1);
-              renderCart();
-            });
-          });
-        }
-
         renderCart();
-
       } catch (error) {
         console.error('Error loading stock data:', error);
       }
     }
 
-    document.addEventListener('DOMContentLoaded', () => {
-  fetchStock();
+    function renderCart() {
+      const cartItems = document.getElementById('cart-items');
+      const cartTotal = document.getElementById('cart-total');
+      cartItems.innerHTML = '';
+      let totalAmount = 0;
+      cart.forEach((item, index) => {
+        const subtotal = item.quantity * item.price;
+        const li = document.createElement('li');
+        li.innerHTML = `${item.quantity} x ${item.fish} (${item.size}) — £${subtotal} <button data-index="${index}" class="remove-btn" style="margin-left: 10px; background-color: #e63946; color: white; border: none; padding: 4px 8px; border-radius: 4px; cursor: pointer;">Remove</button>`;
+        cartItems.appendChild(li);
+        totalAmount += subtotal;
+      });
+      cartTotal.textContent = totalAmount > 0 ? `Total: £${totalAmount}` : '';
+      localStorage.setItem('cart', JSON.stringify(cart));
 
-  document.getElementById('clear-cart').addEventListener('click', () => {
-    cart.length = 0;
-    localStorage.removeItem('cart');
-    document.getElementById('cart-items').innerHTML = '';
-    document.getElementById('cart-total').textContent = '';
-  });
-
-  document.getElementById('checkout-cart').addEventListener('click', () => {
-    if (cart.length === 0) {
-      alert('Your cart is empty.');
-      return;
+      document.querySelectorAll('.remove-btn').forEach(btn => {
+        btn.addEventListener('click', (e) => {
+          const index = parseInt(e.target.getAttribute('data-index'));
+          cart.splice(index, 1);
+          renderCart();
+        });
+      });
     }
 
-    const formData = new FormData();
-    formData.append('name', document.getElementById('customer-name').value);
-    formData.append('email', document.getElementById('customer-email').value);
-    formData.append('_replyto', document.getElementById('customer-email').value);
-    formData.append('_cc', 'atbetteridge@hotmail.co.uk');
-    formData.append('_subject', `New Order from ${document.getElementById('customer-name').value}`);
-    formData.append('message', `Thank you ${document.getElementById('customer-name').value}, your order has been submitted.`);
-    let totalAmount = 0;
-    let totalAmount = 0;
-    const orderSummary = cart.map(item => {
-      const subtotal = item.quantity * item.price;
-      totalAmount += subtotal;
-      return `${item.quantity} x ${item.fish} (${item.size}) — £${subtotal}`;
-    }).join('
-');
-    orderSummary += `
+    document.addEventListener('DOMContentLoaded', () => {
+      fetchStock();
 
-Total: £${totalAmount}`;
-    formData.append('order', orderSummary);
-
-    fetch('https://formspree.io/f/xjvndvgz', {
-      method: 'POST',
-      body: formData,
-    })
-      .then(response => {
-        if (response.ok) {
-          const orderHTML = `<ul>${cart.map(item => `<li>${item.quantity} x ${item.fish} (${item.size}) — £${item.quantity * item.price}</li>`).join('')}</ul><p><strong>Total: £${totalAmount}</strong></p>`;
-          document.getElementById('cart').insertAdjacentHTML('beforeend', `
-  <div class="success-message" style="background-color: #d4edda; color: #155724; border: 1px solid #c3e6cb; padding: 10px; border-radius: 4px; margin-top: 1rem; font-weight: bold;">
-    ✅ Thank you! Your order has been received.
-    ${orderHTML}
-  </div>
-`);
-
-// Scroll cart into view
-setTimeout(() => {
-  document.getElementById('cart').scrollIntoView({ behavior: 'smooth' });
-}, 300);
-          cart.length = 0;
-          localStorage.removeItem('cart');
-          document.getElementById('cart-items').innerHTML = '';
-          document.getElementById('cart-total').textContent = '';
-        } else {
-          alert('Failed to submit order.');
-        }
-      })
-      .catch(error => {
-        console.error('Error submitting order:', error);
-        alert('There was an error. Please try again later.');
+      document.getElementById('clear-cart').addEventListener('click', () => {
+        cart.length = 0;
+        localStorage.removeItem('cart');
+        document.getElementById('cart-items').innerHTML = '';
+        document.getElementById('cart-total').textContent = '';
       });
-  });
-});
+
+      document.getElementById('checkout-cart').addEventListener('click', () => {
+        if (cart.length === 0) {
+          alert('Your cart is empty.');
+          return;
+        }
+
+        const formData = new FormData();
+        formData.append('name', document.getElementById('customer-name').value);
+        formData.append('email', document.getElementById('customer-email').value);
+        formData.append('_replyto', document.getElementById('customer-email').value);
+        formData.append('_cc', 'atbetteridge@hotmail.co.uk');
+        formData.append('_subject', `New Order from ${document.getElementById('customer-name').value}`);
+        formData.append('message', `Thank you ${document.getElementById('customer-name').value}, your order has been submitted.`);
+
+        let totalAmount = 0;
+        const orderSummary = cart.map(item => {
+          const subtotal = item.quantity * item.price;
+          totalAmount += subtotal;
+          return `${item.quantity} x ${item.fish} (${item.size}) — £${subtotal}`;
+        }).join('\n');
+        const fullSummary = `${orderSummary}\n\nTotal: £${totalAmount}`;
+
+        formData.append('order', fullSummary);
+
+        fetch('https://formspree.io/f/xjvndvgz', {
+          method: 'POST',
+          body: formData,
+        })
+          .then(response => {
+            if (response.ok) {
+              window.location.href = 'thank-you.html';
+              return;
+            } else {
+              alert('Failed to submit order.');
+            }
+          })
+          .catch(error => {
+            console.error('Error submitting order:', error);
+            alert('There was an error. Please try again later.');
+          });
+      });
+    });
   </script>
 </head>
 <body>
@@ -207,23 +187,22 @@ setTimeout(() => {
   <main>
     <section id="available">
       <h2>Available Fish</h2>
-      <div class="fish-grid" id="fish-grid">
-        <!-- Fish cards populated by JS -->
-      </div>
+      <div class="fish-grid" id="fish-grid"></div>
     </section>
 
     <section id="cart">
-  <h3>Cart</h3>
-  <label for="customer-name">Name</label>
-  <input type="text" id="customer-name" name="name" placeholder="Your name" required>
-  <label for="customer-email">Email</label>
-  <input type="email" id="customer-email" name="email" placeholder="Your email" required>
-  <ul id="cart-items"></ul>
-  <p id="cart-total"></p>
-  <button id="clear-cart">Clear Cart</button>
-<button id="checkout-cart">Submit Order</button>
-</section>
-<section id="setup">
+      <h3>Cart</h3>
+      <label for="customer-name">Name</label>
+      <input type="text" id="customer-name" name="name" placeholder="Your name" required>
+      <label for="customer-email">Email</label>
+      <input type="email" id="customer-email" name="email" placeholder="Your email" required>
+      <ul id="cart-items"></ul>
+      <p id="cart-total"></p>
+      <button id="clear-cart">Clear Cart</button>
+      <button id="checkout-cart">Submit Order</button>
+    </section>
+
+    <section id="setup">
       <h2>Our Breeding Setup</h2>
       <p>We use a modular tank system with clean water cycling and natural filtration through aquaponics. Each breeding pair is given a dedicated tank to ensure quality offspring and optimal health.</p>
     </section>
