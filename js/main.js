@@ -57,7 +57,31 @@ function fetchStock() {
           const card = document.createElement('div');
           card.className = 'fish-card';
 
+          const mediaWrapper = document.createElement('div');
+          mediaWrapper.className = 'fish-media-wrapper';
+          
           const img = document.createElement('img');
+          img.src = `images/${baseName}.jpg`;
+          img.alt = fish;
+          img.onerror = () => {
+            img.onerror = null;
+            img.src = `images/${baseName}.png`;
+            img.onerror = () => {
+              img.src = 'images/fallback.png';
+            };
+          };
+          mediaWrapper.appendChild(img);
+          
+          const video = document.createElement('video');
+          video.src = `images/${baseName}.mov`;
+          video.muted = true;
+          video.loop = true;
+          video.autoplay = true;
+          video.playsInline = true;
+          mediaWrapper.appendChild(video);
+          
+          card.appendChild(mediaWrapper);
+          
           const baseName = fish.toLowerCase().replace(/\s+/g, '-');
           img.src = `images/${baseName}.jpg`;
           img.alt = fish;
