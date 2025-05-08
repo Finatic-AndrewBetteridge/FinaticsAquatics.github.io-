@@ -93,7 +93,7 @@
           cart.forEach((item, index) => {
             const li = document.createElement('li');
             const subtotal = item.quantity * item.price;
-            li.innerHTML = `${item.quantity} x ${item.fish} (${item.size}) — £${subtotal} <button data-index="${index}" class="remove-btn">Remove</button>`;
+            li.innerHTML = `${item.quantity} x ${item.fish} (${item.size}) — £${subtotal} <button data-index="${index}" class="remove-btn" style="margin-left: 10px; background-color: #e63946; color: white; border: none; padding: 4px 8px; border-radius: 4px; cursor: pointer;">Remove</button>`;
             cartItems.appendChild(li);
             total += subtotal;
           });
@@ -124,6 +124,36 @@
     localStorage.removeItem('cart');
     document.getElementById('cart-items').innerHTML = '';
     document.getElementById('cart-total').textContent = '';
+  });
+
+  document.getElementById('checkout-cart').addEventListener('click', () => {
+    if (cart.length === 0) {
+      alert('Your cart is empty.');
+      return;
+    }
+
+    const formData = new FormData();
+    formData.append('order', JSON.stringify(cart));
+
+    fetch('https://formspree.io/f/xjvndvgz', {
+      method: 'POST',
+      body: formData,
+    })
+      .then(response => {
+        if (response.ok) {
+          alert('Order submitted successfully!');
+          cart.length = 0;
+          localStorage.removeItem('cart');
+          document.getElementById('cart-items').innerHTML = '';
+          document.getElementById('cart-total').textContent = '';
+        } else {
+          alert('Failed to submit order.');
+        }
+      })
+      .catch(error => {
+        console.error('Error submitting order:', error);
+        alert('There was an error. Please try again later.');
+      });
   });
 });
   </script>
@@ -159,9 +189,9 @@
   <ul id="cart-items"></ul>
   <p id="cart-total"></p>
   <button id="clear-cart">Clear Cart</button>
+<button id="checkout-cart">Submit Order</button>
 </section>
-
-    <section id="setup">
+<section id="setup">
       <h2>Our Breeding Setup</h2>
       <p>We use a modular tank system with clean water cycling and natural filtration through aquaponics. Each breeding pair is given a dedicated tank to ensure quality offspring and optimal health.</p>
     </section>
