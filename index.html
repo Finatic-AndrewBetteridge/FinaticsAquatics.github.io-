@@ -140,6 +140,7 @@
     formData.append('_subject', `New Order from ${document.getElementById('customer-name').value}`);
     formData.append('message', `Thank you ${document.getElementById('customer-name').value}, your order has been submitted.`);
     let totalAmount = 0;
+    let totalAmount = 0;
     const orderSummary = cart.map(item => {
       const subtotal = item.quantity * item.price;
       totalAmount += subtotal;
