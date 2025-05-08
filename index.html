@@ -136,7 +136,11 @@
     formData.append('name', document.getElementById('customer-name').value);
     formData.append('email', document.getElementById('customer-email').value);
     formData.append('_replyto', document.getElementById('customer-email').value);
-    formData.append('order', JSON.stringify(cart));
+    formData.append('_subject', `New Order from ${document.getElementById('customer-name').value}`);
+    formData.append('message', `Thank you ${document.getElementById('customer-name').value}, your order has been submitted.`);
+    const orderSummary = cart.map(item => `${item.quantity} x ${item.fish} (${item.size}) — £${item.price * item.quantity}`).join('
+');
+    formData.append('order', orderSummary);
 
     fetch('https://formspree.io/f/xjvndvgz', {
       method: 'POST',
