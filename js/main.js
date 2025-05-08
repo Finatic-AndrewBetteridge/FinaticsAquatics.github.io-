@@ -1,3 +1,5 @@
+// js/main.js
+
 const sheetUrl = 'https://script.google.com/macros/s/AKfycby7R9zrOBS-pg0AwxU_yRaKLo6VUWM8oPjLFkZhiJyl2SkTVw98ENSsO3iC3ISHYqSd/exec';
 let stockData = {};
 let cart = JSON.parse(localStorage.getItem('cart')) || [];
@@ -59,7 +61,9 @@ function fetchStock() {
 
           const mediaWrapper = document.createElement('div');
           mediaWrapper.className = 'fish-media-wrapper';
-          
+
+          const baseName = fish.toLowerCase().replace(/\s+/g, '-');
+
           const img = document.createElement('img');
           img.src = `images/${baseName}.jpg`;
           img.alt = fish;
@@ -70,29 +74,17 @@ function fetchStock() {
               img.src = 'images/fallback.png';
             };
           };
-          mediaWrapper.appendChild(img);
-          
+
           const video = document.createElement('video');
           video.src = `images/${baseName}.mov`;
           video.muted = true;
           video.loop = true;
           video.autoplay = true;
           video.playsInline = true;
+
+          mediaWrapper.appendChild(img);
           mediaWrapper.appendChild(video);
-          
           card.appendChild(mediaWrapper);
-          
-          const baseName = fish.toLowerCase().replace(/\s+/g, '-');
-          img.src = `images/${baseName}.jpg`;
-          img.alt = fish;
-          img.onerror = () => {
-            img.onerror = null;
-            img.src = `images/${baseName}.png`;
-            img.onerror = () => {
-              img.src = 'images/fallback.png';
-            };
-          };
-          card.appendChild(img);
 
           const title = document.createElement('h3');
           title.textContent = fish;
@@ -127,7 +119,6 @@ function fetchStock() {
               alert('Please select a size and quantity.');
               return;
             }
-
             const { size, price } = JSON.parse(selected);
             cart.push({ fish, size, quantity, price });
             renderCart();
@@ -205,19 +196,6 @@ document.addEventListener('DOMContentLoaded', () => {
       localStorage.removeItem('cart');
       document.getElementById('cart-items').innerHTML = '';
       document.getElementById('cart-total').textContent = '';
-    });
-  }
-
-  const navList = document.getElementById('dynamic-nav');
-  if (navList) {
-    Object.keys(stockData).sort().forEach(path => {
-      const sectionId = path.toLowerCase().replace(/[^a-z0-9]+/g, '-');
-      const li = document.createElement('li');
-      const a = document.createElement('a');
-      a.href = `#${sectionId}`;
-      a.textContent = path;
-      li.appendChild(a);
-      navList.insertBefore(li, navList.querySelector('li:nth-child(2)'));
     });
   }
 });
