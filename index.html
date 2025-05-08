@@ -9,7 +9,7 @@
   <script defer>
     const sheetUrl = 'https://script.google.com/macros/s/AKfycby7R9zrOBS-pg0AwxU_yRaKLo6VUWM8oPjLFkZhiJyl2SkTVw98ENSsO3iC3ISHYqSd/exec';
     let stockData = {};
-    const cart = [];
+    let cart = JSON.parse(localStorage.getItem('cart')) || [];
 
     async function fetchStock() {
       try {
@@ -49,6 +49,7 @@
           selector.className = 'selector';
 
           const sizeSelect = document.createElement('select');
+          sizeSelect.style.width = '200px';
           sizeSelect.innerHTML = '<option value="">Choose a size</option>';
           items.forEach(entry => {
             const opt = document.createElement('option');
@@ -73,7 +74,7 @@
               return;
             }
 
-            const { size, price, stock } = JSON.parse(selected);
+            const { size, price } = JSON.parse(selected);
             cart.push({ fish, size, quantity, price });
             renderCart();
           });
@@ -89,15 +90,26 @@
         function renderCart() {
           cartItems.innerHTML = '';
           let total = 0;
-          cart.forEach(item => {
+          cart.forEach((item, index) => {
             const li = document.createElement('li');
             const subtotal = item.quantity * item.price;
-            li.textContent = `${item.quantity} x ${item.fish} (${item.size}) — £${subtotal}`;
+            li.innerHTML = `${item.quantity} x ${item.fish} (${item.size}) — £${subtotal} <button data-index="${index}" class="remove-btn">Remove</button>`;
             cartItems.appendChild(li);
             total += subtotal;
           });
           cartTotal.textContent = total > 0 ? `Total: £${total}` : '';
+          localStorage.setItem('cart', JSON.stringify(cart));
+
+          document.querySelectorAll('.remove-btn').forEach(btn => {
+            btn.addEventListener('click', (e) => {
+              const index = parseInt(e.target.getAttribute('data-index'));
+              cart.splice(index, 1);
+              renderCart();
+            });
+          });
         }
+
+        renderCart();
 
       } catch (error) {
         console.error('Error loading stock data:', error);
