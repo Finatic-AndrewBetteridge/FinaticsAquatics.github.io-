@@ -138,8 +138,16 @@
     formData.append('_replyto', document.getElementById('customer-email').value);
     formData.append('_subject', `New Order from ${document.getElementById('customer-name').value}`);
     formData.append('message', `Thank you ${document.getElementById('customer-name').value}, your order has been submitted.`);
-    const orderSummary = cart.map(item => `${item.quantity} x ${item.fish} (${item.size}) — £${item.price * item.quantity}`).join('
+    let totalAmount = 0;
+    const orderSummary = cart.map(item => {
+      const subtotal = item.quantity * item.price;
+      totalAmount += subtotal;
+      return `${item.quantity} x ${item.fish} (${item.size}) — £${subtotal}`;
+    }).join('
 ');
+    orderSummary += `
+
+Total: £${totalAmount}`;
     formData.append('order', orderSummary);
 
     fetch('https://formspree.io/f/xjvndvgz', {
@@ -148,9 +156,18 @@
     })
       .then(response => {
         if (response.ok) {
-          document.getElementById('cart').insertAdjacentHTML('beforeend', '<p class="success-message" style="background-color: #d4edda; color: #155724; border: 1px solid #c3e6cb; padding: 10px; border-radius: 4px; margin-top: 1rem; font-weight: bold;">
-  ✅ Thank you! Your order has been received.
-</p>');
+          const orderHTML = `<ul>${cart.map(item => `<li>${item.quantity} x ${item.fish} (${item.size}) — £${item.quantity * item.price}</li>`).join('')}</ul><p><strong>Total: £${totalAmount}</strong></p>`;
+          document.getElementById('cart').insertAdjacentHTML('beforeend', `
+  <div class="success-message" style="background-color: #d4edda; color: #155724; border: 1px solid #c3e6cb; padding: 10px; border-radius: 4px; margin-top: 1rem; font-weight: bold;">
+    ✅ Thank you! Your order has been received.
+    ${orderHTML}
+  </div>
+`);
+
+// Scroll cart into view
+setTimeout(() => {
+  document.getElementById('cart').scrollIntoView({ behavior: 'smooth' });
+}, 300);
           cart.length = 0;
           localStorage.removeItem('cart');
           document.getElementById('cart-items').innerHTML = '';
