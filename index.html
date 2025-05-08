@@ -16,7 +16,8 @@
         .then(response => response.json())
         .then(data => {
           stockData = data;
-          document.getElementById('loading').style.display = 'none';
+          const loadingEl = document.getElementById('loading');
+          if (loadingEl) loadingEl.style.display = 'none';
           const grid = document.getElementById('fish-grid');
           grid.innerHTML = '';
 
@@ -150,6 +151,75 @@
   </script>
 </head>
 <body>
-  <!-- Your body content goes here -->
+  <header class="hero">
+    <img src="images/FinaticsCoveringPhoto.png" alt="Finatics Aquatics Banner" class="hero-image" />
+    <div class="hero-overlay">
+      <img src="images/FinaticsAquaticsLogoV2.png" alt="Finatics Aquatics Logo" class="hero-logo" />
+      <h1 class="hero-title">Bred With Passion. <br />Raised With Care.</h1>
+    </div>
+  </header>
+
+  <nav>
+    <ul>
+      <li><a href="#available">Available Fish</a></li>
+      <li><a href="#setup">Our Setup</a></li>
+      <li><a href="#about">About Us</a></li>
+      <li><a href="#contact">Contact</a></li>
+    </ul>
+  </nav>
+
+  <main>
+    <section id="available">
+      <div id="loading" style="text-align: center; font-weight: bold; padding: 1em;">Loading available fish...</div>
+      <h2>Available Fish</h2>
+      <div class="fish-grid" id="fish-grid"></div>
+    </section>
+
+    <section id="cart">
+      <h3>Cart</h3>
+      <label for="customer-name">Name</label>
+      <input type="text" id="customer-name" name="name" placeholder="Your name" required>
+      <label for="customer-email">Email</label>
+      <input type="email" id="customer-email" name="email" placeholder="Your email" required>
+      <ul id="cart-items"></ul>
+      <p id="cart-total"></p>
+      <button id="clear-cart">Clear Cart</button>
+      <form id="order-form" action="https://formspree.io/f/mwpobwwy" method="POST" onsubmit="return appendDeliveryToURL()">
+        <label for="delivery">Delivery Method</label>
+        <select id="delivery" name="delivery" required>
+          <option value="">Select delivery or pickup</option>
+          <option value="Delivery" selected>Delivery</option>
+          <option value="Pickup">Pickup</option>
+        </select>
+        <input type="hidden" id="order-summary" name="order" value="">
+        <button type="submit" onclick="updateOrderSummaryField()">Submit Order</button>
+      </form>
+      <p style="background-color: #d4edda; color: #155724; padding: 1rem; border: 1px solid #c3e6cb; border-radius: 6px; font-weight: bold; margin-top: 1rem;">
+        ✅ Once submitted, we’ll be in touch to confirm your order. Please check your email (and junk folder) for updates. Your selected delivery method will also be shown on the confirmation page.
+      </p>
+    </section>
+
+    <section id="setup">
+      <h2>Our Breeding Setup</h2>
+      <p>We use a modular tank system with clean water cycling and natural filtration through aquaponics. Each breeding pair is given a dedicated tank to ensure quality offspring and optimal health.</p>
+    </section>
+
+    <section id="about">
+      <h2>About Us</h2>
+      <p>We are a family-run breeder in the UK, passionate about African cichlids. Our goal is to produce vibrant, healthy fish raised in a loving environment. From tank care to feeding routines, we involve our children in every part of the process.</p>
+    </section>
+
+    <section id="contact">
+      <h2>Contact Us</h2>
+      <p>Email: <a href="mailto:info@finaticsaquatics.com">info@finaticsaquatics.com</a></p>
+      <p>WhatsApp: 07XXX XXXXXX</p>
+      <p>Follow us on Facebook and Instagram</p>
+    </section>
+  </main>
+
+  <footer>
+    <p>&copy; 2025 Finatics Aquatics. All rights reserved.</p>
+    <p><a href="https://finatic-andrewbetteridge.github.io/FinaticsAquatics.github.io-/">Visit our live site</a></p>
+  </footer>
 </body>
 </html>
