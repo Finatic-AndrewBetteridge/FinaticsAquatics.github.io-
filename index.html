@@ -10,7 +10,7 @@
     const sheetUrl = 'https://script.google.com/macros/s/AKfycby7R9zrOBS-pg0AwxU_yRaKLo6VUWM8oPjLFkZhiJyl2SkTVw98ENSsO3iC3ISHYqSd/exec';
     let stockData = {};
     let cart = JSON.parse(localStorage.getItem('cart')) || [];
-  
+
     function fetchStock() {
       fetch(sheetUrl)
         .then(response => response.json())
@@ -19,13 +19,13 @@
           document.getElementById('loading').style.display = 'none';
           const grid = document.getElementById('fish-grid');
           grid.innerHTML = '';
-  
+
           const sortedFish = Object.keys(stockData).sort();
           for (const fish of sortedFish) {
             const items = stockData[fish];
             const card = document.createElement('div');
             card.className = 'fish-card';
-  
+
             const img = document.createElement('img');
             const baseName = fish.toLowerCase().replace(/\s+/g, '-');
             img.src = `images/${baseName}.jpg`;
@@ -38,14 +38,14 @@
               };
             };
             card.appendChild(img);
-  
+
             const title = document.createElement('h3');
             title.textContent = fish;
             card.appendChild(title);
-  
+
             const selector = document.createElement('div');
             selector.className = 'selector';
-  
+
             const sizeSelect = document.createElement('select');
             sizeSelect.style.width = '200px';
             sizeSelect.innerHTML = '<option value="">Choose a size</option>';
@@ -56,13 +56,13 @@
               opt.textContent = `${entry.size} — £${entry.price} — Stock: ${entry.stock}`;
               sizeSelect.appendChild(opt);
             });
-  
+
             const qtyInput = document.createElement('input');
             qtyInput.type = 'number';
             qtyInput.min = '1';
             qtyInput.value = '1';
             qtyInput.placeholder = 'Qty';
-  
+
             const addBtn = document.createElement('button');
             addBtn.textContent = 'Add to Cart';
             addBtn.addEventListener('click', () => {
@@ -72,30 +72,30 @@
                 alert('Please select a size and quantity.');
                 return;
               }
-  
+
               const { size, price } = JSON.parse(selected);
               cart.push({ fish, size, quantity, price });
               renderCart();
             });
-  
+
             selector.appendChild(sizeSelect);
             selector.appendChild(qtyInput);
             selector.appendChild(addBtn);
             card.appendChild(selector);
             grid.appendChild(card);
           }
-  
+
           renderCart();
         })
         .catch(err => console.error('Failed to fetch stock:', err));
     }
-  
+
     function renderCart() {
       const cartItems = document.getElementById('cart-items');
       const cartTotal = document.getElementById('cart-total');
       cartItems.innerHTML = '';
       let totalAmount = 0;
-  
+
       cart.forEach((item, index) => {
         const subtotal = item.quantity * item.price;
         const li = document.createElement('li');
@@ -103,10 +103,10 @@
         cartItems.appendChild(li);
         totalAmount += subtotal;
       });
-  
+
       cartTotal.textContent = totalAmount > 0 ? `Total: £${totalAmount}` : '';
       localStorage.setItem('cart', JSON.stringify(cart));
-  
+
       document.querySelectorAll('.remove-btn').forEach(btn => {
         btn.addEventListener('click', (e) => {
           const index = parseInt(e.target.getAttribute('data-index'));
@@ -115,7 +115,7 @@
         });
       });
     }
-  
+
     function updateOrderSummaryField() {
       let totalAmount = 0;
       const orderSummary = cart.map(item => {
@@ -127,7 +127,14 @@
       const orderInput = document.getElementById('order-summary');
       if (orderInput) orderInput.value = fullSummary;
     }
-  
+
+    function appendDeliveryToURL() {
+      const form = document.getElementById('order-form');
+      const delivery = document.getElementById('delivery').value;
+      form.action += `?delivery=${encodeURIComponent(delivery)}`;
+      return true;
+    }
+
     document.addEventListener('DOMContentLoaded', () => {
       fetchStock();
       document.getElementById('clear-cart').addEventListener('click', () => {
@@ -137,82 +144,9 @@
         document.getElementById('cart-total').textContent = '';
       });
     });
-    function appendDeliveryToURL() {
-        const form = document.getElementById('order-form');
-        const delivery = document.getElementById('delivery').value;
-        form.action += `?delivery=${encodeURIComponent(delivery)}`;
-        return true;
-}
-
   </script>
 </head>
 <body>
-  <header class="hero">
-    <img src="images/FinaticsCoveringPhoto.png" alt="Finatics Aquatics Banner" class="hero-image" />
-    <div class="hero-overlay">
-      <img src="images/FinaticsAquaticsLogoV2.png" alt="Finatics Aquatics Logo" class="hero-logo" />
-      <h1 class="hero-title">Bred With Passion. <br />Raised With Care.</h1>
-    </div>
-  </header>
-
-  <nav>
-    <ul>
-      <li><a href="#available">Available Fish</a></li>
-      <li><a href="#setup">Our Setup</a></li>
-      <li><a href="#about">About Us</a></li>
-      <li><a href="#contact">Contact</a></li>
-    </ul>
-  </nav>
-
-  <main>
-    <section id="available">
-      <div id="loading" style="text-align: center; font-weight: bold; padding: 1em;">Loading available fish...</div>
-      <h2>Available Fish</h2>
-      <div class="fish-grid" id="fish-grid"></div>
-    </section>
-
-    <section id="cart">
-      <h3>Cart</h3>
-      <label for="customer-name">Name</label>
-      <input type="text" id="customer-name" name="name" placeholder="Your name" required>
-      <label for="customer-email">Email</label>
-      <input type="email" id="customer-email" name="email" placeholder="Your email" required>
-      <ul id="cart-items"></ul>
-      <p id="cart-total"></p>
-      <button id="clear-cart">Clear Cart</button>
-      <form id="order-form" action="https://formspree.io/f/mwpobwwy" method="POST" onsubmit="return appendDeliveryToURL()">
-        <label for="delivery">Delivery Method</label>
-        <select id="delivery" name="delivery" required>
-          <option value="">Select delivery or pickup</option>
-          <option value="Delivery" selected>Delivery</option>
-                    <option value="Pickup">Pickup</option>
-        </select>
-        <input type="hidden" id="order-summary" name="order" value="">
-        <button type="submit" onclick="updateOrderSummaryField()">Submit Order</button>
-      </form>
-    </section>
-
-    <section id="setup">
-      <h2>Our Breeding Setup</h2>
-      <p>We use a modular tank system with clean water cycling and natural filtration through aquaponics. Each breeding pair is given a dedicated tank to ensure quality offspring and optimal health.</p>
-    </section>
-
-    <section id="about">
-      <h2>About Us</h2>
-      <p>We are a family-run breeder in the UK, passionate about African cichlids. Our goal is to produce vibrant, healthy fish raised in a loving environment. From tank care to feeding routines, we involve our children in every part of the process.</p>
-    </section>
-
-    <section id="contact">
-      <h2>Contact Us</h2>
-      <p>Email: <a href="mailto:info@finaticsaquatics.com">info@finaticsaquatics.com</a></p>
-      <p>WhatsApp: 07XXX XXXXXX</p>
-      <p>Follow us on Facebook and Instagram</p>
-    </section>
-  </main>
-
-  <footer>
-    <p>&copy; 2025 Finatics Aquatics. All rights reserved.</p>
-    <p><a href="https://finatic-andrewbetteridge.github.io/FinaticsAquatics.github.io-/">Visit our live site</a></p>
-  </footer>
+  <!-- Your body content goes here -->
 </body>
 </html>
