@@ -16,10 +16,12 @@
         .then(response => response.json())
         .then(data => {
           stockData = data;
+          document.getElementById('loading').style.display = 'none';
           const grid = document.getElementById('fish-grid');
           grid.innerHTML = '';
   
-          for (const fish in stockData) {
+          const sortedFish = Object.keys(stockData).sort();
+          for (const fish of sortedFish) {
             const items = stockData[fish];
             const card = document.createElement('div');
             card.className = 'fish-card';
@@ -48,6 +50,7 @@
             sizeSelect.style.width = '200px';
             sizeSelect.innerHTML = '<option value="">Choose a size</option>';
             items.forEach(entry => {
+              if (entry.stock === 0) return;
               const opt = document.createElement('option');
               opt.value = JSON.stringify(entry);
               opt.textContent = `${entry.size} — £${entry.price} — Stock: ${entry.stock}`;
@@ -134,6 +137,13 @@
         document.getElementById('cart-total').textContent = '';
       });
     });
+    function appendDeliveryToURL() {
+        const form = document.getElementById('order-form');
+        const delivery = document.getElementById('delivery').value;
+        form.action += `?delivery=${encodeURIComponent(delivery)}`;
+        return true;
+}
+
   </script>
 </head>
 <body>
@@ -156,6 +166,7 @@
 
   <main>
     <section id="available">
+      <div id="loading" style="text-align: center; font-weight: bold; padding: 1em;">Loading available fish...</div>
       <h2>Available Fish</h2>
       <div class="fish-grid" id="fish-grid"></div>
     </section>
@@ -169,7 +180,13 @@
       <ul id="cart-items"></ul>
       <p id="cart-total"></p>
       <button id="clear-cart">Clear Cart</button>
-      <form action="https://formspree.io/f/mwpobwwy" method="POST">
+      <form id="order-form" action="https://formspree.io/f/mwpobwwy" method="POST" onsubmit="return appendDeliveryToURL()">
+        <label for="delivery">Delivery Method</label>
+        <select id="delivery" name="delivery" required>
+          <option value="">Select delivery or pickup</option>
+          <option value="Delivery" selected>Delivery</option>
+                    <option value="Pickup">Pickup</option>
+        </select>
         <input type="hidden" id="order-summary" name="order" value="">
         <button type="submit" onclick="updateOrderSummaryField()">Submit Order</button>
       </form>

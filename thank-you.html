@@ -34,14 +34,20 @@
       font-weight: bold;
     }
   </style>
+<script>
+  window.addEventListener('DOMContentLoaded', () => {
+    const params = new URLSearchParams(window.location.search);
+    const delivery = params.get('delivery') || 'Delivery';
+    document.getElementById('delivery-method').textContent = delivery;
+  });
+</script>
 </head>
 <body>
   <div class="thank-you-box">
     <h1>✅ Thank you for your order!</h1>
     <p>Your reservation has been received. We'll be in touch shortly to confirm the details.</p>
+    <p><strong>Note:</strong> You selected <em id="delivery-method">Delivery</em> as your preferred method.</p>
     <p><a href="index.html">Return to Homepage</a></p>
-    <p>Need help? Email us at <a href="mailto:info@finaticsaquatics.com">info@finaticsaquatics.com</a></p>
-    <p>Follow us on <a href="#">Facebook</a> and <a href="#">Instagram</a></p>
   </div>
 </body>
 </html>
