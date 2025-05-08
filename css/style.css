@@ -156,6 +156,36 @@ h2 {
   background-color: #023e8a;
 }
 
+#cart {
+  max-width: 600px;
+  margin: 2rem auto;
+  background: #fff;
+  border: 1px solid #ccc;
+  border-radius: 6px;
+  padding: 1rem;
+}
+
+#cart h3 {
+  margin-top: 0;
+  color: #0077b6;
+}
+
+#cart-items {
+  list-style: none;
+  padding: 0;
+  margin-bottom: 1rem;
+}
+
+#cart-items li {
+  margin-bottom: 0.5rem;
+}
+
+#cart-total {
+  font-weight: bold;
+  text-align: right;
+  color: #023e8a;
+}
+
 footer {
   background-color: #023e8a;
   color: white;
