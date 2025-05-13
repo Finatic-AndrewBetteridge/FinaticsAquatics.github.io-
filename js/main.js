@@ -82,7 +82,7 @@ function fetchStock() {
           const baseName = fish.toLowerCase().replace(/\s+/g, '-');
 
           const img = document.createElement('img');
-          img.src = `images/${baseName}.jpg`;
+          img.src = `images/${baseName}.webp`;
           img.alt = fish;
           img.onerror = () => {
             img.onerror = null;
@@ -93,17 +93,20 @@ function fetchStock() {
           };
 
           const video = document.createElement('video');
-          video.src = `images/${baseName}.mp4`;
           video.muted = true;
           video.loop = true;
           video.playsInline = true;
           video.style.display = 'none';
+          video.style.maxWidth = '100%';
 
           mediaWrapper.appendChild(img);
           mediaWrapper.appendChild(video);
           card.appendChild(mediaWrapper);
 
           mediaWrapper.addEventListener('mouseenter', () => {
+            if (!video.src) {
+              video.src = `images/${baseName}.mp4`;
+            }
             img.style.display = 'none';
             video.style.display = 'block';
             video.play();
