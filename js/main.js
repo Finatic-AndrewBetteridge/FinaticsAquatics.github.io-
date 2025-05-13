@@ -83,16 +83,16 @@ function renderFishGrid(filter = '') {
       const baseName = fish.toLowerCase().replace(/\s+/g, '-');
 
       const img = document.createElement('img');
-      img.src = `images/${baseName}.webp`;
+      img.src = `images/${baseName}.jpg`;
       img.alt = fish;
       img.loading = 'lazy';
       img.onerror = () => {
-        img.onerror = null;
-        img.src = `images/${baseName}.png`;
-        img.onerror = () => {
-          img.src = 'images/fallback.png';
-        };
-      };
+  img.onerror = null;
+  img.src = `images/${baseName}.jpeg`;
+  img.onerror = () => {
+    img.src = 'images/fallback.png';
+  };
+};
 
       const video = document.createElement('video');
       video.muted = true;
@@ -275,5 +275,6 @@ document.addEventListener('DOMContentLoaded', () => {
   searchInput.addEventListener('input', (e) => {
     renderFishGrid(e.target.value);
   });
-  document.getElementById('fish-grid').before(searchInput);
+  const fishGridEl = document.getElementById('fish-grid');
+  if (fishGridEl) fishGridEl.before(searchInput);
 });
