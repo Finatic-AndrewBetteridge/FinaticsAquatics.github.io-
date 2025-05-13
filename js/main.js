@@ -1,4 +1,4 @@
-// js/main.js
+// Cleaned main.js for FinaticsAquatics.github.io
 
 const sheetUrl = 'https://script.google.com/macros/s/AKfycby7R9zrOBS-pg0AwxU_yRaKLo6VUWM8oPjLFkZhiJyl2SkTVw98ENSsO3iC3ISHYqSd/exec';
 const pushoverToken = 'aw5814unpeck3oz59f4q9xucs8y3as';
@@ -30,15 +30,8 @@ function fetchStock() {
       const grouped = {};
       data.forEach(item => {
         const {
-          fishName,
-          size,
-          price,
-          stock,
-          type = 'Uncategorized',
-          category = 'General',
-          subcategory = '',
-          subcategory2 = '',
-          subcategory3 = ''
+          fishName, size, price, stock,
+          type = 'Uncategorized', category = 'General', subcategory = '', subcategory2 = '', subcategory3 = ''
         } = item;
 
         const path = [type, category, subcategory, subcategory2, subcategory3].filter(Boolean);
@@ -105,12 +98,30 @@ function fetchStock() {
 
           mediaWrapper.addEventListener('mouseenter', () => {
             if (!video.src) {
-              video.src = `images/${baseName}.mp4`;
+              const tryVideo = (extList) => {
+                if (!extList.length) return;
+                const ext = extList.shift();
+                const testSrc = `images/${baseName}.${ext}`;
+                fetch(testSrc, { method: 'HEAD' })
+                  .then(res => {
+                    if (res.ok) {
+                      video.src = testSrc;
+                      video.load();
+                      video.play();
+                    } else {
+                      tryVideo(extList);
+                    }
+                  })
+                  .catch(() => tryVideo(extList));
+              };
+              tryVideo(['mp4', 'mov']);
+            } else {
+              video.play();
             }
             img.style.display = 'none';
             video.style.display = 'block';
-            video.play();
           });
+
           mediaWrapper.addEventListener('mouseleave', () => {
             video.style.display = 'none';
             img.style.display = 'block';
@@ -178,9 +189,7 @@ function fetchStock() {
 
       renderCart();
     })
-    .catch(err => {
-      console.error('Failed to fetch stock:', err);
-    });
+    .catch(err => console.error('Failed to fetch stock:', err));
 }
 
 function renderCart() {
