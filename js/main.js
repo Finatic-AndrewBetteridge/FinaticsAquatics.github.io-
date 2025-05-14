@@ -90,6 +90,10 @@ function renderFishGrid(filter = '') {
       video.loop = true;
       video.playsInline = true;
       video.style.display = 'none';
+      video.style.width = '100%';
+      video.style.height = '200px';
+      video.style.objectFit = 'contain';
+      video.style.borderRadius = '4px';
 
       mediaWrapper.appendChild(img);
       mediaWrapper.appendChild(video);
