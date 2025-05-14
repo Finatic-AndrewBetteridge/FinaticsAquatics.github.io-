@@ -1,11 +1,12 @@
 // main.js - Finatics Aquatics with PayPal Integration
 
 const sheetUrl = 'https://script.google.com/macros/s/AKfycby7R9zrOBS-pg0AwxU_yRaKLo6VUWM8oPjLFkZhiJyl2SkTVw98ENSsO3iC3ISHYqSd/exec';
-const pushoverToken = 'aw5814unpeck3oz59f4q9xucs8y3as';
+const pushoverToken = 'aw5814unpeck3oz59f4q9ucs8y3as';
 const pushoverUser = 'u919vjqcq2q4n8g9jto2pns6ctjiew';
 let stockData = {};
 let cart = JSON.parse(localStorage.getItem('cart')) || [];
 
+// --- Notifications ---
 function sendPushoverNotification(summary) {
   fetch('https://api.pushover.net/1/messages.json', {
     method: 'POST',
@@ -27,6 +28,7 @@ function sendEmailConfirmation(email, summary) {
   }).catch(console.error);
 }
 
+// --- Data Fetch ---
 function fetchStock() {
   fetch(sheetUrl)
     .then(res => res.json())
@@ -44,6 +46,7 @@ function fetchStock() {
     .catch(err => console.error('Failed to fetch stock:', err));
 }
 
+// --- Fish Display ---
 function renderFishGrid(filter = '') {
   const grid = document.getElementById('fish-grid');
   grid.innerHTML = '';
@@ -73,10 +76,14 @@ function renderFishGrid(filter = '') {
       mediaWrapper.className = 'fish-media-wrapper';
 
       const baseName = fish.toLowerCase().replace(/\s+/g, '-');
+
       const img = document.createElement('img');
       img.src = `images/${baseName}.jpg`;
       img.alt = fish;
       img.loading = 'lazy';
+      img.style.objectFit = 'contain';
+      img.style.width = '100%';
+      img.style.height = '200px';
       img.onerror = () => {
         img.onerror = null;
         img.src = `images/${baseName}.jpeg`;
@@ -90,10 +97,9 @@ function renderFishGrid(filter = '') {
       video.loop = true;
       video.playsInline = true;
       video.style.display = 'none';
+      video.style.objectFit = 'contain';
       video.style.width = '100%';
       video.style.height = '200px';
-      video.style.objectFit = 'contain';
-      video.style.borderRadius = '4px';
 
       mediaWrapper.appendChild(img);
       mediaWrapper.appendChild(video);
@@ -177,6 +183,7 @@ function renderFishGrid(filter = '') {
   renderCart();
 }
 
+// --- Cart Management ---
 function renderCart() {
   const cartItems = document.getElementById('cart-items');
   const cartTotal = document.getElementById('cart-total');
@@ -205,6 +212,7 @@ function renderCart() {
   renderPayPalButton(total);
 }
 
+// --- PayPal ---
 function renderPayPalButton(totalAmount) {
   const container = document.getElementById('payment-options');
   container.innerHTML = '';
@@ -212,7 +220,10 @@ function renderPayPalButton(totalAmount) {
 
   const email = document.getElementById('customer-email').value || 'unknown@example.com';
   const name = document.getElementById('customer-name').value || 'Customer';
-  const orderSummary = cart.map(item => `${item.quantity} x ${item.fish} (${item.size}) = £${item.quantity * item.price}`).join('\n') + `\nTotal: £${totalAmount}`;
+
+  const orderSummary = cart.map(item =>
+    `${item.quantity} x ${item.fish} (${item.size}) = £${item.quantity * item.price}`
+  ).join('\n') + `\nTotal: £${totalAmount}`;
 
   const paypalDiv = document.createElement('div');
   paypalDiv.id = 'paypal-button-container';
@@ -235,6 +246,7 @@ function renderPayPalButton(totalAmount) {
   }).render('#paypal-button-container');
 }
 
+// --- Init ---
 document.addEventListener('DOMContentLoaded', () => {
   fetchStock();
   const clearBtn = document.getElementById('clear-cart');
