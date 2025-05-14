@@ -5,6 +5,7 @@ body {
   background-color: #f9f9f9;
   color: #333;
   transition: background-color 0.3s ease, color 0.3s ease;
+  scroll-behavior: smooth;
 }
 
 h2 {
@@ -14,6 +15,34 @@ h2 {
   font-size: 1.5rem;
   color: #2c3e50;
   text-align: center;
+  position: relative;
+  animation: fadeSlideIn 0.8s ease both;
+}
+
+@keyframes fadeSlideIn {
+  0% {
+    opacity: 0;
+    transform: translateY(20px);
+  }
+  100% {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+/* Dark Mode Toggle Animation */
+body.dark-mode-toggle {
+  transition: background-color 0.5s ease, color 0.5s ease;
+}
+
+button.dark-toggle {
+  transition: background-color 0.3s ease, transform 0.2s;
+  will-change: background-color, transform;
+}
+
+button.dark-toggle:hover {
+  background-color: #333;
+  transform: scale(1.05);
 }
 
 /* Hero Header */
@@ -31,6 +60,7 @@ h2 {
   text-align: center;
   font-size: 2rem;
   margin-top: 1rem;
+  animation: fadeSlideIn 0.8s ease both;
 }
 
 /* Fish Cards */
@@ -52,6 +82,7 @@ h2 {
   flex-direction: column;
   align-items: stretch;
   transition: transform 0.2s ease, background-color 0.2s ease;
+  animation: fadeSlideIn 0.6s ease both;
 }
 
 .fish-card:hover {
@@ -82,6 +113,13 @@ h2 {
   border: 1px solid #ccc;
   font-size: 1em;
   background: #fff;
+  transition: border-color 0.2s;
+}
+
+.selector select:focus,
+.selector input:focus {
+  outline: none;
+  border-color: #0077cc;
 }
 
 .selector button {
@@ -92,11 +130,12 @@ h2 {
   border-radius: 4px;
   cursor: pointer;
   font-weight: bold;
-  transition: background 0.2s;
+  transition: background 0.2s, transform 0.2s;
 }
 
 .selector button:hover {
   background: #005fa3;
+  transform: translateY(-2px);
 }
 
 /* Cart */
@@ -133,11 +172,12 @@ h2 {
   color: white;
   border: none;
   cursor: pointer;
-  transition: background 0.2s;
+  transition: background 0.2s, transform 0.2s;
 }
 
 #cart-section button:hover {
   background-color: #218838;
+  transform: translateY(-2px);
 }
 
 /* Payment Options */
@@ -156,11 +196,12 @@ h2 {
   border-radius: 6px;
   font-size: 1em;
   cursor: pointer;
-  transition: background-color 0.2s;
+  transition: background-color 0.2s, transform 0.2s;
 }
 
 #payment-options button:hover {
   background-color: #005fa3;
+  transform: translateY(-2px);
 }
 
 /* Footer */
@@ -184,6 +225,19 @@ footer a {
   padding: 2em 1em;
   text-align: center;
   color: #555;
+  animation: pulse 1.2s infinite ease-in-out;
+}
+
+@keyframes pulse {
+  0% {
+    opacity: 0.6;
+  }
+  50% {
+    opacity: 1;
+  }
+  100% {
+    opacity: 0.6;
+  }
 }
 
 /* Responsive Enhancements */
