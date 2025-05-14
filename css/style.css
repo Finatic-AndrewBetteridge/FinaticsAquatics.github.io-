@@ -261,6 +261,25 @@ footer a {
   }
 }
 
+/* Toggle Button Icon */
+.dark-mode-toggle-btn {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.5em;
+  font-weight: bold;
+}
+
+.dark-mode-toggle-btn svg {
+  width: 1em;
+  height: 1em;
+  transition: transform 0.3s ease;
+}
+
+.dark-mode .dark-mode-toggle-btn svg {
+  transform: rotate(180deg);
+}
+
 /* Dark Mode Toggle */
 body.dark-mode {
   background-color: #1c1c1c;
