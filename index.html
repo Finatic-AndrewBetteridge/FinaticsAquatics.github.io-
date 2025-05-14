@@ -6,110 +6,113 @@
   <meta name="description" content="Finatics Aquatics - African Cichlid Breeders" />
   <title>Finatics Aquatics</title>
   <link rel="stylesheet" href="css/style.css" />
-<style>
-  .fish-media-wrapper {
-    position: relative;
-    width: 100%;
-    height: 200px;
-    overflow: hidden;
-  }
-  .fish-media-wrapper img,
-  .fish-media-wrapper video {
-    position: absolute;
-    top: 0;
-    left: 0;
-    width: 100%;
-    height: 100%;
-    object-fit: cover;
-    transition: opacity 0.3s ease;
-  }
-  .fish-media-wrapper video {
-    opacity: 0;
-  }
-  .fish-media-wrapper:hover video {
-    opacity: 1;
-  }
-  .fish-media-wrapper:hover img {
-    opacity: 0;
-  }
-</style>
-<script defer src="js/main.js"></script>
+  <link rel="icon" href="images/favicon.ico" type="image/x-icon">
+  <style>
+    .fish-media-wrapper {
+      position: relative;
+      width: 100%;
+      height: 200px;
+      overflow: hidden;
+    }
+    .fish-media-wrapper img,
+    .fish-media-wrapper video {
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      transition: opacity 0.3s ease;
+    }
+    .fish-media-wrapper video {
+      opacity: 0;
+    }
+    .fish-media-wrapper:hover video {
+      opacity: 1;
+    }
+    .fish-media-wrapper:hover img {
+      opacity: 0;
+    }
+  </style>
+  <script defer src="js/main.js"></script>
 </head>
 <body>
   <header class="hero" style="position: relative; height: auto; overflow: hidden;">
-  <img src="images/FinaticsCoveringPhoto.png" alt="Finatics Aquatics Banner" class="hero-image" style="width: 100%; max-height: none; object-fit: contain; display: block;" />
-  <div class="hero-overlay" style="position: absolute; top: 0; left: 0; width: 100%; height: 100%; display: flex; justify-content: center; align-items: center; flex-direction: column; color: white; background: rgba(0, 0, 0, 0.4);">
-    
-  </div>
+    <img src="images/FinaticsCoveringPhoto.png" alt="Finatics Aquatics Banner" class="hero-image" style="width: 100%; max-height: none; object-fit: contain; display: block;" />
+    <div class="hero-overlay" style="position: absolute; top: 0; left: 0; width: 100%; height: 100%; display: flex; justify-content: center; align-items: center; flex-direction: column; color: white; background: rgba(0, 0, 0, 0.4);">
+    </div>
   </header>
 
   <nav>
-  <div style="text-align: center; margin-top: 0.5em;">
-    <button onclick="document.body.classList.toggle('dark-mode')" style="background: #444; color: #fff; border: none; padding: 0.5em 1em; border-radius: 4px; cursor: pointer;">
-      Toggle Dark Mode
-    </button>
-  </div>
-  <ul id="dynamic-nav" style="display: flex; flex-wrap: wrap; justify-content: center; gap: 1.5rem; padding: 1rem 0; list-style: none; margin: 0;">
-  <li><a href="#available" style="color: white; text-decoration: none; padding: 0.5em 1em; background: #0077cc; border-radius: 6px;">All Fish</a></li>
-  <li><a href="#setup" style="color: white; text-decoration: none; padding: 0.5em 1em; background: #0077cc; border-radius: 6px;">Our Setup</a></li>
-  <li><a href="#about" style="color: white; text-decoration: none; padding: 0.5em 1em; background: #0077cc; border-radius: 6px;">About Us</a></li>
-  <li><a href="#contact" style="color: white; text-decoration: none; padding: 0.5em 1em; background: #0077cc; border-radius: 6px;">Contact</a></li>
-</ul>
-</nav>
+    <div style="text-align: center; margin-top: 0.5em;">
+      <button onclick="document.body.classList.toggle('dark-mode')" style="background: #444; color: #fff; border: none; padding: 0.5em 1em; border-radius: 4px; cursor: pointer;">
+        Toggle Dark Mode
+      </button>
+    </div>
+    <ul id="dynamic-nav" style="display: flex; flex-wrap: wrap; justify-content: center; gap: 1.5rem; padding: 1rem 0; list-style: none; margin: 0;">
+      <li><a href="#available" style="color: white; text-decoration: none; padding: 0.5em 1em; background: #0077cc; border-radius: 6px;">All Fish</a></li>
+      <li><a href="#setup" style="color: white; text-decoration: none; padding: 0.5em 1em; background: #0077cc; border-radius: 6px;">Our Setup</a></li>
+      <li><a href="#about" style="color: white; text-decoration: none; padding: 0.5em 1em; background: #0077cc; border-radius: 6px;">About Us</a></li>
+      <li><a href="#contact" style="color: white; text-decoration: none; padding: 0.5em 1em; background: #0077cc; border-radius: 6px;">Contact</a></li>
+    </ul>
+  </nav>
 
-<main>
-  <section id="available">
-    <h2>All Fish</h2>
-    <div id="loading" style="text-align: center; font-weight: bold; padding: 1em;">Loading available fish...</div>
-    <div class="fish-grid" id="fish-grid"></div>
-  </section>
+  <main>
+    <section id="available">
+      <h2>All Fish</h2>
+      <div id="loading" style="text-align: center; font-weight: bold; padding: 1em;">Loading available fish...</div>
+      <div class="fish-grid" id="fish-grid"></div>
+    </section>
 
-  <section id="cart">
-    <h3>Cart</h3>
-    <label for="customer-name">Name</label>
-    <input type="text" id="customer-name" name="name" placeholder="Your name" required>
-    <label for="customer-email">Email</label>
-    <input type="email" id="customer-email" name="email" placeholder="Your email" required>
-    <ul id="cart-items"></ul>
-    <p id="cart-total"></p>
-    <button id="clear-cart">Clear Cart</button>
-    <form id="order-form" action="https://formspree.io/f/mwpobwwy" method="POST" onsubmit="return appendDeliveryToURL()">
-      <label for="delivery">Delivery Method</label>
-      <select id="delivery" name="delivery" required>
-        <option value="">Select delivery or pickup</option>
-        <option value="Delivery" selected>Delivery</option>
-        <option value="Pickup">Pickup</option>
-      </select>
-      <input type="hidden" id="order-summary" name="order" value="">
-      <button type="submit" onclick="updateOrderSummaryField()">Submit Order</button>
-    </form>
-    <p style="background-color: #d4edda; color: #155724; padding: 1rem; border: 1px solid #c3e6cb; border-radius: 6px; font-weight: bold; margin-top: 1rem;">
-      ✅ Once submitted, we’ll be in touch to confirm your order. Please check your email (and junk folder) for updates. Your selected delivery method will also be shown on the confirmation page.
-    </p>
-  </section>
+    <section id="cart-section">
+      <h3>Cart</h3>
+      <label for="customer-name">Name</label>
+      <input type="text" id="customer-name" name="name" placeholder="Your name" required>
+      <label for="customer-email">Email</label>
+      <input type="email" id="customer-email" name="email" placeholder="Your email" required>
+      <ul id="cart-items"></ul>
+      <p id="cart-total"></p>
+      <button id="clear-cart">Clear Cart</button>
 
-  <section id="setup">
-    <h2>Our Breeding Setup</h2>
-    <p>We use a modular tank system with clean water cycling and natural filtration through aquaponics. Each breeding pair is given a dedicated tank to ensure quality offspring and optimal health.</p>
-  </section>
+      <form id="order-form" action="https://formspree.io/f/mwpobwwy" method="POST" onsubmit="return appendDeliveryToURL()">
+        <label for="delivery">Delivery Method</label>
+        <select id="delivery" name="delivery" required>
+          <option value="">Select delivery or pickup</option>
+          <option value="Delivery" selected>Delivery</option>
+          <option value="Pickup">Pickup</option>
+        </select>
+        <input type="hidden" id="order-summary" name="order" value="">
+        <button type="submit" onclick="updateOrderSummaryField()">Submit Order</button>
+      </form>
 
-  <section id="about">
-    <h2>About Us</h2>
-    <p>We are a family-run breeder in the UK, passionate about African cichlids. Our goal is to produce vibrant, healthy fish raised in a loving environment. From tank care to feeding routines, we involve our children in every part of the process.</p>
-  </section>
+      <div id="payment-options" style="margin-top: 20px;"></div>
 
-  <section id="contact">
-    <h2>Contact Us</h2>
-    <p>Email: <a href="mailto:info@finaticsaquatics.com">info@finaticsaquatics.com</a></p>
-    <p>WhatsApp: 07XXX XXXXXX</p>
-    <p>Follow us on Facebook and Instagram</p>
-  </section>
-</main>
+      <p style="background-color: #d4edda; color: #155724; padding: 1rem; border: 1px solid #c3e6cb; border-radius: 6px; font-weight: bold; margin-top: 1rem;">
+        ✅ Once submitted, we’ll be in touch to confirm your order. Please check your email (and junk folder) for updates. Your selected delivery method will also be shown on the confirmation page.
+      </p>
+    </section>
 
-<footer>
-  <p>&copy; 2025 Finatics Aquatics. All rights reserved.</p>
-  <p><a href="https://finatic-andrewbetteridge.github.io/FinaticsAquatics.github.io-/">Visit our live site</a></p>
-</footer>
+    <section id="setup">
+      <h2>Our Breeding Setup</h2>
+      <p>We use a modular tank system with clean water cycling and natural filtration through aquaponics. Each breeding pair is given a dedicated tank to ensure quality offspring and optimal health.</p>
+    </section>
 
+    <section id="about">
+      <h2>About Us</h2>
+      <p>We are a family-run breeder in the UK, passionate about African cichlids. Our goal is to produce vibrant, healthy fish raised in a loving environment. From tank care to feeding routines, we involve our children in every part of the process.</p>
+    </section>
+
+    <section id="contact">
+      <h2>Contact Us</h2>
+      <p>Email: <a href="mailto:info@finaticsaquatics.com">info@finaticsaquatics.com</a></p>
+      <p>WhatsApp: 07XXX XXXXXX</p>
+      <p>Follow us on Facebook and Instagram</p>
+    </section>
+  </main>
+
+  <footer>
+    <p>&copy; 2025 Finatics Aquatics. All rights reserved.</p>
+    <p><a href="https://finatic-andrewbetteridge.github.io/FinaticsAquatics.github.io-/">Visit our live site</a></p>
+  </footer>
 </body>
 </html>
