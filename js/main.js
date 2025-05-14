@@ -1,4 +1,4 @@
-// main.js - Finatics Aquatics
+// main.js - Finatics Aquatics with PayPal Integration
 
 const sheetUrl = 'https://script.google.com/macros/s/AKfycby7R9zrOBS-pg0AwxU_yRaKLo6VUWM8oPjLFkZhiJyl2SkTVw98ENSsO3iC3ISHYqSd/exec';
 const pushoverToken = 'aw5814unpeck3oz59f4q9xucs8y3as';
@@ -29,24 +29,15 @@ function sendEmailConfirmation(email, summary) {
 
 function fetchStock() {
   fetch(sheetUrl)
-    .then(response => response.json())
+    .then(res => res.json())
     .then(data => {
-      if (!Array.isArray(data)) throw new Error("Invalid data format from backend");
-
       const grouped = {};
-      data.forEach(item => {
-        const {
-          fishName, size, price, stock,
-          type = 'Uncategorized', category = 'General', subcategory = '', subcategory2 = '', subcategory3 = ''
-        } = item;
-
-        const path = [type, category, subcategory, subcategory2, subcategory3].filter(Boolean);
-        const key = path.join(' > ');
-        if (!grouped[key]) grouped[key] = {};
-        if (!grouped[key][fishName]) grouped[key][fishName] = [];
-        grouped[key][fishName].push({ size, price, stock });
+      data.forEach(({ fishName, size, price, stock, type = 'Uncategorized', category = 'General', subcategory = '', subcategory2 = '', subcategory3 = '' }) => {
+        const path = [type, category, subcategory, subcategory2, subcategory3].filter(Boolean).join(' > ');
+        grouped[path] = grouped[path] || {};
+        grouped[path][fishName] = grouped[path][fishName] || [];
+        grouped[path][fishName].push({ size, price, stock });
       });
-
       stockData = grouped;
       renderFishGrid();
     })
@@ -65,21 +56,16 @@ function renderFishGrid(filter = '') {
       section.id = sectionId;
       const heading = document.createElement('h2');
       heading.textContent = path;
-      section.appendChild(heading);
       const fishList = document.createElement('div');
       fishList.className = 'fish-grid';
+      section.appendChild(heading);
       section.appendChild(fishList);
       grid.appendChild(section);
       sectionMap[sectionId] = fishList;
     }
 
-    const fishEntries = stockData[path];
-    for (const fish in fishEntries) {
-      if (filter && !fish.toLowerCase().includes(filter.toLowerCase())) continue;
-
-      const items = fishEntries[fish];
-      if (!Array.isArray(items)) continue;
-
+    Object.entries(stockData[path]).forEach(([fish, items]) => {
+      if (filter && !fish.toLowerCase().includes(filter.toLowerCase())) return;
       const card = document.createElement('div');
       card.className = 'fish-card';
 
@@ -87,7 +73,6 @@ function renderFishGrid(filter = '') {
       mediaWrapper.className = 'fish-media-wrapper';
 
       const baseName = fish.toLowerCase().replace(/\s+/g, '-');
-
       const img = document.createElement('img');
       img.src = `images/${baseName}.jpg`;
       img.alt = fish;
@@ -105,7 +90,6 @@ function renderFishGrid(filter = '') {
       video.loop = true;
       video.playsInline = true;
       video.style.display = 'none';
-      video.style.maxWidth = '100%';
 
       mediaWrapper.appendChild(img);
       mediaWrapper.appendChild(video);
@@ -113,21 +97,16 @@ function renderFishGrid(filter = '') {
 
       mediaWrapper.addEventListener('mouseenter', () => {
         if (!video.src) {
-          const tryVideo = (extList) => {
-            if (!extList.length) return;
-            const ext = extList.shift();
-            const testSrc = `images/${baseName}.${ext}`;
-            fetch(testSrc, { method: 'HEAD' })
-              .then(res => {
-                if (res.ok) {
-                  video.src = testSrc;
-                  video.load();
-                  video.play();
-                } else {
-                  tryVideo(extList);
-                }
-              })
-              .catch(() => tryVideo(extList));
+          const tryVideo = (exts) => {
+            if (!exts.length) return;
+            const ext = exts.shift();
+            const src = `images/${baseName}.${ext}`;
+            fetch(src, { method: 'HEAD' }).then(r => {
+              if (r.ok) {
+                video.src = src;
+                video.play();
+              } else tryVideo(exts);
+            }).catch(() => tryVideo(exts));
           };
           tryVideo(['mp4', 'mov']);
         } else {
@@ -138,15 +117,14 @@ function renderFishGrid(filter = '') {
       });
 
       mediaWrapper.addEventListener('mouseleave', () => {
-        video.style.display = 'none';
-        img.style.display = 'block';
         video.pause();
         video.currentTime = 0;
+        video.style.display = 'none';
+        img.style.display = 'block';
       });
 
       const title = document.createElement('h3');
       title.textContent = fish;
-      card.appendChild(title);
 
       const selector = document.createElement('div');
       selector.className = 'selector';
@@ -154,121 +132,117 @@ function renderFishGrid(filter = '') {
       const sizeSelect = document.createElement('select');
       sizeSelect.innerHTML = '<option value="">Choose a size</option>';
       items.forEach(entry => {
-        if (entry.stock === 0) return;
-        const opt = document.createElement('option');
-        opt.value = JSON.stringify(entry);
-        opt.textContent = `${entry.size} — £${entry.price} — Stock: ${entry.stock}`;
-        sizeSelect.appendChild(opt);
+        if (entry.stock > 0) {
+          const opt = document.createElement('option');
+          opt.value = JSON.stringify(entry);
+          opt.textContent = `${entry.size} — £${entry.price} — Stock: ${entry.stock}`;
+          sizeSelect.appendChild(opt);
+        }
       });
 
       const qtyInput = document.createElement('input');
       qtyInput.type = 'number';
       qtyInput.min = '1';
       qtyInput.value = '1';
-      qtyInput.placeholder = 'Qty';
 
       const addBtn = document.createElement('button');
       addBtn.textContent = 'Add to Cart';
       addBtn.addEventListener('click', () => {
         const selected = sizeSelect.value;
-        const quantity = parseInt(qtyInput.value);
-        if (!selected || isNaN(quantity) || quantity < 1) {
-          alert('Please select a size and quantity.');
-          return;
-        }
+        const qty = parseInt(qtyInput.value);
+        if (!selected || isNaN(qty) || qty < 1) return alert('Choose size & quantity');
         const { size, price } = JSON.parse(selected);
-        cart.push({ fish, size, quantity, price });
+        cart.push({ fish, size, quantity: qty, price });
         renderCart();
       });
 
-      selector.appendChild(sizeSelect);
-      selector.appendChild(qtyInput);
-      selector.appendChild(addBtn);
-      card.appendChild(selector);
+      selector.append(sizeSelect, qtyInput, addBtn);
+      card.append(title, selector);
       sectionMap[sectionId].appendChild(card);
-    }
+    });
   });
 
+  const doaSection = document.createElement('section');
+  doaSection.id = 'doa-policy';
+  doaSection.innerHTML = `
+    <h2>DOA & Shipping Policy</h2>
+    <p>Claims must include clear video of parcel being opened on first delivery attempt.</p>
+    <p>We fast fish for 72 hours before shipment for water quality.</p>
+  `;
+  grid.appendChild(doaSection);
   renderCart();
 }
 
 function renderCart() {
   const cartItems = document.getElementById('cart-items');
   const cartTotal = document.getElementById('cart-total');
-  const paymentOptions = document.getElementById('payment-options');
-  const confirmationBox = document.getElementById('confirmation-message');
   cartItems.innerHTML = '';
-  paymentOptions.innerHTML = '';
-  if (confirmationBox) confirmationBox.style.display = 'none';
-  let totalAmount = 0;
+  let total = 0;
 
-  cart.forEach((item, index) => {
+  cart.forEach((item, i) => {
     const subtotal = item.quantity * item.price;
     const li = document.createElement('li');
-    li.innerHTML = `${item.quantity} x ${item.fish} (${item.size}) — £${subtotal} <button data-index="${index}" class="remove-btn">Remove</button>`;
+    li.innerHTML = `${item.quantity} x ${item.fish} (${item.size}) — £${subtotal}
+      <button data-index="${i}" class="remove-btn">Remove</button>`;
     cartItems.appendChild(li);
-    totalAmount += subtotal;
+    total += subtotal;
   });
 
-  cartTotal.textContent = totalAmount > 0 ? `Total: £${totalAmount}` : '';
+  cartTotal.textContent = total > 0 ? `Total: £${total}` : '';
   localStorage.setItem('cart', JSON.stringify(cart));
 
   document.querySelectorAll('.remove-btn').forEach(btn => {
-    btn.addEventListener('click', (e) => {
-      const index = parseInt(e.target.getAttribute('data-index'));
-      cart.splice(index, 1);
+    btn.onclick = () => {
+      cart.splice(btn.dataset.index, 1);
       renderCart();
-    });
+    };
   });
 
-  if (totalAmount > 0 && window.paypal) {
-    paypal.Buttons({
-      createOrder: (data, actions) => actions.order.create({
-        purchase_units: [{ amount: { value: totalAmount.toFixed(2) } }]
-      }),
-      onApprove: (data, actions) => actions.order.capture().then(details => {
-        const summary = generateOrderSummary();
-        sendPushoverNotification(summary);
-        sendEmailConfirmation(details.payer.email_address, summary);
-        cart = [];
-        renderCart();
-        if (confirmationBox) {
-          confirmationBox.innerHTML = `✅ <strong>Thank you!</strong> Your payment was received. We'll be in touch shortly to confirm delivery details.`;
-          confirmationBox.style.display = 'block';
-          window.scrollTo({ top: confirmationBox.offsetTop - 50, behavior: 'smooth' });
-        }
-      })
-    }).render('#payment-options');
-  }
+  renderPayPalButton(total);
 }
 
-function generateOrderSummary() {
-  let totalAmount = 0;
-  const orderSummary = cart.map(item => {
-    const subtotal = item.quantity * item.price;
-    totalAmount += subtotal;
-    return `${item.quantity} x ${item.fish} (${item.size}) — £${subtotal}`;
-  }).join('\n');
-  return `${orderSummary}\n\nTotal: £${totalAmount}`;
+function renderPayPalButton(totalAmount) {
+  const container = document.getElementById('payment-options');
+  container.innerHTML = '';
+  if (totalAmount === 0) return;
+
+  const email = document.getElementById('customer-email').value || 'unknown@example.com';
+  const name = document.getElementById('customer-name').value || 'Customer';
+  const orderSummary = cart.map(item => `${item.quantity} x ${item.fish} (${item.size}) = £${item.quantity * item.price}`).join('\n') + `\nTotal: £${totalAmount}`;
+
+  const paypalDiv = document.createElement('div');
+  paypalDiv.id = 'paypal-button-container';
+  container.appendChild(paypalDiv);
+
+  paypal.Buttons({
+    createOrder: (data, actions) => actions.order.create({
+      purchase_units: [{ amount: { value: totalAmount.toFixed(2) } }]
+    }),
+    onApprove: (data, actions) =>
+      actions.order.capture().then(details => {
+        alert('Payment complete. Thank you!');
+        sendPushoverNotification(`${name} (${email}) paid £${totalAmount}\n\n${orderSummary}`);
+        sendEmailConfirmation(email, orderSummary);
+        cart = [];
+        localStorage.removeItem('cart');
+        renderCart();
+      }),
+    onError: err => alert('Payment failed. Please try again.')
+  }).render('#paypal-button-container');
 }
 
 document.addEventListener('DOMContentLoaded', () => {
   fetchStock();
+  const clearBtn = document.getElementById('clear-cart');
+  if (clearBtn) clearBtn.onclick = () => {
+    cart = [];
+    localStorage.removeItem('cart');
+    renderCart();
+  };
 
-  const clearCartBtn = document.getElementById('clear-cart');
-  if (clearCartBtn) {
-    clearCartBtn.addEventListener('click', () => {
-      cart.length = 0;
-      localStorage.removeItem('cart');
-      renderCart();
-    });
-  }
-
-  const searchInput = document.createElement('input');
-  searchInput.type = 'text';
-  searchInput.placeholder = 'Search for fish...';
-  searchInput.className = 'search-input';
-  searchInput.addEventListener('input', e => renderFishGrid(e.target.value));
-  const fishGridEl = document.getElementById('fish-grid');
-  if (fishGridEl) fishGridEl.before(searchInput);
+  const search = document.createElement('input');
+  search.placeholder = 'Search fish...';
+  search.addEventListener('input', e => renderFishGrid(e.target.value));
+  const grid = document.getElementById('fish-grid');
+  if (grid) grid.before(search);
 });
