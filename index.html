@@ -2,19 +2,32 @@
 <html lang="en">
 <head>
   <!-- PWA + Cross-platform Compatibility Enhancements -->
-  <link rel="apple-touch-icon" sizes="180x180" href="images/favicon.ico">
-  <link rel="icon" type="image/png" sizes="32x32" href="images/favicon.ico">
-  <link rel="icon" type="image/png" sizes="16x16" href="images/favicon.ico">
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="description" content="Finatics Aquatics - African Cichlid Breeders" />
   <meta name="theme-color" content="#0077cc">
   <meta name="apple-mobile-web-app-capable" content="yes">
   <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
   <meta name="mobile-web-app-capable" content="yes">
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <meta name="description" content="Finatics Aquatics - African Cichlid Breeders" />
+  <meta name="apple-mobile-web-app-title" content="Finatics Aquatics">
+  <meta name="application-name" content="Finatics Aquatics">
   <title>Finatics Aquatics</title>
   <link rel="stylesheet" href="css/style.css" />
+  <link rel="manifest" href="manifest.json">
   <link rel="icon" href="images/favicon.ico" type="image/x-icon">
+  <link rel="apple-touch-icon" sizes="180x180" href="images/favicon.ico">
+  <!-- Apple Splash Screens -->
+  <link rel="apple-touch-startup-image" href="images/apple-splash-640x1136.png" media="(device-width: 320px) and (device-height: 568px) and (-webkit-device-pixel-ratio: 2)">
+  <link rel="apple-touch-startup-image" href="images/apple-splash-750x1334.png" media="(device-width: 375px) and (device-height: 667px) and (-webkit-device-pixel-ratio: 2)">
+  <link rel="apple-touch-startup-image" href="images/apple-splash-828x1792.png" media="(device-width: 414px) and (device-height: 896px) and (-webkit-device-pixel-ratio: 2)">
+  <link rel="apple-touch-startup-image" href="images/apple-splash-1125x2436.png" media="(device-width: 375px) and (device-height: 812px) and (-webkit-device-pixel-ratio: 3)">
+  <link rel="apple-touch-startup-image" href="images/apple-splash-1242x2208.png" media="(device-width: 414px) and (device-height: 736px) and (-webkit-device-pixel-ratio: 3)">
+  <link rel="apple-touch-startup-image" href="images/apple-splash-1242x2688.png" media="(device-width: 414px) and (device-height: 896px) and (-webkit-device-pixel-ratio: 3)">
+  <link rel="apple-touch-startup-image" href="images/apple-splash-1536x2048.png" media="(device-width: 768px) and (device-height: 1024px) and (-webkit-device-pixel-ratio: 2)">
+  <link rel="apple-touch-startup-image" href="images/apple-splash-1668x2224.png" media="(device-width: 834px) and (device-height: 1112px) and (-webkit-device-pixel-ratio: 2)">
+  <link rel="apple-touch-startup-image" href="images/apple-splash-1668x2388.png" media="(device-width: 834px) and (device-height: 1194px) and (-webkit-device-pixel-ratio: 2)">
+  <link rel="apple-touch-startup-image" href="images/apple-splash-2048x2732.png" media="(device-width: 1024px) and (device-height: 1366px) and (-webkit-device-pixel-ratio: 2)">
+
   <style>
     .fish-media-wrapper {
       position: relative;
@@ -42,47 +55,45 @@
       opacity: 0;
     }
   </style>
+  <script>
+    function toggleDarkMode() {
+      document.body.classList.toggle('dark-mode');
+      localStorage.setItem('darkMode', document.body.classList.contains('dark-mode'));
+    }
+    document.addEventListener('DOMContentLoaded', () => {
+      if (localStorage.getItem('darkMode') === 'true') {
+        document.body.classList.add('dark-mode');
+      }
+    });
+  </script>
   <script defer src="js/main.js"></script>
-  <link rel="manifest" href="manifest.json">
-  <meta name="apple-mobile-web-app-title" content="Finatics Aquatics">
-  <meta name="application-name" content="Finatics Aquatics">
-  <!-- iOS Splash Screens -->
-  <link rel="apple-touch-startup-image" href="images/apple-splash-640x1136.png" media="(device-width: 320px) and (device-height: 568px) and (-webkit-device-pixel-ratio: 2)">
-  <link rel="apple-touch-startup-image" href="images/apple-splash-750x1334.png" media="(device-width: 375px) and (device-height: 667px) and (-webkit-device-pixel-ratio: 2)">
-  <link rel="apple-touch-startup-image" href="images/apple-splash-828x1792.png" media="(device-width: 414px) and (device-height: 896px) and (-webkit-device-pixel-ratio: 2)">
-  <link rel="apple-touch-startup-image" href="images/apple-splash-1125x2436.png" media="(device-width: 375px) and (device-height: 812px) and (-webkit-device-pixel-ratio: 3)">
-  <link rel="apple-touch-startup-image" href="images/apple-splash-1242x2208.png" media="(device-width: 414px) and (device-height: 736px) and (-webkit-device-pixel-ratio: 3)">
-  <link rel="apple-touch-startup-image" href="images/apple-splash-1242x2688.png" media="(device-width: 414px) and (device-height: 896px) and (-webkit-device-pixel-ratio: 3)">
-  <link rel="apple-touch-startup-image" href="images/apple-splash-1536x2048.png" media="(device-width: 768px) and (device-height: 1024px) and (-webkit-device-pixel-ratio: 2)">
-  <link rel="apple-touch-startup-image" href="images/apple-splash-1668x2224.png" media="(device-width: 834px) and (device-height: 1112px) and (-webkit-device-pixel-ratio: 2)">
-  <link rel="apple-touch-startup-image" href="images/apple-splash-1668x2388.png" media="(device-width: 834px) and (device-height: 1194px) and (-webkit-device-pixel-ratio: 2)">
-  <link rel="apple-touch-startup-image" href="images/apple-splash-2048x2732.png" media="(device-width: 1024px) and (device-height: 1366px) and (-webkit-device-pixel-ratio: 2)">
 </head>
 <body>
-  <header class="hero" style="position: relative; height: auto; overflow: hidden;">
-    <img src="images/FinaticsCoveringPhoto.png" alt="Finatics Aquatics Banner" class="hero-image" style="width: 100%; max-height: none; object-fit: contain; display: block;" />
-    <div class="hero-overlay" style="position: absolute; top: 0; left: 0; width: 100%; height: 100%; display: flex; justify-content: center; align-items: center; flex-direction: column; color: white; background: rgba(0, 0, 0, 0.4);">
-    </div>
+  <header class="hero">
+    <img src="images/FinaticsCoveringPhoto.png" alt="Finatics Aquatics Banner" class="hero-image" />
   </header>
-
   <nav>
     <div style="text-align: center; margin-top: 0.5em;">
-      <button onclick="document.body.classList.toggle('dark-mode')" style="background: #444; color: #fff; border: none; padding: 0.5em 1em; border-radius: 4px; cursor: pointer;">
+      <button onclick="toggleDarkMode()" class="dark-toggle dark-mode-toggle-btn" aria-label="Switch between dark and light mode">
+        <svg viewBox="0 0 24 24" fill="currentColor">
+          <circle cx="12" cy="12" r="5" fill="currentColor" class="sun"></circle>
+          <path d="M 17.657 6.343 A 8 8 0 1 1 6.343 17.657" fill="currentColor" class="moon" style="opacity: 0;"></path>
+        </svg>
         Toggle Dark Mode
       </button>
     </div>
-    <ul id="dynamic-nav" style="display: flex; flex-wrap: wrap; justify-content: center; gap: 1.5rem; padding: 1rem 0; list-style: none; margin: 0;">
-      <li><a href="#available" style="color: white; text-decoration: none; padding: 0.5em 1em; background: #0077cc; border-radius: 6px;">All Fish</a></li>
-      <li><a href="#setup" style="color: white; text-decoration: none; padding: 0.5em 1em; background: #0077cc; border-radius: 6px;">Our Setup</a></li>
-      <li><a href="#about" style="color: white; text-decoration: none; padding: 0.5em 1em; background: #0077cc; border-radius: 6px;">About Us</a></li>
-      <li><a href="#contact" style="color: white; text-decoration: none; padding: 0.5em 1em; background: #0077cc; border-radius: 6px;">Contact</a></li>
+    <ul id="dynamic-nav">
+      <li><a href="#available">All Fish</a></li>
+      <li><a href="#setup">Our Setup</a></li>
+      <li><a href="#about">About Us</a></li>
+      <li><a href="#contact">Contact</a></li>
     </ul>
   </nav>
 
   <main>
     <section id="available">
       <h2>All Fish</h2>
-      <div id="loading" style="text-align: center; font-weight: bold; padding: 1em;">Loading available fish...</div>
+      <div id="loading">Loading available fish...</div>
       <div class="fish-grid" id="fish-grid"></div>
     </section>
 
@@ -107,9 +118,9 @@
         <button type="submit" onclick="updateOrderSummaryField()">Submit Order</button>
       </form>
 
-      <div id="payment-options" style="margin-top: 20px;"></div>
+      <div id="payment-options"></div>
 
-      <p style="background-color: #d4edda; color: #155724; padding: 1rem; border: 1px solid #c3e6cb; border-radius: 6px; font-weight: bold; margin-top: 1rem;">
+      <p class="order-note">
         ✅ Once submitted, we’ll be in touch to confirm your order. Please check your email (and junk folder) for updates. Your selected delivery method will also be shown on the confirmation page.
       </p>
     </section>

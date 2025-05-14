@@ -87,12 +87,12 @@ function renderFishGrid(filter = '') {
       img.alt = fish;
       img.loading = 'lazy';
       img.onerror = () => {
-  img.onerror = null;
-  img.src = `images/${baseName}.jpeg`;
-  img.onerror = () => {
-    img.src = 'images/fallback.png';
-  };
-};
+        img.onerror = null;
+        img.src = `images/${baseName}.jpeg`;
+        img.onerror = () => {
+          img.src = 'images/fallback.png';
+        };
+      };
 
       const video = document.createElement('video');
       video.muted = true;
