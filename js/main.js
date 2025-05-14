@@ -1,5 +1,3 @@
-// Enhanced main.js with styling, lazy loading, and search functionality
-
 const sheetUrl = 'https://script.google.com/macros/s/AKfycby7R9zrOBS-pg0AwxU_yRaKLo6VUWM8oPjLFkZhiJyl2SkTVw98ENSsO3iC3ISHYqSd/exec';
 const pushoverToken = 'aw5814unpeck3oz59f4q9xucs8y3as';
 const pushoverUser = 'u919vjqcq2q4n8g9jto2pns6ctjiew';
@@ -16,9 +14,8 @@ function sendPushoverNotification(summary) {
       title: 'New Finatics Order!',
       message: summary.substring(0, 512)
     })
-  })
-  .then(res => res.ok ? console.log('Pushover sent') : console.error('Pushover failed'))
-  .catch(err => console.error('Pushover error:', err));
+  }).then(res => res.ok ? console.log('Pushover sent') : console.error('Pushover failed'))
+    .catch(err => console.error('Pushover error:', err));
 }
 
 function fetchStock() {
@@ -70,7 +67,6 @@ function renderFishGrid(filter = '') {
     const fishEntries = stockData[path];
     for (const fish in fishEntries) {
       if (filter && !fish.toLowerCase().includes(filter.toLowerCase())) continue;
-
       const items = fishEntries[fish];
       if (!Array.isArray(items)) continue;
 
@@ -80,17 +76,24 @@ function renderFishGrid(filter = '') {
       const mediaWrapper = document.createElement('div');
       mediaWrapper.className = 'fish-media-wrapper';
 
-      const baseName = fish.toLowerCase().replace(/\s+/g, '-');
+      const baseName = fish.toLowerCase().replace(/\s+/g, '-').replace(/[^a-z0-9\-()]/g, '');
 
       const img = document.createElement('img');
       img.src = `images/${baseName}.jpg`;
       img.alt = fish;
       img.loading = 'lazy';
+
       img.onerror = () => {
         img.onerror = null;
         img.src = `images/${baseName}.jpeg`;
         img.onerror = () => {
-          img.src = 'images/fallback.png';
+          img.src = `images/${baseName}.webp`;
+          img.onerror = () => {
+            img.src = `images/${baseName}.png`;
+            img.onerror = () => {
+              img.src = 'images/fallback.png';
+            };
+          };
         };
       };
 
@@ -111,17 +114,15 @@ function renderFishGrid(filter = '') {
             if (!extList.length) return;
             const ext = extList.shift();
             const testSrc = `images/${baseName}.${ext}`;
-            fetch(testSrc, { method: 'HEAD' })
-              .then(res => {
-                if (res.ok) {
-                  video.src = testSrc;
-                  video.load();
-                  video.play();
-                } else {
-                  tryVideo(extList);
-                }
-              })
-              .catch(() => tryVideo(extList));
+            fetch(testSrc, { method: 'HEAD' }).then(res => {
+              if (res.ok) {
+                video.src = testSrc;
+                video.load();
+                video.play();
+              } else {
+                tryVideo(extList);
+              }
+            }).catch(() => tryVideo(extList));
           };
           tryVideo(['mp4', 'mov']);
         } else {
@@ -266,7 +267,6 @@ document.addEventListener('DOMContentLoaded', () => {
     form.insertBefore(consentBox, form.querySelector('button[type="submit"]'));
   }
 
-  // Add search input
   const searchInput = document.createElement('input');
   searchInput.type = 'text';
   searchInput.placeholder = 'Search for fish...';
