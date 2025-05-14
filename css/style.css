@@ -1,215 +1,140 @@
-/* General Layout */
-body {
-  font-family: 'Segoe UI', sans-serif;
-  margin: 0;
-  background-color: #f9f9f9;
-  color: #333;
-  transition: background-color 0.3s ease, color 0.3s ease;
-}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <!-- PWA + Cross-platform Compatibility Enhancements -->
+  <link rel="apple-touch-icon" sizes="180x180" href="images/favicon.ico">
+  <link rel="icon" type="image/png" sizes="32x32" href="images/favicon.ico">
+  <link rel="icon" type="image/png" sizes="16x16" href="images/favicon.ico">
+  <meta name="theme-color" content="#0077cc">
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+  <meta name="mobile-web-app-capable" content="yes">
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="description" content="Finatics Aquatics - African Cichlid Breeders" />
+  <title>Finatics Aquatics</title>
+  <link rel="stylesheet" href="css/style.css" />
+  <link rel="icon" href="images/favicon.ico" type="image/x-icon">
+  <style>
+    .fish-media-wrapper {
+      position: relative;
+      width: 100%;
+      height: 200px;
+      overflow: hidden;
+    }
+    .fish-media-wrapper img,
+    .fish-media-wrapper video {
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      transition: opacity 0.3s ease;
+    }
+    .fish-media-wrapper video {
+      opacity: 0;
+    }
+    .fish-media-wrapper:hover video {
+      opacity: 1;
+    }
+    .fish-media-wrapper:hover img {
+      opacity: 0;
+    }
+  </style>
+  <script defer src="js/main.js"></script>
+  <link rel="manifest" href="manifest.json">
+  <meta name="apple-mobile-web-app-title" content="Finatics Aquatics">
+  <meta name="application-name" content="Finatics Aquatics">
+  <!-- iOS Splash Screens -->
+  <link rel="apple-touch-startup-image" href="images/apple-splash-640x1136.png" media="(device-width: 320px) and (device-height: 568px) and (-webkit-device-pixel-ratio: 2)">
+  <link rel="apple-touch-startup-image" href="images/apple-splash-750x1334.png" media="(device-width: 375px) and (device-height: 667px) and (-webkit-device-pixel-ratio: 2)">
+  <link rel="apple-touch-startup-image" href="images/apple-splash-828x1792.png" media="(device-width: 414px) and (device-height: 896px) and (-webkit-device-pixel-ratio: 2)">
+  <link rel="apple-touch-startup-image" href="images/apple-splash-1125x2436.png" media="(device-width: 375px) and (device-height: 812px) and (-webkit-device-pixel-ratio: 3)">
+  <link rel="apple-touch-startup-image" href="images/apple-splash-1242x2208.png" media="(device-width: 414px) and (device-height: 736px) and (-webkit-device-pixel-ratio: 3)">
+  <link rel="apple-touch-startup-image" href="images/apple-splash-1242x2688.png" media="(device-width: 414px) and (device-height: 896px) and (-webkit-device-pixel-ratio: 3)">
+  <link rel="apple-touch-startup-image" href="images/apple-splash-1536x2048.png" media="(device-width: 768px) and (device-height: 1024px) and (-webkit-device-pixel-ratio: 2)">
+  <link rel="apple-touch-startup-image" href="images/apple-splash-1668x2224.png" media="(device-width: 834px) and (device-height: 1112px) and (-webkit-device-pixel-ratio: 2)">
+  <link rel="apple-touch-startup-image" href="images/apple-splash-1668x2388.png" media="(device-width: 834px) and (device-height: 1194px) and (-webkit-device-pixel-ratio: 2)">
+  <link rel="apple-touch-startup-image" href="images/apple-splash-2048x2732.png" media="(device-width: 1024px) and (device-height: 1366px) and (-webkit-device-pixel-ratio: 2)">
+</head>
+<body>
+  <header class="hero" style="position: relative; height: auto; overflow: hidden;">
+    <img src="images/FinaticsCoveringPhoto.png" alt="Finatics Aquatics Banner" class="hero-image" style="width: 100%; max-height: none; object-fit: contain; display: block;" />
+    <div class="hero-overlay" style="position: absolute; top: 0; left: 0; width: 100%; height: 100%; display: flex; justify-content: center; align-items: center; flex-direction: column; color: white; background: rgba(0, 0, 0, 0.4);">
+    </div>
+  </header>
 
-h2 {
-  border-bottom: 2px solid #ccc;
-  padding-bottom: 0.3em;
-  margin-top: 2em;
-  font-size: 1.5rem;
-  color: #2c3e50;
-}
+  <nav>
+    <div style="text-align: center; margin-top: 0.5em;">
+      <button onclick="document.body.classList.toggle('dark-mode')" style="background: #444; color: #fff; border: none; padding: 0.5em 1em; border-radius: 4px; cursor: pointer;">
+        Toggle Dark Mode
+      </button>
+    </div>
+    <ul id="dynamic-nav" style="display: flex; flex-wrap: wrap; justify-content: center; gap: 1.5rem; padding: 1rem 0; list-style: none; margin: 0;">
+      <li><a href="#available" style="color: white; text-decoration: none; padding: 0.5em 1em; background: #0077cc; border-radius: 6px;">All Fish</a></li>
+      <li><a href="#setup" style="color: white; text-decoration: none; padding: 0.5em 1em; background: #0077cc; border-radius: 6px;">Our Setup</a></li>
+      <li><a href="#about" style="color: white; text-decoration: none; padding: 0.5em 1em; background: #0077cc; border-radius: 6px;">About Us</a></li>
+      <li><a href="#contact" style="color: white; text-decoration: none; padding: 0.5em 1em; background: #0077cc; border-radius: 6px;">Contact</a></li>
+    </ul>
+  </nav>
 
-/* Hero Header */
-.hero-image {
-  width: 100%;
-  height: auto;
-  max-height: 320px;
-  object-fit: cover;
-  display: block;
-  background-color: #f0f0f0;
-  border-bottom: 2px solid #ccc;
-}
+  <main>
+    <section id="available">
+      <h2>All Fish</h2>
+      <div id="loading" style="text-align: center; font-weight: bold; padding: 1em;">Loading available fish...</div>
+      <div class="fish-grid" id="fish-grid"></div>
+    </section>
 
-.hero-title {
-  text-align: center;
-  font-size: 2rem;
-  margin-top: 1rem;
-}
+    <section id="cart-section">
+      <h3>Cart</h3>
+      <label for="customer-name">Name</label>
+      <input type="text" id="customer-name" name="name" placeholder="Your name" required>
+      <label for="customer-email">Email</label>
+      <input type="email" id="customer-email" name="email" placeholder="Your email" required>
+      <ul id="cart-items"></ul>
+      <p id="cart-total"></p>
+      <button id="clear-cart">Clear Cart</button>
 
-/* Fish Cards */
-.fish-grid {
-  display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
-  gap: 1rem;
-  padding: 1rem;
-}
+      <form id="order-form" action="https://formspree.io/f/mwpobwwy" method="POST" onsubmit="return appendDeliveryToURL()">
+        <label for="delivery">Delivery Method</label>
+        <select id="delivery" name="delivery" required>
+          <option value="">Select delivery or pickup</option>
+          <option value="Delivery" selected>Delivery</option>
+          <option value="Pickup">Pickup</option>
+        </select>
+        <input type="hidden" id="order-summary" name="order" value="">
+        <button type="submit" onclick="updateOrderSummaryField()">Submit Order</button>
+      </form>
 
-.fish-card {
-  background: white;
-  border: 1px solid #ddd;
-  border-radius: 8px;
-  overflow: hidden;
-  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.05);
-  padding: 1em;
-  display: flex;
-  flex-direction: column;
-  align-items: stretch;
-  transition: transform 0.2s ease, background-color 0.2s ease;
-}
+      <div id="payment-options" style="margin-top: 20px;"></div>
 
-.fish-card:hover {
-  transform: scale(1.02);
-  background-color: #f1f9ff;
-}
+      <p style="background-color: #d4edda; color: #155724; padding: 1rem; border: 1px solid #c3e6cb; border-radius: 6px; font-weight: bold; margin-top: 1rem;">
+        ✅ Once submitted, we’ll be in touch to confirm your order. Please check your email (and junk folder) for updates. Your selected delivery method will also be shown on the confirmation page.
+      </p>
+    </section>
 
-.fish-card img {
-  width: 100%;
-  height: 200px;
-  object-fit: contain;
-  border-radius: 4px;
-  margin-bottom: 0.5em;
-}
+    <section id="setup">
+      <h2>Our Breeding Setup</h2>
+      <p>We use a modular tank system with clean water cycling and natural filtration through aquaponics. Each breeding pair is given a dedicated tank to ensure quality offspring and optimal health.</p>
+    </section>
 
-.selector {
-  display: flex;
-  flex-direction: column;
-  gap: 0.5em;
-  width: 100%;
-  margin-top: 0.5em;
-}
+    <section id="about">
+      <h2>About Us</h2>
+      <p>We are a family-run breeder in the UK, passionate about African cichlids. Our goal is to produce vibrant, healthy fish raised in a loving environment. From tank care to feeding routines, we involve our children in every part of the process.</p>
+    </section>
 
-.selector select,
-.selector input {
-  padding: 0.5em;
-  border-radius: 4px;
-  border: 1px solid #ccc;
-  font-size: 1em;
-  background: #fff;
-}
+    <section id="contact">
+      <h2>Contact Us</h2>
+      <p>Email: <a href="mailto:info@finaticsaquatics.com">info@finaticsaquatics.com</a></p>
+      <p>WhatsApp: 07XXX XXXXXX</p>
+      <p>Follow us on Facebook and Instagram</p>
+    </section>
+  </main>
 
-.selector button {
-  background: #0077cc;
-  color: white;
-  border: none;
-  padding: 0.6em;
-  border-radius: 4px;
-  cursor: pointer;
-  font-weight: bold;
-  transition: background 0.2s;
-}
-
-.selector button:hover {
-  background: #005fa3;
-}
-
-/* Cart */
-#cart {
-  padding: 2em;
-  background: #fff;
-  margin: 2em auto;
-  max-width: 600px;
-  border-radius: 8px;
-  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.05);
-  transition: background-color 0.3s ease;
-}
-
-#cart h3 {
-  margin-top: 0;
-  font-size: 1.4rem;
-}
-
-#cart input,
-#cart select,
-#cart button {
-  width: 100%;
-  margin-top: 0.5em;
-  padding: 0.6em;
-  border-radius: 4px;
-  border: 1px solid #ccc;
-  font-size: 1em;
-  background: #fff;
-}
-
-#cart button {
-  background-color: #28a745;
-  color: white;
-  border: none;
-  cursor: pointer;
-  transition: background 0.2s;
-}
-
-#cart button:hover {
-  background-color: #218838;
-}
-
-/* Footer */
-footer {
-  text-align: center;
-  padding: 1.5em;
-  background: #222;
-  color: #fff;
-  margin-top: 2em;
-}
-
-footer a {
-  color: #61dafb;
-  text-decoration: none;
-  font-weight: bold;
-}
-
-/* Loading */
-#loading {
-  font-size: 1.2rem;
-  padding: 2em 1em;
-  text-align: center;
-  color: #555;
-}
-
-/* Responsive Enhancements */
-@media (max-width: 600px) {
-  nav ul {
-    flex-direction: column;
-    align-items: center;
-  }
-
-  .fish-grid {
-    grid-template-columns: 1fr;
-  }
-
-  #cart {
-    padding: 1em;
-    margin: 1em;
-  }
-}
-
-/* Dark Mode Toggle */
-body.dark-mode {
-  background-color: #1c1c1c;
-  color: #ddd;
-}
-
-body.dark-mode nav,
-body.dark-mode footer {
-  background: #111;
-  color: #eee;
-}
-
-body.dark-mode .fish-card {
-  background-color: #2a2a2a;
-  border-color: #444;
-}
-
-body.dark-mode .selector select,
-body.dark-mode .selector input,
-body.dark-mode #cart input,
-body.dark-mode #cart select {
-  background-color: #333;
-  color: #eee;
-  border-color: #555;
-}
-
-body.dark-mode .selector button,
-body.dark-mode #cart button {
-  background-color: #3498db;
-}
-
-body.dark-mode .selector button:hover,
-body.dark-mode #cart button:hover {
-  background-color: #2c80b4;
-}
+  <footer>
+    <p>&copy; 2025 Finatics Aquatics. All rights reserved.</p>
+    <p><a href="https://finatic-andrewbetteridge.github.io/FinaticsAquatics.github.io-/">Visit our live site</a></p>
+  </footer>
+</body>
+</html>
