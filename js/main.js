@@ -19,6 +19,14 @@ function sendPushoverNotification(summary) {
   }).catch(err => console.error('Pushover error:', err));
 }
 
+function sendEmailConfirmation(email, summary) {
+  fetch('https://formspree.io/f/mwpobwwy', {
+    method: 'POST',
+    headers: { 'Content-Type': 'application/json' },
+    body: JSON.stringify({ email, message: summary })
+  }).catch(console.error);
+}
+
 function fetchStock() {
   fetch(sheetUrl)
     .then(response => response.json())
@@ -188,8 +196,10 @@ function renderCart() {
   const cartItems = document.getElementById('cart-items');
   const cartTotal = document.getElementById('cart-total');
   const paymentOptions = document.getElementById('payment-options');
+  const confirmationBox = document.getElementById('confirmation-message');
   cartItems.innerHTML = '';
   paymentOptions.innerHTML = '';
+  if (confirmationBox) confirmationBox.style.display = 'none';
   let totalAmount = 0;
 
   cart.forEach((item, index) => {
@@ -217,10 +227,16 @@ function renderCart() {
         purchase_units: [{ amount: { value: totalAmount.toFixed(2) } }]
       }),
       onApprove: (data, actions) => actions.order.capture().then(details => {
-        alert(`Payment completed by ${details.payer.name.given_name}`);
-        sendPushoverNotification(generateOrderSummary());
+        const summary = generateOrderSummary();
+        sendPushoverNotification(summary);
+        sendEmailConfirmation(details.payer.email_address, summary);
         cart = [];
         renderCart();
+        if (confirmationBox) {
+          confirmationBox.innerHTML = `✅ <strong>Thank you!</strong> Your payment was received. We'll be in touch shortly to confirm delivery details.`;
+          confirmationBox.style.display = 'block';
+          window.scrollTo({ top: confirmationBox.offsetTop - 50, behavior: 'smooth' });
+        }
       })
     }).render('#payment-options');
   }
