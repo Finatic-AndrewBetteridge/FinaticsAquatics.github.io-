@@ -30,20 +30,26 @@ h2 {
   }
 }
 
-/* Navigation Styling */
+/* Hero Header */
+.hero-image {
+  width: 100%;
+  height: auto;
+  max-height: 320px;
+  object-fit: contain;
+  display: block;
+  background-color: #f0f0f0;
+  border-bottom: 2px solid #ccc;
+}
+
+/* Navigation */
 nav ul {
   display: flex;
   flex-wrap: wrap;
   justify-content: center;
-  gap: 1rem;
+  gap: 1.5rem;
   padding: 1rem 0;
   list-style: none;
   margin: 0;
-  background-color: #0077cc;
-}
-
-nav ul li {
-  display: inline-block;
 }
 
 nav ul li a {
@@ -52,44 +58,6 @@ nav ul li a {
   padding: 0.5em 1em;
   background: #0077cc;
   border-radius: 6px;
-  font-weight: bold;
-  transition: background 0.3s;
-}
-
-nav ul li a:hover {
-  background: #005fa3;
-}
-
-/* Dark Mode Toggle Animation */
-body.dark-mode-toggle {
-  transition: background-color 0.5s ease, color 0.5s ease;
-}
-
-button.dark-toggle {
-  transition: background-color 0.3s ease, transform 0.2s;
-  will-change: background-color, transform;
-}
-
-button.dark-toggle:hover {
-  background-color: #333;
-  transform: scale(1.05);
-}
-
-/* Hero Header */
-.hero-image {
-  width: 100%;
-  height: auto;
-  object-fit: contain;
-  display: block;
-  background-color: #f0f0f0;
-  border-bottom: 2px solid #ccc;
-}
-
-.hero-title {
-  text-align: center;
-  font-size: 2rem;
-  margin-top: 1rem;
-  animation: fadeSlideIn 0.8s ease both;
 }
 
 /* Fish Cards */
@@ -120,14 +88,11 @@ button.dark-toggle:hover {
 }
 
 .fish-card img {
-  max-width: 100%;
-  max-height: 200px;
-  width: auto;
-  height: auto;
+  width: 100%;
+  height: 200px;
   object-fit: contain;
   border-radius: 4px;
-  margin: 0 auto 0.5em;
-  display: block;
+  margin-bottom: 0.5em;
 }
 
 .selector {
@@ -212,30 +177,6 @@ button.dark-toggle:hover {
   transform: translateY(-2px);
 }
 
-/* Payment Options */
-#payment-options {
-  margin-top: 1.5em;
-  display: flex;
-  flex-direction: column;
-  gap: 1em;
-}
-
-#payment-options button {
-  background: #0077cc;
-  color: white;
-  padding: 0.8em;
-  border: none;
-  border-radius: 6px;
-  font-size: 1em;
-  cursor: pointer;
-  transition: background-color 0.2s, transform 0.2s;
-}
-
-#payment-options button:hover {
-  background-color: #005fa3;
-  transform: translateY(-2px);
-}
-
 /* Footer */
 footer {
   text-align: center;
@@ -287,52 +228,9 @@ footer a {
     padding: 1em;
     margin: 1em;
   }
-
-  #payment-options button {
-    font-size: 1.1em;
-  }
 }
 
-/* Toggle Button Icon */
-.dark-mode-toggle-btn {
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  gap: 0.5em;
-  font-weight: bold;
-  border: none;
-  background-color: #444;
-  color: white;
-  padding: 0.5em 1em;
-  border-radius: 4px;
-  cursor: pointer;
-}
-
-.dark-mode-toggle-btn[aria-label]:hover::after {
-  content: attr(aria-label);
-  position: absolute;
-  top: 100%;
-  background: rgba(0, 0, 0, 0.8);
-  color: white;
-  padding: 0.3em 0.6em;
-  font-size: 0.8em;
-  border-radius: 4px;
-  margin-top: 0.2em;
-  white-space: nowrap;
-  z-index: 9999;
-}
-
-.dark-mode-toggle-btn svg {
-  width: 1em;
-  height: 1em;
-  transition: transform 0.3s ease;
-}
-
-.dark-mode .dark-mode-toggle-btn svg {
-  transform: rotate(180deg);
-}
-
-/* Dark Mode Toggle */
+/* Dark Mode */
 body.dark-mode {
   background-color: #1c1c1c;
   color: #ddd;

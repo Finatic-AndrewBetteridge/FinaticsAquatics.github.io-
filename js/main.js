@@ -1,3 +1,5 @@
+// main.js - Finatics Aquatics
+
 const sheetUrl = 'https://script.google.com/macros/s/AKfycby7R9zrOBS-pg0AwxU_yRaKLo6VUWM8oPjLFkZhiJyl2SkTVw98ENSsO3iC3ISHYqSd/exec';
 const pushoverToken = 'aw5814unpeck3oz59f4q9xucs8y3as';
 const pushoverUser = 'u919vjqcq2q4n8g9jto2pns6ctjiew';
@@ -14,8 +16,7 @@ function sendPushoverNotification(summary) {
       title: 'New Finatics Order!',
       message: summary.substring(0, 512)
     })
-  }).then(res => res.ok ? console.log('Pushover sent') : console.error('Pushover failed'))
-    .catch(err => console.error('Pushover error:', err));
+  }).catch(err => console.error('Pushover error:', err));
 }
 
 function fetchStock() {
@@ -67,6 +68,7 @@ function renderFishGrid(filter = '') {
     const fishEntries = stockData[path];
     for (const fish in fishEntries) {
       if (filter && !fish.toLowerCase().includes(filter.toLowerCase())) continue;
+
       const items = fishEntries[fish];
       if (!Array.isArray(items)) continue;
 
@@ -76,24 +78,17 @@ function renderFishGrid(filter = '') {
       const mediaWrapper = document.createElement('div');
       mediaWrapper.className = 'fish-media-wrapper';
 
-      const baseName = fish.toLowerCase().replace(/\s+/g, '-').replace(/[^a-z0-9\-()]/g, '');
+      const baseName = fish.toLowerCase().replace(/\s+/g, '-');
 
       const img = document.createElement('img');
       img.src = `images/${baseName}.jpg`;
       img.alt = fish;
       img.loading = 'lazy';
-
       img.onerror = () => {
         img.onerror = null;
         img.src = `images/${baseName}.jpeg`;
         img.onerror = () => {
-          img.src = `images/${baseName}.webp`;
-          img.onerror = () => {
-            img.src = `images/${baseName}.png`;
-            img.onerror = () => {
-              img.src = 'images/fallback.png';
-            };
-          };
+          img.src = 'images/fallback.png';
         };
       };
 
@@ -114,15 +109,17 @@ function renderFishGrid(filter = '') {
             if (!extList.length) return;
             const ext = extList.shift();
             const testSrc = `images/${baseName}.${ext}`;
-            fetch(testSrc, { method: 'HEAD' }).then(res => {
-              if (res.ok) {
-                video.src = testSrc;
-                video.load();
-                video.play();
-              } else {
-                tryVideo(extList);
-              }
-            }).catch(() => tryVideo(extList));
+            fetch(testSrc, { method: 'HEAD' })
+              .then(res => {
+                if (res.ok) {
+                  video.src = testSrc;
+                  video.load();
+                  video.play();
+                } else {
+                  tryVideo(extList);
+                }
+              })
+              .catch(() => tryVideo(extList));
           };
           tryVideo(['mp4', 'mov']);
         } else {
@@ -147,7 +144,6 @@ function renderFishGrid(filter = '') {
       selector.className = 'selector';
 
       const sizeSelect = document.createElement('select');
-      sizeSelect.style.width = '100%';
       sizeSelect.innerHTML = '<option value="">Choose a size</option>';
       items.forEach(entry => {
         if (entry.stock === 0) return;
@@ -165,7 +161,6 @@ function renderFishGrid(filter = '') {
 
       const addBtn = document.createElement('button');
       addBtn.textContent = 'Add to Cart';
-      addBtn.style.marginTop = '8px';
       addBtn.addEventListener('click', () => {
         const selected = sizeSelect.value;
         const quantity = parseInt(qtyInput.value);
@@ -186,28 +181,21 @@ function renderFishGrid(filter = '') {
     }
   });
 
-  const doaSection = document.createElement('section');
-  doaSection.id = 'doa-policy';
-  doaSection.innerHTML = `
-    <h2>DOA & Shipping Policy</h2>
-    <p>We honour any dead-on-arrival (DOA) claims <strong>if</strong> you provide clear video evidence of the parcel being opened on first delivery attempt. Please ensure someone is home to receive the parcel at the time of delivery.</p>
-    <p>For the safety of our fish during transport, we do not feed them for 72 hours before shipping. This prevents excess waste in transit and ensures better water quality on arrival.</p>
-  `;
-  grid.appendChild(doaSection);
-
   renderCart();
 }
 
 function renderCart() {
   const cartItems = document.getElementById('cart-items');
   const cartTotal = document.getElementById('cart-total');
+  const paymentOptions = document.getElementById('payment-options');
   cartItems.innerHTML = '';
+  paymentOptions.innerHTML = '';
   let totalAmount = 0;
 
   cart.forEach((item, index) => {
     const subtotal = item.quantity * item.price;
     const li = document.createElement('li');
-    li.innerHTML = `${item.quantity} x ${item.fish} (${item.size}) — £${subtotal} <button data-index="${index}" class="remove-btn" style="margin-left: 10px; background-color: #e63946; color: white; border: none; padding: 4px 8px; border-radius: 4px; cursor: pointer;">Remove</button>`;
+    li.innerHTML = `${item.quantity} x ${item.fish} (${item.size}) — £${subtotal} <button data-index="${index}" class="remove-btn">Remove</button>`;
     cartItems.appendChild(li);
     totalAmount += subtotal;
   });
@@ -222,26 +210,30 @@ function renderCart() {
       renderCart();
     });
   });
+
+  if (totalAmount > 0 && window.paypal) {
+    paypal.Buttons({
+      createOrder: (data, actions) => actions.order.create({
+        purchase_units: [{ amount: { value: totalAmount.toFixed(2) } }]
+      }),
+      onApprove: (data, actions) => actions.order.capture().then(details => {
+        alert(`Payment completed by ${details.payer.name.given_name}`);
+        sendPushoverNotification(generateOrderSummary());
+        cart = [];
+        renderCart();
+      })
+    }).render('#payment-options');
+  }
 }
 
-function updateOrderSummaryField() {
+function generateOrderSummary() {
   let totalAmount = 0;
   const orderSummary = cart.map(item => {
     const subtotal = item.quantity * item.price;
     totalAmount += subtotal;
     return `${item.quantity} x ${item.fish} (${item.size}) — £${subtotal}`;
   }).join('\n');
-  const fullSummary = `${orderSummary}\n\nTotal: £${totalAmount}`;
-  const orderInput = document.getElementById('order-summary');
-  if (orderInput) orderInput.value = fullSummary;
-  sendPushoverNotification(fullSummary);
-}
-
-function appendDeliveryToURL() {
-  const form = document.getElementById('order-form');
-  const delivery = document.getElementById('delivery').value;
-  form.action += `?delivery=${encodeURIComponent(delivery)}`;
-  return true;
+  return `${orderSummary}\n\nTotal: £${totalAmount}`;
 }
 
 document.addEventListener('DOMContentLoaded', () => {
@@ -252,29 +244,15 @@ document.addEventListener('DOMContentLoaded', () => {
     clearCartBtn.addEventListener('click', () => {
       cart.length = 0;
       localStorage.removeItem('cart');
-      document.getElementById('cart-items').innerHTML = '';
-      document.getElementById('cart-total').textContent = '';
+      renderCart();
     });
-  }
-
-  const form = document.getElementById('order-form');
-  if (form) {
-    const consentBox = document.createElement('label');
-    consentBox.innerHTML = `
-      <input type="checkbox" name="gdpr" required>
-      I consent to my data being used for order processing and communication in line with GDPR.
-    `;
-    form.insertBefore(consentBox, form.querySelector('button[type="submit"]'));
   }
 
   const searchInput = document.createElement('input');
   searchInput.type = 'text';
   searchInput.placeholder = 'Search for fish...';
-  searchInput.style.width = '100%';
-  searchInput.style.margin = '16px 0';
-  searchInput.addEventListener('input', (e) => {
-    renderFishGrid(e.target.value);
-  });
+  searchInput.className = 'search-input';
+  searchInput.addEventListener('input', e => renderFishGrid(e.target.value));
   const fishGridEl = document.getElementById('fish-grid');
   if (fishGridEl) fishGridEl.before(searchInput);
 });
