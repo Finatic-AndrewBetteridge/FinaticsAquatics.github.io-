@@ -1,3 +1,5 @@
+/* Updated style.css for Finatics Aquatics */
+
 /* General Layout */
 body {
   font-family: 'Segoe UI', sans-serif;
@@ -229,15 +231,9 @@ footer a {
 }
 
 @keyframes pulse {
-  0% {
-    opacity: 0.6;
-  }
-  50% {
-    opacity: 1;
-  }
-  100% {
-    opacity: 0.6;
-  }
+  0% { opacity: 0.6; }
+  50% { opacity: 1; }
+  100% { opacity: 0.6; }
 }
 
 /* Responsive Enhancements */
@@ -290,26 +286,17 @@ footer a {
   z-index: 9999;
 }
 
-
-.dark-mode-toggle-btn {
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  gap: 0.5em;
-  font-weight: bold;
-}
-
 .dark-mode-toggle-btn svg {
   width: 1em;
   height: 1em;
   transition: transform 0.3s ease;
 }
 
-.dark-mode .dark-mode-toggle-btn svg {
+body.dark-mode .dark-mode-toggle-btn svg {
   transform: rotate(180deg);
 }
 
-/* Dark Mode Toggle */
+/* Dark Mode Theme */
 body.dark-mode {
   background-color: #1c1c1c;
   color: #ddd;
