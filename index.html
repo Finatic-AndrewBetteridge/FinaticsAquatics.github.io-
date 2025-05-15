@@ -26,17 +26,13 @@
 
   <!-- Modular Scripts -->
   <script defer src="js/stock.js"></script>
-
   <script defer src="js/cart/state.js"></script>
   <script defer src="js/cart/ui.js"></script>
   <script defer src="js/cart/controls.js"></script>
-
   <script defer src="js/notifications/pushover.js"></script>
   <script defer src="js/notifications/email.js"></script>
-
   <script defer src="js/fish/renderCard.js"></script>
   <script defer src="js/fish/renderGrid.js"></script>
-
   <script defer src="js/paypal/init.js"></script>
   <script defer src="js/init.js"></script>
 
@@ -54,33 +50,26 @@
   </script>
 </head>
 <body>
-<header class="hero">
-  <img src="images/FinaticsCoveringPhoto.png" alt="Finatics Aquatics Banner" class="hero-image" />
+  <header class="hero">
+    <img src="images/FinaticsCoveringPhoto.png" alt="Finatics Aquatics Banner" class="hero-image" />
 
-  <nav class="hero-nav">
-    <ul>
-      <li><a href="#available">All Fish</a></li>
-      <li><a href="#setup">Our Setup</a></li>
-      <li><a href="#about">About Us</a></li>
-      <li><a href="#contact">Contact</a></li>
-    </ul>
-  </nav>
-</header>
-
-  <nav>
-    <div style="text-align: center; margin-top: 0.5em;">
-      <button onclick="toggleDarkMode()" class="dark-toggle dark-mode-toggle-btn">
-        <svg viewBox="0 0 24 24" fill="currentColor"><path d="M12 2a9.933 9.933 0 0 0-3.6.7 1 1 0 0 0 .2 1.9A8 8 0 1 1 5.4 6.2a1 1 0 0 0-1.4-1.4A10 10 0 1 0 12 2z"/></svg>
-        Toggle Dark Mode
-      </button>
-    </div>
-    <ul id="dynamic-nav">
-      <li><a href="#available">All Fish</a></li>
-      <li><a href="#setup">Our Setup</a></li>
-      <li><a href="#about">About Us</a></li>
-      <li><a href="#contact">Contact</a></li>
-    </ul>
-  </nav>
+    <nav class="hero-nav">
+      <ul>
+        <li><a href="#available">All Fish</a></li>
+        <li><a href="#setup">Our Setup</a></li>
+        <li><a href="#about">About Us</a></li>
+        <li><a href="#contact">Contact</a></li>
+        <li>
+          <button onclick="toggleDarkMode()" class="dark-toggle dark-mode-toggle-btn">
+            <svg viewBox="0 0 24 24" fill="currentColor">
+              <path d="M12 2a9.933 9.933 0 0 0-3.6.7 1 1 0 0 0 .2 1.9A8 8 0 1 1 5.4 6.2a1 1 0 0 0-1.4-1.4A10 10 0 1 0 12 2z"/>
+            </svg>
+            Toggle Dark Mode
+          </button>
+        </li>
+      </ul>
+    </nav>
+  </header>
 
   <main>
     <section id="available">
