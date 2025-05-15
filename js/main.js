@@ -91,7 +91,7 @@ function renderFishGrid(filter = '') {
       img.style.left = '0';
       img.style.width = '100%';
       img.style.height = '100%';
-      img.style.objectFit = 'contain';
+      img.style.objectFit = 'cover';
       img.onerror = () => {
         img.onerror = null;
         img.src = `images/${baseName}.jpeg`;
@@ -110,7 +110,7 @@ function renderFishGrid(filter = '') {
       video.style.left = '0';
       video.style.width = '100%';
       video.style.height = '100%';
-      video.style.objectFit = 'contain';
+      video.style.objectFit = 'cover';
 
       mediaWrapper.appendChild(img);
       mediaWrapper.appendChild(video);
