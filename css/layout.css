@@ -84,12 +84,11 @@ nav ul li a {
 body {
   margin: 0;
   font-family: 'Segoe UI', sans-serif;
-  background: linear-gradient(to bottom, #0f2027, #203a43, #2c5364); /* river gradient */
-  color: #f0f0f0;
-  transition: background 0.3s ease, color 0.3s ease;
+  background-color: #33f6ff;
+  color: #003344; /* contrast-optimized */
+  transition: background-color 0.3s ease, color 0.3s ease;
   scroll-behavior: smooth;
 }
-
 
 /* Footer */
 footer {
