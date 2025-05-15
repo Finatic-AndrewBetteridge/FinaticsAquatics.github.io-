@@ -17,12 +17,13 @@
   top: 50%;
   left: 50%;
   transform: translate(-50%, -50%);
-  background: none;
+  color: white;
   text-align: center;
-  background: none;
-  pointer-events: none;
+  background: rgba(0, 0, 0, 0.3); /* translucent dark bg */
+  padding: 1rem 2rem;
+  border-radius: 8px;
   z-index: 2;
-  text-shadow: 0 2px 4px rgba(0, 0, 0, 0.6);
+  text-shadow: 0 2px 6px rgba(0, 0, 0, 0.7); /* glow around text */
 }
 
 .hero-overlay-text h1 {
