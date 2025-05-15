@@ -1,12 +1,19 @@
 /* Hero Header */
 .hero-image {
-  width: 100%;
+  width: 100vw;           /* Full viewport width */
   height: auto;
-  max-height: 320px;
-  object-fit: contain;
   display: block;
-  background-color: #f0f0f0;
-  border-bottom: 2px solid #ccc;
+  object-fit: cover;
+  margin: 0;
+  padding: 0;
+  border: none;
+}
+
+.hero {
+  margin: 0;
+  padding: 0;
+  width: 100vw;
+  overflow: hidden;
 }
 
 /* Navigation */
