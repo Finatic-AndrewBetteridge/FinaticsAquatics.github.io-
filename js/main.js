@@ -74,11 +74,6 @@ function renderFishGrid(filter = '') {
 
       const mediaWrapper = document.createElement('div');
       mediaWrapper.className = 'fish-media-wrapper';
-      mediaWrapper.style.position = 'relative';
-      mediaWrapper.style.width = '100%';
-      mediaWrapper.style.height = '200px';
-      mediaWrapper.style.overflow = 'hidden';
-      mediaWrapper.style.marginBottom = '0.5em';
 
       const baseName = fish.toLowerCase().replace(/\s+/g, '-');
 
@@ -106,8 +101,15 @@ function renderFishGrid(filter = '') {
         el.style.left = '0';
         el.style.width = '100%';
         el.style.height = '100%';
-        el.style.objectFit = 'cover';
+        el.style.objectFit = 'contain';
+        el.style.backgroundColor = '#000';
       });
+
+      mediaWrapper.style.position = 'relative';
+      mediaWrapper.style.width = '100%';
+      mediaWrapper.style.height = '200px';
+      mediaWrapper.style.overflow = 'hidden';
+      mediaWrapper.style.marginBottom = '0.5em';
 
       mediaWrapper.appendChild(img);
       mediaWrapper.appendChild(video);
