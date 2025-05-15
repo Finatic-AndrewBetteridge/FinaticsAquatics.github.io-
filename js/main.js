@@ -101,7 +101,7 @@ function renderFishGrid(filter = '') {
         el.style.left = '0';
         el.style.width = '100%';
         el.style.height = '100%';
-        el.style.objectFit = 'contain';
+        el.style.objectFit = 'cover'; // switched from 'contain' to 'cover'
         el.style.backgroundColor = '#000';
       });
 
