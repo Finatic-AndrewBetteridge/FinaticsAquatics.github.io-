@@ -20,8 +20,11 @@
   transform: translate(-50%, -50%);
   color: white;
   text-align: center;
-  text-shadow: 0 2px 4px rgba(0,0,0,0.6);
+  padding: 1rem 2rem;
+  background: rgba(0, 0, 0, 0.4); /* transparent dark background */
+  border-radius: 8px;
   z-index: 2;
+  text-shadow: 0 2px 4px rgba(0,0,0,0.6);
 }
 
 .hero-overlay-text h1 {
