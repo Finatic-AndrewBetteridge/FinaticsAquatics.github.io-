@@ -20,12 +20,12 @@
   transform: translate(-50%, -50%);
   color: white;
   text-align: center;
-  padding: 1rem 2rem;
-  background: rgba(0, 0, 0, 0.4); /* transparent dark background */
-  border-radius: 8px;
   z-index: 2;
   text-shadow: 0 2px 4px rgba(0,0,0,0.6);
+  background: none; /* ✅ Make sure there's NO background */
+  pointer-events: none; /* ✅ Let buttons behind it remain clickable */
 }
+
 
 .hero-overlay-text h1 {
   font-size: 2.5rem;
