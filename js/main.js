@@ -101,7 +101,7 @@ function renderFishGrid(filter = '') {
         el.style.left = '0';
         el.style.width = '100%';
         el.style.height = '100%';
-        el.style.objectFit = 'cover'; // switched from 'contain' to 'cover'
+        el.style.objectFit = 'cover';
         el.style.backgroundColor = '#000';
       });
 
@@ -146,6 +146,17 @@ function renderFishGrid(filter = '') {
       const title = document.createElement('h3');
       title.textContent = fish;
 
+      // Min and Max Price Display
+      const prices = items.map(i => i.price);
+      const min = Math.min(...prices);
+      const max = Math.max(...prices);
+      const priceRange = document.createElement('p');
+      priceRange.textContent = min === max ? `Price: £${min}` : `Price Range: £${min} - £${max}`;
+      priceRange.style.fontWeight = 'bold';
+      priceRange.style.margin = '0.5em 0';
+      card.appendChild(title);
+      card.appendChild(priceRange);
+
       const selector = document.createElement('div');
       selector.className = 'selector';
 
@@ -177,7 +188,7 @@ function renderFishGrid(filter = '') {
       });
 
       selector.append(sizeSelect, qtyInput, addBtn);
-      card.append(title, selector);
+      card.append(selector);
       sectionMap[sectionId].appendChild(card);
     });
   });
