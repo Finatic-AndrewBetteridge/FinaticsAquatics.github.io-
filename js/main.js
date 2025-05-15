@@ -1,4 +1,4 @@
-// main.js - Finatics Aquatics with PayPal Integration
+// main.js - Finatics Aquatics with PayPal Integration + Floating Cart Icon + Animations + Price Range
 
 const sheetUrl = 'https://script.google.com/macros/s/AKfycby7R9zrOBS-pg0AwxU_yRaKLo6VUWM8oPjLFkZhiJyl2SkTVw98ENSsO3iC3ISHYqSd/exec';
 const pushoverToken = 'aw5814unpeck3oz59f4q9ucs8y3as';
@@ -44,6 +44,40 @@ function fetchStock() {
       renderFishGrid();
     })
     .catch(err => console.error('Failed to fetch stock:', err));
+}
+
+// --- Floating Cart Icon ---
+function updateCartIcon() {
+  let cartIcon = document.getElementById('floating-cart');
+  if (!cartIcon) {
+    cartIcon = document.createElement('div');
+    cartIcon.id = 'floating-cart';
+    cartIcon.innerHTML = `<span id="cart-count" style="background:red;color:white;padding:2px 6px;border-radius:10px;margin-right:6px;font-size:0.9em;">0</span>🛒 Cart: £0.00`;
+    Object.assign(cartIcon.style, {
+      position: 'fixed',
+      top: '1em',
+      right: '1em',
+      background: '#0077cc',
+      color: 'white',
+      padding: '0.5em 1em',
+      borderRadius: '25px',
+      boxShadow: '0 2px 6px rgba(0,0,0,0.2)',
+      cursor: 'pointer',
+      zIndex: 1000,
+      fontWeight: 'bold',
+      display: 'flex',
+      alignItems: 'center'
+    });
+    cartIcon.onclick = () => {
+      const cartSection = document.getElementById('cart-section');
+      if (cartSection) cartSection.scrollIntoView({ behavior: 'smooth' });
+    };
+    document.body.appendChild(cartIcon);
+  }
+  const total = cart.reduce((sum, item) => sum + item.quantity * item.price, 0);
+  const count = cart.reduce((sum, item) => sum + item.quantity, 0);
+  document.getElementById('cart-count').textContent = count;
+  cartIcon.innerHTML = `<span id="cart-count" style="background:red;color:white;padding:2px 6px;border-radius:10px;margin-right:6px;font-size:0.9em;">${count}</span>🛒 Cart: £${total.toFixed(2)}`;
 }
 
 // --- Fish Display ---
@@ -146,7 +180,6 @@ function renderFishGrid(filter = '') {
       const title = document.createElement('h3');
       title.textContent = fish;
 
-      // Min and Max Price Display
       const prices = items.map(i => i.price);
       const min = Math.min(...prices);
       const max = Math.max(...prices);
@@ -214,8 +247,7 @@ function renderCart() {
   cart.forEach((item, i) => {
     const subtotal = item.quantity * item.price;
     const li = document.createElement('li');
-    li.innerHTML = `${item.quantity} x ${item.fish} (${item.size}) — £${subtotal}
-      <button data-index="${i}" class="remove-btn">Remove</button>`;
+    li.innerHTML = `${item.quantity} x ${item.fish} (${item.size}) — £${subtotal} <button data-index="${i}" class="remove-btn">Remove</button>`;
     cartItems.appendChild(li);
     total += subtotal;
   });
@@ -230,6 +262,7 @@ function renderCart() {
     };
   });
 
+  updateCartIcon();
   renderPayPalButton(total);
 }
 
@@ -242,9 +275,7 @@ function renderPayPalButton(totalAmount) {
   const email = document.getElementById('customer-email').value || 'unknown@example.com';
   const name = document.getElementById('customer-name').value || 'Customer';
 
-  const orderSummary = cart.map(item =>
-    `${item.quantity} x ${item.fish} (${item.size}) = £${item.quantity * item.price}`
-  ).join('\n') + `\nTotal: £${totalAmount}`;
+  const orderSummary = cart.map(item => `${item.quantity} x ${item.fish} (${item.size}) = £${item.quantity * item.price}`).join('\n') + `\nTotal: £${totalAmount}`;
 
   const paypalDiv = document.createElement('div');
   paypalDiv.id = 'paypal-button-container';
@@ -282,4 +313,6 @@ document.addEventListener('DOMContentLoaded', () => {
   search.addEventListener('input', e => renderFishGrid(e.target.value));
   const grid = document.getElementById('fish-grid');
   if (grid) grid.before(search);
+
+  updateCartIcon();
 });
