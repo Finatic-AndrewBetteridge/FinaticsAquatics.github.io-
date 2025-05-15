@@ -1,0 +1,44 @@
+/* Hero Header */
+.hero-image {
+  width: 100%;
+  height: auto;
+  max-height: 320px;
+  object-fit: contain;
+  display: block;
+  background-color: #f0f0f0;
+  border-bottom: 2px solid #ccc;
+}
+
+/* Navigation */
+nav ul {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: 1.5rem;
+  padding: 1rem 0;
+  list-style: none;
+  margin: 0;
+}
+
+nav ul li a {
+  color: white;
+  text-decoration: none;
+  padding: 0.5em 1em;
+  background: #0077cc;
+  border-radius: 6px;
+}
+
+/* Footer */
+footer {
+  text-align: center;
+  padding: 1.5em;
+  background: #222;
+  color: #fff;
+  margin-top: 2em;
+}
+
+footer a {
+  color: #61dafb;
+  text-decoration: none;
+  font-weight: bold;
+}

@@ -20,8 +20,27 @@
 
   <!-- PayPal SDK -->
   <script src="https://www.paypal.com/sdk/js?client-id=sb&currency=GBP"></script>
-  <script defer src="js/main.js"></script>
-  
+
+  <!-- Constants must come first -->
+  <script defer src="js/constants.js"></script>
+
+  <!-- Modular Scripts -->
+  <script defer src="js/stock.js"></script>
+
+  <script defer src="js/cart/state.js"></script>
+  <script defer src="js/cart/ui.js"></script>
+  <script defer src="js/cart/controls.js"></script>
+
+  <script defer src="js/notifications/pushover.js"></script>
+  <script defer src="js/notifications/email.js"></script>
+
+  <script defer src="js/fish/renderCard.js"></script>
+  <script defer src="js/fish/renderGrid.js"></script>
+
+  <script defer src="js/paypal/init.js"></script>
+  <script defer src="js/init.js"></script>
+
+  <!-- Dark Mode Toggle Script -->
   <script>
     function toggleDarkMode() {
       document.body.classList.toggle('dark-mode');

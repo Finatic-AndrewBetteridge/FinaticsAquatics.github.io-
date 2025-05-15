@@ -1,0 +1,16 @@
+/* Responsive Enhancements */
+@media (max-width: 600px) {
+  nav ul {
+    flex-direction: column;
+    align-items: center;
+  }
+
+  .fish-grid {
+    grid-template-columns: 1fr;
+  }
+
+  #cart-section {
+    padding: 1em;
+    margin: 1em;
+  }
+}
