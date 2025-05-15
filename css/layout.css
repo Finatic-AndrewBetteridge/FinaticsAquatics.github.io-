@@ -1,7 +1,6 @@
 /* Hero Header */
 .hero {
   position: relative;
-  width: 100%;
   height: 320px;
   overflow: hidden;
 }
@@ -18,14 +17,13 @@
   top: 50%;
   left: 50%;
   transform: translate(-50%, -50%);
-  color: white;
+  background: none;
   text-align: center;
+  background: none;
+  pointer-events: none;
   z-index: 2;
-  text-shadow: 0 2px 4px rgba(0,0,0,0.6);
-  background: none; /* ✅ Make sure there's NO background */
-  pointer-events: none; /* ✅ Let buttons behind it remain clickable */
+  text-shadow: 0 2px 4px rgba(0, 0, 0, 0.6);
 }
-
 
 .hero-overlay-text h1 {
   font-size: 2.5rem;
