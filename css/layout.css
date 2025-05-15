@@ -84,7 +84,7 @@ nav ul li a {
 body {
   margin: 0;
   font-family: 'Segoe UI', sans-serif;
-  background-color: #1E3F66; /* River blue */
+  background-color: #33f6ff; /* River blue */
   color: #f0f0f0;
   transition: background-color 0.3s ease, color 0.3s ease;
   scroll-behavior: smooth;
