@@ -97,9 +97,10 @@ function renderFishGrid(filter = '') {
       video.loop = true;
       video.playsInline = true;
       video.style.display = 'none';
-      video.style.objectFit = 'contain';
+      video.style.objectFit = 'cover';
       video.style.width = '100%';
       video.style.height = '200px';
+
 
       mediaWrapper.appendChild(img);
       mediaWrapper.appendChild(video);
