@@ -1,113 +1,87 @@
 <!DOCTYPE html>
+
 <html lang="en">
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <meta name="description" content="Finatics Aquatics - African Cichlid Breeders" />
-  <meta name="theme-color" content="#0077cc" />
-  <meta name="apple-mobile-web-app-capable" content="yes">
-  <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
-  <meta name="mobile-web-app-capable" content="yes">
-  <meta name="apple-mobile-web-app-title" content="Finatics Aquatics">
-  <meta name="application-name" content="Finatics Aquatics">
-
-  <title>Finatics Aquatics</title>
-
-  <link rel="stylesheet" href="css/style.css" />
-  <link rel="manifest" href="manifest.json">
-  <link rel="icon" href="images/favicon.ico" type="image/x-icon">
-  <link rel="apple-touch-icon" sizes="180x180" href="images/favicon.ico">
-
-  <!-- PayPal SDK -->
-  <script src="https://www.paypal.com/sdk/js?client-id=sb&currency=GBP"></script>
-
-  <!-- Constants must come first -->
-  <script defer src="js/constants.js"></script>
-
-  <!-- Modular Scripts -->
-  <script defer src="js/stock.js"></script>
-  <script defer src="js/cart/state.js"></script>
-  <script defer src="js/cart/ui.js"></script>
-  <script defer src="js/cart/controls.js"></script>
-  <script defer src="js/notifications/pushover.js"></script>
-  <script defer src="js/notifications/email.js"></script>
-  <script defer src="js/fish/renderCard.js"></script>
-  <script defer src="js/fish/renderGrid.js"></script>
-  <script defer src="js/paypal/init.js"></script>
-  <script defer src="js/init.js"></script>
-
-  <!-- Dark Mode Toggle Script -->
-  <script>
-    function toggleDarkMode() {
-      document.body.classList.toggle('dark-mode');
-      localStorage.setItem('darkMode', document.body.classList.contains('dark-mode'));
-    }
-    document.addEventListener('DOMContentLoaded', () => {
-      if (localStorage.getItem('darkMode') === 'true') {
-        document.body.classList.add('dark-mode');
-      }
-    });
-  </script>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<meta content="Finatics Aquatics - African Cichlid Breeders" name="description"/>
+<meta content="#0077cc" name="theme-color"/>
+<meta content="yes" name="apple-mobile-web-app-capable"/>
+<meta content="black-translucent" name="apple-mobile-web-app-status-bar-style"/>
+<meta content="yes" name="mobile-web-app-capable"/>
+<meta content="Finatics Aquatics" name="apple-mobile-web-app-title"/>
+<meta content="Finatics Aquatics" name="application-name"/>
+<title>Finatics Aquatics</title>
+<link href="css/style.css" rel="stylesheet"/>
+<link href="manifest.json" rel="manifest"/>
+<link href="images/favicon.ico" rel="icon" type="image/x-icon"/>
+<link href="images/favicon.ico" rel="apple-touch-icon" sizes="180x180"/>
+<!-- PayPal SDK -->
+<script src="https://www.paypal.com/sdk/js?client-id=sb¤cy=GBP"></script>
+<!-- Constants must come first -->
+<script defer="" src="js/constants.js"></script>
+<!-- Modular Scripts -->
+<script defer="" src="js/stock.js"></script>
+<script defer="" src="js/cart/state.js"></script>
+<script defer="" src="js/cart/ui.js"></script>
+<script defer="" src="js/cart/controls.js"></script>
+<script defer="" src="js/notifications/pushover.js"></script>
+<script defer="" src="js/notifications/email.js"></script>
+<script defer="" src="js/fish/renderCard.js"></script>
+<script defer="" src="js/fish/renderGrid.js"></script>
+<script defer="" src="js/paypal/init.js"></script>
+<script defer="" src="js/init.js"></script>
 </head>
 <body>
-  <header class="hero">
-    <img src="images/FinaticsCoveringPhoto.png" alt="Finatics Aquatics Banner" class="hero-image" />
+<header class="hero"><nav class="hero-nav">
+<ul>
+<li><a href="#available">All Fish</a></li>
+<li><a href="#setup">Our Setup</a></li>
+<li><a href="#about">About Us</a></li>
+<li><a href="#contact">Contact</a></li>
+</ul>
+</nav>
+<div class="hero-search" style="position: absolute; top: 50%; left: 50%; transform: translate(-50%, -50%); z-index: 3;"><input id="search-fish" oninput="renderFishGrid(this.value)" placeholder="Search fish..." style="padding: 0.6em 1em; font-size: 1rem; border-radius: 6px; border: 1px solid #ccc; width: 80%; max-width: 400px;" type="text"/></div><img alt="Finatics Aquatics Banner" class="hero-image" src="images/FinaticsCoveringPhoto.png"/>
 
-    <nav class="hero-nav">
-      <ul>
-        <li><a href="#available">All Fish</a></li>
-        <li><a href="#setup">Our Setup</a></li>
-        <li><a href="#about">About Us</a></li>
-        <li><a href="#contact">Contact</a></li>
-      </ul>
-    </nav>
-  </header>
-
-  <main>
-    <section id="available">
-      <h2>All Fish</h2>
-      <div id="loading">Loading available fish...</div>
-      <div class="fish-grid" id="fish-grid"></div>
-    </section>
-
-    <section id="cart-section">
-      <h3>Cart</h3>
-      <label for="customer-name">Name</label>
-      <input type="text" id="customer-name" name="name" placeholder="Your name" required>
-      <label for="customer-email">Email</label>
-      <input type="email" id="customer-email" name="email" placeholder="Your email" required>
-      <ul id="cart-items"></ul>
-      <p id="cart-total"></p>
-      <button id="clear-cart">Clear Cart</button>
-
-      <div id="payment-options"></div>
-
-      <p style="background-color: #d4edda; color: #155724; padding: 1rem; border: 1px solid #c3e6cb; border-radius: 6px; font-weight: bold; margin-top: 1rem;">
+</header>
+<main>
+<section id="available">
+<h2>All Fish</h2>
+<div id="loading">Loading available fish...</div>
+<div class="fish-grid" id="fish-grid"></div>
+</section>
+<section id="cart-section">
+<h3>Cart</h3>
+<label for="customer-name">Name</label>
+<input id="customer-name" name="name" placeholder="Your name" required="" type="text"/>
+<label for="customer-email">Email</label>
+<input id="customer-email" name="email" placeholder="Your email" required="" type="email"/>
+<ul id="cart-items"></ul>
+<p id="cart-total"></p>
+<button id="clear-cart">Clear Cart</button>
+<div id="payment-options"></div>
+<p style="background-color: #d4edda; color: #155724; padding: 1rem; border: 1px solid #c3e6cb; border-radius: 6px; font-weight: bold; margin-top: 1rem;">
         ✅ Please complete payment through PayPal. We will contact you to confirm your order.
       </p>
-    </section>
-
-    <section id="setup">
-      <h2>Our Breeding Setup</h2>
-      <p>We use a modular tank system with clean water cycling and natural filtration through aquaponics. Each breeding pair is given a dedicated tank to ensure quality offspring and optimal health.</p>
-    </section>
-
-    <section id="about">
-      <h2>About Us</h2>
-      <p>We are a family-run breeder in the UK, passionate about African cichlids. Our goal is to produce vibrant, healthy fish raised in a loving environment. From tank care to feeding routines, we involve our children in every part of the process.</p>
-    </section>
-
-    <section id="contact">
-      <h2>Contact Us</h2>
-      <p>Email: <a href="mailto:info@finaticsaquatics.com">info@finaticsaquatics.com</a></p>
-      <p>WhatsApp: 07XXX XXXXXX</p>
-      <p>Follow us on Facebook and Instagram</p>
-    </section>
-  </main>
-
-  <footer>
-    <p>&copy; 2025 Finatics Aquatics. All rights reserved.</p>
-    <p><a href="https://finatic-andrewbetteridge.github.io/FinaticsAquatics.github.io-/">Visit our live site</a></p>
-  </footer>
+</section>
+<section id="setup">
+<h2>Our Breeding Setup</h2>
+<p>We use a modular tank system with clean water cycling and natural filtration through aquaponics. Each breeding pair is given a dedicated tank to ensure quality offspring and optimal health.</p>
+</section>
+<section id="about">
+<h2>About Us</h2>
+<p>We are a family-run breeder in the UK, passionate about African cichlids. Our goal is to produce vibrant, healthy fish raised in a loving environment. From tank care to feeding routines, we involve our children in every part of the process.</p>
+</section>
+<section id="contact">
+<h2>Contact Us</h2>
+<p>Email: <a href="mailto:info@finaticsaquatics.com">info@finaticsaquatics.com</a></p>
+<p>WhatsApp: 07XXX XXXXXX</p>
+<p>Follow us on Facebook and Instagram</p>
+</section>
+</main>
+<footer>
+<p>© 2025 Finatics Aquatics. All rights reserved.</p>
+<p><a href="https://finatic-andrewbetteridge.github.io/FinaticsAquatics.github.io-/">Visit our live site</a></p>
+</footer>
 </body>
 </html>
