@@ -115,7 +115,36 @@ function createFishCard(fish, items, sectionPath, sectionElement) {
     if (!selected || isNaN(qty) || qty < 1) return alert('Choose size & quantity');
     const { size, price } = JSON.parse(selected);
     cart.push({ fish, size, quantity: qty, price });
-    renderCart();
+
+    // Update cart UI with delivery charge
+    const cartItems = document.getElementById('cart-items');
+    const cartTotal = document.getElementById('cart-total');
+    cartItems.innerHTML = '';
+    let total = 0;
+
+    cart.forEach((item, i) => {
+      const subtotal = item.quantity * item.price;
+      const li = document.createElement('li');
+      li.innerHTML = `${item.quantity} x ${item.fish} (${item.size}) — £${subtotal} <button data-index="${i}" class="remove-btn">Remove</button>`;
+      cartItems.appendChild(li);
+      total += subtotal;
+    });
+
+    const delivery = 14.99;
+    total += delivery;
+    cartTotal.textContent = `Items Total: £${(total - delivery).toFixed(2)}\nDelivery: £${delivery.toFixed(2)}\nTotal: £${total.toFixed(2)}`;
+
+    localStorage.setItem('cart', JSON.stringify(cart));
+
+    document.querySelectorAll('.remove-btn').forEach(btn => {
+      btn.onclick = () => {
+        cart.splice(btn.dataset.index, 1);
+        renderCart(); // assuming renderCart re-applies the delivery fee too
+      };
+    });
+
+    updateCartIcon();
+    renderPayPalButton(total);
   });
 
   selector.append(sizeSelect, qtyInput, addBtn);
