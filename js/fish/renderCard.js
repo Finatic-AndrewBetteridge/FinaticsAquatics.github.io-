@@ -139,7 +139,7 @@ function createFishCard(fish, items, sectionPath, sectionElement) {
     document.querySelectorAll('.remove-btn').forEach(btn => {
       btn.onclick = () => {
         cart.splice(btn.dataset.index, 1);
-        renderCart(); // assuming renderCart re-applies the delivery fee too
+        renderCart(); // assumes renderCart applies delivery fee again
       };
     });
 
