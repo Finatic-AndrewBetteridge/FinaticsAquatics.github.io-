@@ -18,7 +18,7 @@ function groupFishStock(data) {
 }
 
 function fetchStock() {
-  fetch(stockUrl)  // ✅ Use the shared constant from constants.js
+  return fetch(stockUrl)  // must return the fetch promise!
     .then(res => {
       if (!res.ok) throw new Error(`Fetch error: ${res.status}`);
       return res.json();
@@ -26,6 +26,6 @@ function fetchStock() {
     .then(data => {
       stockData = groupFishStock(data);
       renderFishGrid();
-    })
-    .catch(err => console.error('❌ Failed to fetch stock:', err));
+    });
 }
+
