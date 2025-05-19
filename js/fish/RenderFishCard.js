@@ -173,6 +173,9 @@ function createFishCard(fish, items, sectionPath, sectionElement) {
   });
 
   selector.append(sizeSelect, qtyInput, addBtn);
-  card.append(title, priceRange, selector);
+const contentWrapper = document.createElement('div');
+contentWrapper.className = 'fish-card-content';
+contentWrapper.append(title, priceRange, selector);
+card.appendChild(contentWrapper);
   sectionElement.appendChild(card);
 }
