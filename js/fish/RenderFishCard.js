@@ -1,3 +1,35 @@
+// fish/RenderFishCard.js - Loops through stockData and renders fish sections
+
+function renderFishGrid(filter = '') {
+  const grid = document.getElementById('fish-grid');
+  grid.innerHTML = '';
+  const sectionMap = {};
+
+  Object.keys(stockData).sort().forEach(path => {
+    const sectionId = path.toLowerCase().replace(/[^a-z0-9]+/g, '-');
+    if (!sectionMap[sectionId]) {
+      const section = document.createElement('section');
+      section.id = sectionId;
+      const heading = document.createElement('h2');
+      heading.textContent = path;
+      const fishList = document.createElement('div');
+      fishList.className = 'fish-grid';
+      section.appendChild(heading);
+      section.appendChild(fishList);
+      grid.appendChild(section);
+      sectionMap[sectionId] = fishList;
+    }
+
+    Object.entries(stockData[path]).forEach(([fish, items]) => {
+      if (filter && !fish.toLowerCase().includes(filter.toLowerCase())) return;
+      createFishCard(fish, items, path, sectionMap[sectionId]);
+    });
+  });
+
+  renderCart();
+}
+
+
 // fish/renderCard.js - Builds and returns a DOM element for a fish card
 
 function createFishCard(fish, items, sectionPath, sectionElement) {
@@ -8,13 +40,6 @@ function createFishCard(fish, items, sectionPath, sectionElement) {
 
   const mediaWrapper = document.createElement('div');
   mediaWrapper.className = 'fish-media-wrapper';
-  Object.assign(mediaWrapper.style, {
-    position: 'relative',
-    width: '100%',
-    height: '200px',
-    overflow: 'hidden',
-    marginBottom: '0.5em'
-  });
 
   const img = document.createElement('img');
   img.src = `images/${baseName}.jpg`;
@@ -139,7 +164,7 @@ function createFishCard(fish, items, sectionPath, sectionElement) {
     document.querySelectorAll('.remove-btn').forEach(btn => {
       btn.onclick = () => {
         cart.splice(btn.dataset.index, 1);
-        renderCart(); // assumes renderCart applies delivery fee again
+        renderCart();
       };
     });
 
