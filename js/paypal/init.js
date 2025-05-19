@@ -59,6 +59,9 @@ Total: £${total.toFixed(2)}
         localStorage.removeItem('cart');
         renderCart();
       }),
-    onError: err => alert('Payment failed. Please try again.')
+    onError: err => {
+      console.error('❌ PayPal error:', err);
+      alert('Payment failed. Please try again.');
+    }
   }).render('#paypal-button-container');
 }
