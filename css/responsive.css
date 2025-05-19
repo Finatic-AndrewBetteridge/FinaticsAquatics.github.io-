@@ -7,6 +7,13 @@
 
   .fish-grid {
     grid-template-columns: 1fr;
+    gap: 1rem;
+    padding: 1rem;
+  }
+
+  .fish-card {
+    width: 100%;
+    box-sizing: border-box;
   }
 
   #cart-section {
