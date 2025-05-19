@@ -18,12 +18,7 @@
   padding: 1em;
   min-width: 250px;
   height: 100%;
-}
-.fish-card {
-  outline: 2px dashed red;
-}
-.fish-card-content {
-  outline: 2px dashed green;
+  max-height: 500px;
 }
 
 .fish-media-wrapper {
