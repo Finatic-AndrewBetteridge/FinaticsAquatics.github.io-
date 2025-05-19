@@ -38,8 +38,8 @@ Total: £${total.toFixed(2)}
         sendPushoverNotification(`${name} (${email}, ${mobile}) paid £${total}\n\n${orderSummary}`);
         sendEmailConfirmation(email, orderSummary);
 
-        // Send to Google Sheets
-        fetch('https://script.google.com/macros/s/AKfycby7R9zrOBS-pg0AwxU_yRaKLo6VUWM8oPjLFkZhiJyl2SkTVw98ENSsO3iC3ISHYqSd/exec', {
+        // Send to Google Sheets (new Orders script URL)
+        fetch('https://script.google.com/macros/s/AKfycbxIkp1RTypVkWIz3BP8lRudfGaK66LmW6nLi_HgEMr8z0FguNvFJu8Yqz33dv86Yx9NQg/exec', {
           method: 'POST',
           headers: { 'Content-Type': 'application/json' },
           body: JSON.stringify({
