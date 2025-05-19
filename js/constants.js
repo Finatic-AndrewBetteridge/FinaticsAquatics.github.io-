@@ -1,11 +1,12 @@
 // constants.js - Shared configuration for the app
 
 // Google Sheet endpoint for stock
-const sheetUrl = 'https://script.google.com/macros/s/AKfycby7R9zrOBS-pg0AwxU_yRaKLo6VUWM8oPjLFkZhiJyl2SkTVw98ENSsO3iC3ISHYqSd/exec';
+const stockUrl = 'https://script.google.com/macros/s/AKfycbxZCGKHXmkewH4p5dbcpdKHMsUZb42CFqpclYuvL0dwOCbfqw2fFPC66L1LxqMNTH3Z/exec';
+const ordersUrl = 'https://script.google.com/macros/s/AKfycbxIkp1RTypVkWIz3BP8lRudfGaK66LmW6nLi_HgEMr8z0FguNvFJu8Yqz33dv86Yx9NQg/exec';
 
 // Pushover credentials
 const pushoverToken = 'aw5814unpeck3oz59f4q9ucs8y3as';
 const pushoverUser = 'u919vjqcq2q4n8g9jto2pns6ctjiew';
 
-// Formspree endpoint for confirmation emails
+// ✅ Updated Formspree endpoint
 const formspreeEndpoint = 'https://formspree.io/f/mwpobwwy';

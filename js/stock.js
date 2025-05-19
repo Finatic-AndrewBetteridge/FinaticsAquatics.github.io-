@@ -18,9 +18,7 @@ function groupFishStock(data) {
 }
 
 function fetchStock() {
-  const sheetUrl = 'https://script.google.com/macros/s/AKfycbxZCGKHXmkewH4p5dbcpdKHMsUZb42CFqpclYuvL0dwOCbfqw2fFPC66L1LxqMNTH3Z/exec';
-
-  fetch(sheetUrl)
+  fetch(stockUrl)  // ✅ Use the shared constant from constants.js
     .then(res => {
       if (!res.ok) throw new Error(`Fetch error: ${res.status}`);
       return res.json();
