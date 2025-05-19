@@ -3,8 +3,7 @@
 .hero {
   position: relative;
   width: 100%;
-  height: auto;           /* allow it to grow */
-  aspect-ratio: 16 / 9;   /* OR use auto height to fit image */
+  aspect-ratio: 16 / 9;   /* Responsive height */
   overflow: hidden;
   z-index: 1;
 }
