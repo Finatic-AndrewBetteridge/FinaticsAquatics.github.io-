@@ -18,7 +18,7 @@ function groupFishStock(data) {
 }
 
 function fetchStock() {
-  const sheetUrl = 'https://script.google.com/macros/s/AKfycbwleCf6gEcbwTn7mDmE5K0BbGubaYEZBUFqeQ7ecYqCzaMAooRxf8KYJJnpo17zD-c/exec';
+  const sheetUrl = 'https://script.google.com/macros/s/AKfycbxZCGKHXmkewH4p5dbcpdKHMsUZb42CFqpclYuvL0dwOCbfqw2fFPC66L1LxqMNTH3Z/exec';
 
   fetch(sheetUrl)
     .then(res => {
