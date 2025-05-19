@@ -4,10 +4,15 @@ document.addEventListener('DOMContentLoaded', () => {
   const loading = document.getElementById('loading');
   if (loading) loading.style.display = 'block';
 
-  // Fetch fish stock and hide spinner
-  fetchStock().finally(() => {
-    if (loading) loading.style.display = 'none';
-  });
+  // Fetch fish stock and hide spinner once loaded
+  fetchStock()
+    .then(() => {
+      if (loading) loading.style.display = 'none';
+    })
+    .catch(err => {
+      console.error('❌ Error during stock fetch:', err);
+      if (loading) loading.textContent = 'Failed to load fish stock.';
+    });
 
   // Setup "Clear Cart" button
   const clearBtn = document.getElementById('clear-cart');
