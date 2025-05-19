@@ -55,11 +55,12 @@
 
 /* Fish Card Inner Content */
 .fish-card-content {
-  flex-grow: 1;
+  flex: 1;
   display: flex;
   flex-direction: column;
   justify-content: space-between;
   height: 100%;
+  box-sizing: border-box;
 }
 
 /* Selector Section */
@@ -68,15 +69,10 @@
   display: flex;
   flex-direction: column;
   gap: 0.5rem;
+  flex-shrink: 0;
 }
 
 /* Force equal heights visually */
-.fish-card {
-  display: flex;
-  flex-direction: column;
-  height: 100%;
-}
-
 .fish-grid > * {
   height: 100%;
   display: flex;
@@ -90,5 +86,8 @@
 }
 .fish-card-content {
   outline: 2px dashed green;
+}
+.selector {
+  outline: 2px dashed orange;
 }
 */
