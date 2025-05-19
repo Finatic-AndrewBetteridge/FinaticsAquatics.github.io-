@@ -1,7 +1,7 @@
 // constants.js - Shared configuration for the app
 
 // Google Sheet endpoint for stock
-const stockUrl = 'https://script.google.com/macros/s/AKfycbxZCGKHXmkewH4p5dbcpdKHMsUZb42CFqpclYuvL0dwOCbfqw2fFPC66L1LxqMNTH3Z/exec';
+const stockUrl = 'https://script.google.com/macros/s/AKfycbyIADfqiDetQkUpG--fyChQ1G4EOnZ6yklH_Xno155PJEMVAHXp1BUoreiKLjZpiUpD8Q/exec';
 const ordersUrl = 'https://script.google.com/macros/s/AKfycbxIkp1RTypVkWIz3BP8lRudfGaK66LmW6nLi_HgEMr8z0FguNvFJu8Yqz33dv86Yx9NQg/exec';
 
 // Pushover credentials
