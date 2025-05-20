@@ -70,8 +70,7 @@ document.addEventListener('DOMContentLoaded', () => {
       alignItems: 'center'
     });
     cartIcon.onclick = () => {
-      const cartSection = document.getElementById('cart-section');
-      if (cartSection) cartSection.scrollIntoView({ behavior: 'smooth' });
+      window.location.href = 'cart.html';
     };
     document.body.appendChild(cartIcon);
   }
