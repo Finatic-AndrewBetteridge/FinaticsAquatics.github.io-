@@ -15,22 +15,30 @@
   <script defer src="js/paypal/init.js"></script>
 </head>
 <body>
-  <header>
-    <h1 style="text-align:center;">Your Cart</h1>
+  <header style="text-align:center; padding: 1rem 0;">
+    <h1>Your Cart</h1>
   </header>
   <main>
     <section id="cart-section" style="max-width:600px; margin:0 auto; padding:1rem;">
-      <label for="customer-name">Name</label>
-      <input type="text" id="customer-name" placeholder="Your name" required>
-      <label for="customer-email">Email</label>
-      <input type="email" id="customer-email" placeholder="Your email" required>
-      <label for="customer-mobile">Mobile</label>
-      <input type="tel" id="customer-mobile" placeholder="Mobile number" required>
+      <form id="checkout-form">
+        <label for="customer-name">Name</label>
+        <input type="text" id="customer-name" placeholder="Your name" required>
+
+        <label for="customer-email">Email</label>
+        <input type="email" id="customer-email" placeholder="Your email" required>
+
+        <label for="customer-mobile">Mobile</label>
+        <input type="tel" id="customer-mobile" placeholder="Mobile number" required>
+      </form>
+
       <ul id="cart-items"></ul>
       <p id="cart-total"></p>
+
       <button id="clear-cart">Clear Cart</button>
+
       <div id="payment-options" style="margin-top:1rem;"></div>
-      <p style="background-color:#d4edda;color:#155724;padding:1rem;border:1px solid #c3e6cb;border-radius:6px;margin-top:1rem;">
+
+      <p style="background-color: #d4edda; color: #155724; padding: 1rem; border: 1px solid #c3e6cb; border-radius: 6px; font-weight: bold; margin-top: 1rem;">
         ✅ Please complete payment through PayPal. We will contact you to confirm your order.
       </p>
     </section>
