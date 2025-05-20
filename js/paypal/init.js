@@ -8,7 +8,7 @@ function renderPayPalButton(itemTotal) {
   const email = document.getElementById('customer-email')?.value || 'unknown@example.com';
   const name = document.getElementById('customer-name')?.value || 'Customer';
   const mobile = document.getElementById('customer-mobile')?.value || 'N/A';
-  const delivery = DELIVERY_FEE; // ✅ use constant
+  const delivery = DELIVERY_FEE;
   const total = itemTotal + delivery;
 
   const orderSummary = `
@@ -16,9 +16,7 @@ Name: ${name}
 Email: ${email}
 Mobile: ${mobile}
 
-${cart.map(item =>
-    `${item.quantity} x ${item.fish} (${item.size}) = £${(item.quantity * item.price).toFixed(2)}`
-  ).join('\n')}
+${cart.map(item => `${item.quantity} x ${item.fish} (${item.size}) = £${(item.quantity * item.price).toFixed(2)}`).join('\n')}
 
 Delivery: £${delivery.toFixed(2)}
 Total: £${total.toFixed(2)}
@@ -38,7 +36,6 @@ Total: £${total.toFixed(2)}
         sendPushoverNotification(`${name} (${email}, ${mobile}) paid £${total}\n\n${orderSummary}`);
         sendEmailConfirmation(email, orderSummary);
 
-        // Send to Google Sheets using ordersUrl from constants.js
         fetch(ordersUrl, {
           method: 'POST',
           headers: { 'Content-Type': 'application/json' },

@@ -13,8 +13,6 @@ function groupFishStock(data) {
   return grouped;
 }
 
-// ✅ 2. Replace createFishCard function in RenderFishCard.js with this:
-
 function createFishCard(fish, items, sectionPath, sectionElement) {
   const card = document.createElement('div');
   card.className = 'fish-card';
