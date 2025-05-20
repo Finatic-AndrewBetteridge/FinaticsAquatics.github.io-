@@ -1,5 +1,7 @@
 // cart/ui.js - Renders the cart view and triggers PayPal
 
+document.addEventListener('DOMContentLoaded', renderCart);
+
 function renderCart() {
   const cartItems = document.getElementById('cart-items');
   const cartTotal = document.getElementById('cart-total');
