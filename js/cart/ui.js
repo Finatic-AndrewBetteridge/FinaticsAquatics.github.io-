@@ -3,6 +3,9 @@
 function renderCart() {
   const cartItems = document.getElementById('cart-items');
   const cartTotal = document.getElementById('cart-total');
+
+  if (!cartItems || !cartTotal) return;
+
   cartItems.innerHTML = '';
   let total = 0;
 
@@ -15,7 +18,10 @@ function renderCart() {
   });
 
   cartTotal.textContent = total > 0 ? `Total: £${total}` : '';
+
   saveCart();
   updateCartIcon();
-  renderPayPalButton(total);
+
+  const paymentContainer = document.getElementById('payment-options');
+  if (paymentContainer) renderPayPalButton(total);
 }
