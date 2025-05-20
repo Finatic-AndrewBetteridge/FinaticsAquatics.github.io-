@@ -12,12 +12,25 @@ function renderCart() {
   cart.forEach((item, i) => {
     const subtotal = item.quantity * item.price;
     const li = document.createElement('li');
-    li.innerHTML = \`\${item.quantity} x \${item.fish} (\${item.size}) — £\${subtotal} <button data-index="\${i}" class="remove-btn">Remove</button>\`;
+    li.innerHTML = `${item.quantity} x ${item.fish} (${item.size}) — £${subtotal} <button data-index="${i}" class="remove-btn">Remove</button>`;
     cartItems.appendChild(li);
     total += subtotal;
+
+    li.querySelector('.remove-btn').addEventListener('click', () => {
+      cart.splice(i, 1);
+      saveCart();
+      renderCart();
+    });
   });
 
-  cartTotal.textContent = total > 0 ? \`Total: £\${total.toFixed(2)}\` : '';
+  if (cart.length === 0) {
+    const msg = document.createElement('p');
+    msg.textContent = '🛒 Your cart is empty.';
+    msg.style.fontWeight = 'bold';
+    cartItems.appendChild(msg);
+  }
+
+  cartTotal.textContent = total > 0 ? `Total: £${total.toFixed(2)}` : '';
 
   saveCart();
   updateCartIcon();
