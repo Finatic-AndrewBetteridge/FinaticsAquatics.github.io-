@@ -145,7 +145,23 @@ function createFishCard(fish, items, sectionPath, sectionElement) {
     cart.push({ fish, size, quantity: qty, price });
     saveCart();
     updateCartIcon();
-    alert(`${qty} x ${fish} added to cart.`); // ✅ Prevent redirect, show confirmation
+    const notice = document.createElement('div');
+    notice.className = 'cart-toast';
+    notice.textContent = `${qty} x ${fish} added to cart.`;
+    Object.assign(notice.style, {
+      position: 'fixed',
+      bottom: '1rem',
+      right: '1rem',
+      background: '#0077cc',
+      color: 'white',
+      padding: '0.5rem 1rem',
+      borderRadius: '8px',
+      boxShadow: '0 2px 6px rgba(0,0,0,0.2)',
+      zIndex: 1000,
+      fontSize: '0.9rem'
+    });
+    document.body.appendChild(notice);
+    setTimeout(() => notice.remove(), 2000); // ✅ Prevent redirect, show confirmation
   });
 
   selector.append(sizeSelect, qtyInput, addBtn);
