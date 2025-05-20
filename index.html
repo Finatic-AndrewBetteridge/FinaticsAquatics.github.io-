@@ -3,6 +3,7 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Finatics Aquatics | African Cichlid Breeders in the UK</title>
   <meta name="description" content="Finatics Aquatics is a UK-based breeder of healthy, vibrant African cichlids including Mbuna, Peacock, and Hap species. Quality fish, raised with care.">
   <meta name="theme-color" content="#0077cc" />
   <meta name="apple-mobile-web-app-capable" content="yes">
@@ -14,8 +15,6 @@
   <meta name="author" content="Finatics Aquatics - Andrew Betteridge">
   <meta name="robots" content="index, follow">
 
-  <title>Finatics Aquatics | African Cichlid Breeders in the UK</title>
-  
   <link rel="stylesheet" href="css/style.css" />
   <link rel="manifest" href="manifest.json">
   <link rel="icon" href="images/favicon.ico" type="image/x-icon">
@@ -27,11 +26,11 @@
   <!-- Constants must come first -->
   <script defer src="js/constants.js"></script>
 
-  <!-- Fish card renderer (defines renderFishGrid) must load BEFORE stock -->
+  <!-- Fish card renderer must load BEFORE stock -->
   <script defer src="js/fish/RenderFishCard.js"></script>
   <script defer src="js/stock.js"></script>
 
-  <!-- Then other logic files -->
+  <!-- Other modules -->
   <script defer src="js/init.js"></script>
   <script defer src="js/cart/state.js"></script>
   <script defer src="js/cart/ui.js"></script>
@@ -40,7 +39,6 @@
   <script defer src="js/notifications/email.js"></script>
   <script defer src="js/paypal/init.js"></script>
 
-  <!-- Dark Mode Toggle Script -->
   <script>
     function toggleDarkMode() {
       document.body.classList.toggle('dark-mode');
@@ -56,7 +54,6 @@
 <body>
   <header class="hero">
     <img src="images/FinaticsCoveringPhoto.png" alt="Finatics Aquatics Banner" class="hero-image" />
-
     <nav class="hero-nav">
       <ul>
         <li><a href="#available">All Fish</a></li>
@@ -74,23 +71,6 @@
       <div class="fish-grid" id="fish-grid"></div>
     </section>
 
-    <section id="cart-section">
-      <h3>Cart</h3>
-      <label for="customer-name">Name</label>
-      <input type="text" id="customer-name" name="name" placeholder="Your name" required>
-      <label for="customer-email">Email</label>
-      <input type="email" id="customer-email" name="email" placeholder="Your email" required>
-      <ul id="cart-items"></ul>
-      <p id="cart-total"></p>
-      <button id="clear-cart">Clear Cart</button>
-
-      <div id="payment-options"></div>
-
-      <p style="background-color: #d4edda; color: #155724; padding: 1rem; border: 1px solid #c3e6cb; border-radius: 6px; font-weight: bold; margin-top: 1rem;">
-        ✅ Please complete payment through PayPal. We will contact you to confirm your order.
-      </p>
-    </section>
-
     <section id="setup">
       <h2>Our Breeding Setup</h2>
       <p>We use a modular tank system with clean water cycling and natural filtration through aquaponics. Each breeding pair is given a dedicated tank to ensure quality offspring and optimal health.</p>
@@ -98,29 +78,16 @@
 
     <section id="about">
       <h2>About Us</h2>
-      <p>Finatics Aquatics began with a passion for keeping and breeding healthy fish, and has grown into a family-run venture focused on quality, sustainability, and care. While we currently specialize in African cichlids, we plan to expand into other freshwater species and aquatic offerings in the near future.</p>
-      <p>We believe in doing things the right way—offering fish raised in well-maintained systems, educating new hobbyists, and building lasting connections with our customers. Whether you’re just starting out or adding to an established setup, we’re here to help you succeed.</p>
-      <p>Based in the UK, we deliver locally by hand and nationwide through trusted courier services. Our goal is simple: happy fish, happy customers, and a thriving aquatic community.</p>
+      <p>Finatics Aquatics began with a passion for keeping and breeding healthy fish, and has grown into a family-run venture focused on quality, sustainability, and care.</p>
+      <p>We believe in doing things the right way—offering fish raised in well-maintained systems, educating new hobbyists, and building lasting connections with our customers.</p>
+      <p>Based in the UK, we deliver locally by hand and nationwide through trusted courier services.</p>
     </section>
 
     <section id="doa">
       <h2>DOA (Dead on Arrival) Policy</h2>
-      <p>We take the health and wellbeing of our fish seriously and always do our best to make sure they arrive safe, healthy, and happy. All fish are fasted before travel, double-bagged with pure oxygen, and packed securely in insulated boxes with heat or cold packs as needed.</p>
-
-      <h3>Local Deliveries (Within Our Delivery Radius)</h3>
-      <p>If you're local, we’ll personally deliver your fish in a face-to-face handover, carefully coordinated with you to make sure someone is home to receive them. This is the safest option for your fish, and we’re proud to say DOAs are extremely rare with this method.</p>
-      <p>In the unlikely event that something does go wrong, we’ll offer a free replacement or refund—just send us a clear photo of the fish in their bag within 1 hour of receiving them.</p>
-
-      <h3>Courier Deliveries (Outside Our Local Radius)</h3>
-      <p>For those a bit further away, we use reliable overnight couriers who are experienced with live fish transport. We pack each order with the same care and attention, but once it leaves us, the courier journey is out of our hands.</p>
-
-      <ul>
-        <li>Please provide clear, timestamped photos of the fish still sealed in the bag within 1 hour of delivery.</li>
-        <li>We’ll do our best to offer a refund or store credit, minus the delivery cost.</li>
-        <li>Please make sure someone is home to receive the delivery, and double-check that your address details are correct—courier delays or missed deliveries due to address errors can’t be covered.</li>
-      </ul>
-
-      <p>If you’ve got any questions or want to check if you’re within our local delivery area, feel free to <a href="#contact">get in touch</a>. We’re always happy to help!</p>
+      <p>We take the health and wellbeing of our fish seriously and always do our best to make sure they arrive safe, healthy, and happy.</p>
+      <p>All fish are fasted before travel, double-bagged with pure oxygen, and packed securely in insulated boxes.</p>
+      <p>If you’re local, we’ll deliver by hand. For couriers, provide timestamped photos within 1 hour of delivery to request refund or credit.</p>
     </section>
 
     <section id="contact">
