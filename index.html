@@ -15,8 +15,6 @@
   <meta name="robots" content="index, follow">
 
   <title>Finatics Aquatics | African Cichlid Breeders in the UK</title>
-  <!-- Constants must come first -->
-  <script defer src="js/constants.js"></script>
   
   <link rel="stylesheet" href="css/style.css" />
   <link rel="manifest" href="manifest.json">
@@ -26,16 +24,21 @@
   <!-- PayPal SDK -->
   <script src="https://www.paypal.com/sdk/js?client-id=sb&currency=GBP"></script>
 
-  <!-- Modular Scripts -->
+  <!-- Constants must come first -->
+  <script defer src="js/constants.js"></script>
+
+  <!-- Fish card renderer (defines renderFishGrid) must load BEFORE stock -->
+  <script defer src="js/fish/RenderFishCard.js"></script>
+  <script defer src="js/stock.js"></script>
+
+  <!-- Then other logic files -->
+  <script defer src="js/init.js"></script>
   <script defer src="js/cart/state.js"></script>
   <script defer src="js/cart/ui.js"></script>
   <script defer src="js/cart/controls.js"></script>
   <script defer src="js/notifications/pushover.js"></script>
   <script defer src="js/notifications/email.js"></script>
   <script defer src="js/paypal/init.js"></script>
-  <script defer src="js/fish/RenderFishCard.js"></script>
-  <script defer src="js/stock.js"></script>
-  <script defer src="js/init.js"></script>
 
   <!-- Dark Mode Toggle Script -->
   <script>
