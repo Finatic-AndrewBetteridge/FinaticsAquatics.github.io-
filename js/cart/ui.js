@@ -12,16 +12,18 @@ function renderCart() {
   cart.forEach((item, i) => {
     const subtotal = item.quantity * item.price;
     const li = document.createElement('li');
-    li.innerHTML = `${item.quantity} x ${item.fish} (${item.size}) — £${subtotal} <button data-index="${i}" class="remove-btn">Remove</button>`;
+    li.innerHTML = \`\${item.quantity} x \${item.fish} (\${item.size}) — £\${subtotal} <button data-index="\${i}" class="remove-btn">Remove</button>\`;
     cartItems.appendChild(li);
     total += subtotal;
   });
 
-  cartTotal.textContent = total > 0 ? `Total: £${total}` : '';
+  cartTotal.textContent = total > 0 ? \`Total: £\${total.toFixed(2)}\` : '';
 
   saveCart();
   updateCartIcon();
 
   const paymentContainer = document.getElementById('payment-options');
-  if (paymentContainer) renderPayPalButton(total);
+  if (paymentContainer && typeof renderPayPalButton === 'function') {
+    renderPayPalButton(total);
+  }
 }
