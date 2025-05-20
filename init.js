@@ -49,7 +49,7 @@ document.addEventListener('DOMContentLoaded', () => {
     cartIcon.innerHTML = `
       <span id="cart-count" style="background:red;color:white;padding:2px 6px;border-radius:10px;margin-right:6px;font-size:0.9em;">0</span>
       🛒 Cart: £0.00
-    \`;
+    `;
     Object.assign(cartIcon.style, {
       position: 'fixed',
       top: '1em',
