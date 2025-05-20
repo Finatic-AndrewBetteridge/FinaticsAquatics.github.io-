@@ -145,7 +145,7 @@ function createFishCard(fish, items, sectionPath, sectionElement) {
     cart.push({ fish, size, quantity: qty, price });
     saveCart();
     updateCartIcon();
-    window.location.href = 'cart.html';
+    alert(`${qty} x ${fish} added to cart.`); // ✅ Prevent redirect, show confirmation
   });
 
   selector.append(sizeSelect, qtyInput, addBtn);
