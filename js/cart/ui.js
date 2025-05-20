@@ -49,4 +49,13 @@ function renderCart() {
       paymentContainer.innerHTML = "<p style='color:red; font-weight: bold;'>Please complete name, email, and mobile to continue to checkout.</p>";
     }
   }
+
+  ['customer-name', 'customer-email', 'customer-mobile'].forEach(id => {
+    const field = document.getElementById(id);
+    if (field) {
+      field.addEventListener('input', () => {
+        renderCart();
+      }, { once: true });
+    }
+  });
 }
