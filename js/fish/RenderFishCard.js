@@ -28,19 +28,6 @@ function renderFishGrid(filter = '') {
   });
 }
 
-function groupFishStock(data) {
-  const grouped = {};
-  data.forEach(({ fishName, size, price, salePrice, stock, type = 'Uncategorized', category = 'General', subcategory = '', subcategory2 = '', subcategory3 = '' }) => {
-    const path = [type, category, subcategory, subcategory2, subcategory3].filter(Boolean).join(' > ');
-
-    if (!grouped[path]) grouped[path] = {};
-    if (!grouped[path][fishName]) grouped[path][fishName] = [];
-
-    grouped[path][fishName].push({ size, price, salePrice, stock });
-  });
-  return grouped;
-}
-
 function createFishCard(fish, items, sectionPath, sectionElement) {
   const card = document.createElement('div');
   card.className = 'fish-card';

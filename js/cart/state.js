@@ -7,7 +7,7 @@ function saveCart() {
 }
 
 function updateCartIcon() {
-  let cartIcon = document.getElementById('floating-cart');
+  const cartIcon = document.getElementById('floating-cart');
   if (!cartIcon) return;
 
   const total = cart.reduce((sum, item) => sum + item.quantity * item.price, 0);
