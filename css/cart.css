@@ -1,1 +1,52 @@
-/* placeholder */
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Your Cart | Finatics Aquatics</title>
+  <link rel="stylesheet" href="css/style.css" />
+  <link rel="stylesheet" href="css/cart.css" />
+  <script src="https://www.paypal.com/sdk/js?client-id=sb&currency=GBP"></script>
+  <script defer src="js/constants.js"></script>
+  <script defer src="js/cart/state.js"></script>
+  <script defer src="js/cart/ui.js"></script>
+  <script defer src="js/cart/controls.js"></script>
+  <script defer src="js/notifications/pushover.js"></script>
+  <script defer src="js/notifications/email.js"></script>
+  <script defer src="js/paypal/init.js"></script>
+</head>
+<body>
+  <header>
+    <h1 style="text-align:center; padding: 1rem 0;">Your Cart</h1>
+  </header>
+
+  <main>
+    <section id="cart-section" style="max-width:600px; margin:0 auto; padding:1rem;">
+      <label for="customer-name">Name</label>
+      <input type="text" id="customer-name" placeholder="Your name" required>
+
+      <label for="customer-email">Email</label>
+      <input type="email" id="customer-email" placeholder="Your email" required>
+
+      <label for="customer-mobile">Mobile</label>
+      <input type="tel" id="customer-mobile" placeholder="Mobile number" required>
+
+      <ul id="cart-items"></ul>
+      <p id="cart-total"></p>
+
+      <button id="clear-cart">Clear Cart</button>
+
+      <div id="payment-options" style="margin-top:1rem;"></div>
+
+      <p style="background-color: #d4edda; color: #155724; padding: 1rem; border: 1px solid #c3e6cb; border-radius: 6px; font-weight: bold; margin-top: 1rem;">
+        ✅ Please complete payment through PayPal. We will contact you to confirm your order.
+      </p>
+    </section>
+  </main>
+
+  <footer style="text-align:center; margin-top:2em; padding: 1rem;">
+    <a href="index.html">← Back to shop</a>
+    <p>&copy; 2025 Finatics Aquatics</p>
+  </footer>
+</body>
+</html>
