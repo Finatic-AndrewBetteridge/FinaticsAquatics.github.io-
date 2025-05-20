@@ -144,7 +144,7 @@ function createFishCard(fish, items, sectionPath, sectionElement) {
     const { size, price } = JSON.parse(selected);
     cart.push({ fish, size, quantity: qty, price });
     saveCart();
-    renderCart();
+    updateCartIcon();
     window.location.href = 'cart.html';
   });
 
