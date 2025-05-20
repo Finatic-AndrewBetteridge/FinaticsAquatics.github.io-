@@ -4,52 +4,7 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Finatics Aquatics | African Cichlid Breeders in the UK</title>
-  <meta name="description" content="Finatics Aquatics is a UK-based breeder of healthy, vibrant African cichlids including Mbuna, Peacock, and Hap species. Quality fish, raised with care.">
-  <meta name="theme-color" content="#0077cc" />
-  <meta name="apple-mobile-web-app-capable" content="yes">
-  <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
-  <meta name="mobile-web-app-capable" content="yes">
-  <meta name="apple-mobile-web-app-title" content="Finatics Aquatics">
-  <meta name="application-name" content="Finatics Aquatics">
-  <meta name="keywords" content="African cichlids, cichlid breeders UK, Finatics Aquatics, Malawi cichlids, Mbuna, Peacock cichlids, Hap cichlids, cichlid fish for sale, UK cichlid breeder, Dynetic Solutions">
-  <meta name="author" content="Finatics Aquatics - Andrew Betteridge">
-  <meta name="robots" content="index, follow">
-
   <link rel="stylesheet" href="css/style.css" />
-  <link rel="manifest" href="manifest.json">
-  <link rel="icon" href="images/favicon.ico" type="image/x-icon">
-  <link rel="apple-touch-icon" sizes="180x180" href="images/favicon.ico">
-
-  <!-- PayPal SDK -->
-  <script src="https://www.paypal.com/sdk/js?client-id=sb&currency=GBP"></script>
-
-  <!-- Constants must come first -->
-  <script defer src="js/constants.js"></script>
-
-  <!-- Fish card renderer must load BEFORE stock -->
-  <script defer src="js/fish/RenderFishCard.js"></script>
-  <script defer src="js/stock.js"></script>
-
-  <!-- Other modules -->
-  <script defer src="js/init.js"></script>
-  <script defer src="js/cart/state.js"></script>
-  <script defer src="js/cart/ui.js"></script>
-  <script defer src="js/cart/controls.js"></script>
-  <script defer src="js/notifications/pushover.js"></script>
-  <script defer src="js/notifications/email.js"></script>
-  <script defer src="js/paypal/init.js"></script>
-
-  <script>
-    function toggleDarkMode() {
-      document.body.classList.toggle('dark-mode');
-      localStorage.setItem('darkMode', document.body.classList.contains('dark-mode'));
-    }
-    document.addEventListener('DOMContentLoaded', () => {
-      if (localStorage.getItem('darkMode') === 'true') {
-        document.body.classList.add('dark-mode');
-      }
-    });
-  </script>
 </head>
 <body>
   <header class="hero">
@@ -63,43 +18,27 @@
       </ul>
     </nav>
   </header>
-
   <main>
     <section id="available">
       <h2>All Fish</h2>
       <div id="loading">Loading available fish...</div>
       <div class="fish-grid" id="fish-grid"></div>
     </section>
-
     <section id="setup">
       <h2>Our Breeding Setup</h2>
-      <p>We use a modular tank system with clean water cycling and natural filtration through aquaponics. Each breeding pair is given a dedicated tank to ensure quality offspring and optimal health.</p>
+      <p>We use a modular tank system with clean water cycling and natural filtration through aquaponics.</p>
     </section>
-
     <section id="about">
       <h2>About Us</h2>
-      <p>Finatics Aquatics began with a passion for keeping and breeding healthy fish, and has grown into a family-run venture focused on quality, sustainability, and care.</p>
-      <p>We believe in doing things the right way—offering fish raised in well-maintained systems, educating new hobbyists, and building lasting connections with our customers.</p>
-      <p>Based in the UK, we deliver locally by hand and nationwide through trusted courier services.</p>
+      <p>We are passionate UK breeders of vibrant African cichlids.</p>
     </section>
-
-    <section id="doa">
-      <h2>DOA (Dead on Arrival) Policy</h2>
-      <p>We take the health and wellbeing of our fish seriously and always do our best to make sure they arrive safe, healthy, and happy.</p>
-      <p>All fish are fasted before travel, double-bagged with pure oxygen, and packed securely in insulated boxes.</p>
-      <p>If you’re local, we’ll deliver by hand. For couriers, provide timestamped photos within 1 hour of delivery to request refund or credit.</p>
-    </section>
-
     <section id="contact">
       <h2>Contact Us</h2>
       <p>Email: <a href="mailto:info@finaticsaquatics.co.uk">info@finaticsaquatics.co.uk</a></p>
-      <p>Follow us on Facebook and Instagram</p>
     </section>
   </main>
-
   <footer>
     <p>&copy; 2025 Finatics Aquatics. All rights reserved.</p>
-    <p><a href="https://finatic-andrewbetteridge.github.io/FinaticsAquatics.github.io-/">Visit our live site</a></p>
   </footer>
 </body>
 </html>

@@ -1,13 +1,1 @@
-/* Loading */
-#loading {
-  font-size: 1.2rem;
-  padding: 2em 1em;
-  text-align: center;
-  color: #555;
-  animation: pulse 1.2s infinite ease-in-out;
-}
-
-@keyframes pulse {
-  0%, 100% { opacity: 0.6; }
-  50% { opacity: 1; }
-}
+/* placeholder */
