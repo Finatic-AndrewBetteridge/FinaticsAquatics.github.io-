@@ -2,6 +2,7 @@
 
 function renderFishGrid(filter = '') {
   const grid = document.getElementById('fish-grid');
+  if (!grid) return;
   grid.innerHTML = '';
   const sectionMap = {};
 
@@ -25,8 +26,6 @@ function renderFishGrid(filter = '') {
       createFishCard(fish, items, path, sectionMap[sectionId]);
     });
   });
-
-  renderCart();
 }
 
 function groupFishStock(data) {
@@ -46,7 +45,7 @@ function createFishCard(fish, items, sectionPath, sectionElement) {
   const card = document.createElement('div');
   card.className = 'fish-card';
 
-  const baseName = fish.toLowerCase().replace(/\s+/g, '-');
+  const baseName = fish.toLowerCase().replace(/\s+/g, '-').replace(/-+/g, '-');
 
   const mediaWrapper = document.createElement('div');
   mediaWrapper.className = 'fish-media-wrapper';
@@ -93,24 +92,20 @@ function createFishCard(fish, items, sectionPath, sectionElement) {
   }
 
   mediaWrapper.addEventListener('mouseenter', () => {
-    if (!video.src) {
-      const tryVideo = (exts) => {
-        if (!exts.length) return;
-        const ext = exts.shift();
-        const src = `images/${baseName}.${ext}`;
-        fetch(src, { method: 'HEAD' }).then(r => {
-          if (r.ok) {
+    const exts = ['mp4', 'mov'];
+    for (const ext of exts) {
+      const src = `images/${baseName}.${ext}`;
+      fetch(src, { method: 'HEAD' })
+        .then(res => {
+          if (res.ok) {
             video.src = src;
             video.play();
-          } else tryVideo(exts);
-        }).catch(() => tryVideo(exts));
-      };
-      tryVideo(['mp4', 'mov']);
-    } else {
-      video.play();
+            img.style.display = 'none';
+            video.style.display = 'block';
+          }
+        })
+        .catch(() => {});
     }
-    img.style.display = 'none';
-    video.style.display = 'block';
   });
 
   mediaWrapper.addEventListener('mouseleave', () => {
@@ -163,6 +158,7 @@ function createFishCard(fish, items, sectionPath, sectionElement) {
     cart.push({ fish, size, quantity: qty, price });
     saveCart();
     renderCart();
+    window.location.href = 'cart.html';
   });
 
   selector.append(sizeSelect, qtyInput, addBtn);
