@@ -16,10 +16,10 @@ function renderCart() {
     const subtotal = item.quantity * item.price;
     const li = document.createElement('li');
     li.innerHTML = `
-      <span>\${item.fish} (\${item.size}) — £\${item.price} x </span>
-      <input type="number" min="1" value="\${item.quantity}" data-index="\${i}" class="qty-input" style="width: 50px; margin: 0 0.5rem;">
-      <span>= £\${subtotal}</span>
-      <button data-index="\${i}" class="remove-btn">Remove</button>
+      <span>${item.fish} (${item.size}) — £${item.price} x </span>
+      <input type="number" min="1" value="${item.quantity}" data-index="${i}" class="qty-input" style="width: 50px; margin: 0 0.5rem;">
+      <span>= £${subtotal}</span>
+      <button data-index="${i}" class="remove-btn">Remove</button>
     `;
     cartItems.appendChild(li);
     total += subtotal;
@@ -29,8 +29,15 @@ function renderCart() {
   cartItems.querySelectorAll('.qty-input').forEach(input => {
     input.addEventListener('change', (e) => {
       const index = parseInt(e.target.dataset.index);
-      const qty = parseInt(e.target.value);
-      if (!isNaN(qty) && qty > 0 && cart[index]) {
+      let qty = parseInt(e.target.value);
+
+      // Validate min and max
+      if (isNaN(qty) || qty < 1) qty = 1;
+      if (qty > 99) qty = 99;
+
+      e.target.value = qty;
+
+      if (cart[index]) {
         cart[index].quantity = qty;
         saveCart();
         renderCart();
@@ -57,7 +64,7 @@ function renderCart() {
     cartItems.appendChild(msg);
   }
 
-  cartTotal.textContent = total > 0 ? `Total: £\${total.toFixed(2)}` : '';
+  cartTotal.textContent = total > 0 ? `Total: £${total.toFixed(2)}` : '';
 
   saveCart();
   updateCartIcon();
@@ -68,14 +75,20 @@ function renderCart() {
 
   paymentContainer.innerHTML = '';
 
+  const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+  const ukPhoneRegex = /^\+?44\s?7\d{9}$/;
+
+  const validEmail = emailRegex.test(email);
+  const validPhone = ukPhoneRegex.test(mobile);
+
   if (typeof renderPayPalButton === 'function') {
-    if (name && email && mobile) {
+    if (name && validEmail && validPhone) {
       renderPayPalButton(total);
     } else {
       const msg = document.createElement('p');
       msg.style.color = 'red';
       msg.style.fontWeight = 'bold';
-      msg.textContent = 'Please complete name, email, and mobile to continue to checkout.';
+      msg.innerHTML = 'Please enter a valid name, UK mobile (e.g. +447...), and email to continue to checkout.';
       paymentContainer.appendChild(msg);
     }
   }
