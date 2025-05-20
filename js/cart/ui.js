@@ -5,8 +5,9 @@ document.addEventListener('DOMContentLoaded', renderCart);
 function renderCart() {
   const cartItems = document.getElementById('cart-items');
   const cartTotal = document.getElementById('cart-total');
+  const paymentContainer = document.getElementById('payment-options');
 
-  if (!cartItems || !cartTotal) return;
+  if (!cartItems || !cartTotal || !paymentContainer) return;
 
   cartItems.innerHTML = '';
   let total = 0;
@@ -37,25 +38,31 @@ function renderCart() {
   saveCart();
   updateCartIcon();
 
-  const paymentContainer = document.getElementById('payment-options');
-  if (paymentContainer && typeof renderPayPalButton === 'function') {
-    const name = document.getElementById('customer-name')?.value.trim();
-    const email = document.getElementById('customer-email')?.value.trim();
-    const mobile = document.getElementById('customer-mobile')?.value.trim();
+  const name = document.getElementById('customer-name')?.value.trim();
+  const email = document.getElementById('customer-email')?.value.trim();
+  const mobile = document.getElementById('customer-mobile')?.value.trim();
 
+  paymentContainer.innerHTML = ''; // Clear existing content before checking
+
+  if (typeof renderPayPalButton === 'function') {
     if (name && email && mobile) {
       renderPayPalButton(total);
     } else {
-      paymentContainer.innerHTML = "<p style='color:red; font-weight: bold;'>Please complete name, email, and mobile to continue to checkout.</p>";
+      const msg = document.createElement('p');
+      msg.style.color = 'red';
+      msg.style.fontWeight = 'bold';
+      msg.textContent = 'Please complete name, email, and mobile to continue to checkout.';
+      paymentContainer.appendChild(msg);
     }
   }
 
   ['customer-name', 'customer-email', 'customer-mobile'].forEach(id => {
     const field = document.getElementById(id);
-    if (field) {
+    if (field && !field.dataset.listenerAttached) {
       field.addEventListener('input', () => {
         renderCart();
-      }, { once: true });
+      });
+      field.dataset.listenerAttached = 'true';
     }
   });
 }
