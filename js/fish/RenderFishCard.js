@@ -1,36 +1,19 @@
 // fish/RenderFishCard.js - Loops through stockData and renders fish sections
 
-function renderFishGrid(filter = '') {
-  const grid = document.getElementById('fish-grid');
-  grid.innerHTML = '';
-  const sectionMap = {};
+function groupFishStock(data) {
+  const grouped = {};
+  data.forEach(({ fishName, size, price, salePrice, stock, type = 'Uncategorized', category = 'General', subcategory = '', subcategory2 = '', subcategory3 = '' }) => {
+    const path = [type, category, subcategory, subcategory2, subcategory3].filter(Boolean).join(' > ');
 
-  Object.keys(stockData).sort().forEach(path => {
-    const sectionId = path.toLowerCase().replace(/[^a-z0-9]+/g, '-');
-    if (!sectionMap[sectionId]) {
-      const section = document.createElement('section');
-      section.id = sectionId;
-      const heading = document.createElement('h2');
-      heading.textContent = path;
-      const fishList = document.createElement('div');
-      fishList.className = 'fish-grid';
-      section.appendChild(heading);
-      section.appendChild(fishList);
-      grid.appendChild(section);
-      sectionMap[sectionId] = fishList;
-    }
+    if (!grouped[path]) grouped[path] = {};
+    if (!grouped[path][fishName]) grouped[path][fishName] = [];
 
-    Object.entries(stockData[path]).forEach(([fish, items]) => {
-      if (filter && !fish.toLowerCase().includes(filter.toLowerCase())) return;
-      createFishCard(fish, items, path, sectionMap[sectionId]);
-    });
+    grouped[path][fishName].push({ size, price, salePrice, stock });
   });
-
-  renderCart();
+  return grouped;
 }
 
-
-// fish/renderCard.js - Builds and returns a DOM element for a fish card
+// ✅ 2. Replace createFishCard function in RenderFishCard.js with this:
 
 function createFishCard(fish, items, sectionPath, sectionElement) {
   const card = document.createElement('div');
@@ -74,6 +57,14 @@ function createFishCard(fish, items, sectionPath, sectionElement) {
   mediaWrapper.append(img, video);
   card.append(mediaWrapper);
 
+  const hasSale = items.some(i => i.salePrice && i.salePrice < i.price);
+  if (hasSale) {
+    const badge = document.createElement('span');
+    badge.className = 'sale-badge';
+    badge.textContent = 'SALE';
+    mediaWrapper.appendChild(badge);
+  }
+
   mediaWrapper.addEventListener('mouseenter', () => {
     if (!video.src) {
       const tryVideo = (exts) => {
@@ -105,9 +96,9 @@ function createFishCard(fish, items, sectionPath, sectionElement) {
   const title = document.createElement('h3');
   title.textContent = fish;
 
-  const prices = items.map(i => i.price);
-  const min = Math.min(...prices);
-  const max = Math.max(...prices);
+  const displayPrices = items.map(i => i.salePrice && i.salePrice < i.price ? i.salePrice : i.price);
+  const min = Math.min(...displayPrices);
+  const max = Math.max(...displayPrices);
   const priceRange = document.createElement('p');
   priceRange.textContent = min === max ? `Price: £${min}` : `Price Range: £${min} - £${max}`;
   priceRange.style.fontWeight = 'bold';
@@ -122,7 +113,10 @@ function createFishCard(fish, items, sectionPath, sectionElement) {
     if (entry.stock > 0) {
       const opt = document.createElement('option');
       opt.value = JSON.stringify(entry);
-      opt.textContent = `${entry.size} — £${entry.price} — Stock: ${entry.stock}`;
+      const priceLabel = entry.salePrice && entry.salePrice < entry.price
+        ? `£${entry.salePrice} (was £${entry.price})`
+        : `£${entry.price}`;
+      opt.textContent = `${entry.size} — ${priceLabel} — Stock: ${entry.stock}`;
       sizeSelect.appendChild(opt);
     }
   });
@@ -140,42 +134,16 @@ function createFishCard(fish, items, sectionPath, sectionElement) {
     if (!selected || isNaN(qty) || qty < 1) return alert('Choose size & quantity');
     const { size, price } = JSON.parse(selected);
     cart.push({ fish, size, quantity: qty, price });
-
-    // Update cart UI with delivery charge
-    const cartItems = document.getElementById('cart-items');
-    const cartTotal = document.getElementById('cart-total');
-    cartItems.innerHTML = '';
-    let total = 0;
-
-    cart.forEach((item, i) => {
-      const subtotal = item.quantity * item.price;
-      const li = document.createElement('li');
-      li.innerHTML = `${item.quantity} x ${item.fish} (${item.size}) — £${subtotal} <button data-index="${i}" class="remove-btn">Remove</button>`;
-      cartItems.appendChild(li);
-      total += subtotal;
-    });
-
-    const delivery = 14.99;
-    total += delivery;
-    cartTotal.textContent = `Items Total: £${(total - delivery).toFixed(2)}\nDelivery: £${delivery.toFixed(2)}\nTotal: £${total.toFixed(2)}`;
-
-    localStorage.setItem('cart', JSON.stringify(cart));
-
-    document.querySelectorAll('.remove-btn').forEach(btn => {
-      btn.onclick = () => {
-        cart.splice(btn.dataset.index, 1);
-        renderCart();
-      };
-    });
-
-    updateCartIcon();
-    renderPayPalButton(total);
+    saveCart();
+    renderCart();
   });
 
   selector.append(sizeSelect, qtyInput, addBtn);
-const contentWrapper = document.createElement('div');
-contentWrapper.className = 'fish-card-content';
-contentWrapper.append(title, priceRange, selector);
-card.appendChild(contentWrapper);
+
+  const contentWrapper = document.createElement('div');
+  contentWrapper.className = 'fish-card-content';
+  contentWrapper.append(title, priceRange, selector);
+  card.appendChild(contentWrapper);
+
   sectionElement.appendChild(card);
 }
