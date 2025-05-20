@@ -39,6 +39,14 @@ function renderCart() {
 
   const paymentContainer = document.getElementById('payment-options');
   if (paymentContainer && typeof renderPayPalButton === 'function') {
-    renderPayPalButton(total);
+    const name = document.getElementById('customer-name')?.value.trim();
+    const email = document.getElementById('customer-email')?.value.trim();
+    const mobile = document.getElementById('customer-mobile')?.value.trim();
+
+    if (name && email && mobile) {
+      renderPayPalButton(total);
+    } else {
+      paymentContainer.innerHTML = "<p style='color:red; font-weight: bold;'>Please complete name, email, and mobile to continue to checkout.</p>";
+    }
   }
 }
