@@ -76,7 +76,7 @@ function renderCart() {
   paymentContainer.innerHTML = '';
 
   const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
-  const ukPhoneRegex = /^\+?44\s?7\d{9}$/;
+  const ukPhoneRegex = /^(\+44\s?7\d{9}|07\d{9})$/;
 
   const validEmail = emailRegex.test(email);
   const validPhone = ukPhoneRegex.test(mobile);
@@ -88,9 +88,15 @@ function renderCart() {
       const msg = document.createElement('p');
       msg.style.color = 'red';
       msg.style.fontWeight = 'bold';
-      msg.innerHTML = 'Please enter a valid name, UK mobile (e.g. +447...), and email to continue to checkout.';
+      msg.innerHTML = 'Please enter a valid name, UK mobile (e.g. +447... or 07...) and email to continue to checkout.';
       paymentContainer.appendChild(msg);
     }
+  } else {
+    const msg = document.createElement('p');
+    msg.style.color = 'red';
+    msg.style.fontWeight = 'bold';
+    msg.innerHTML = 'PayPal is currently unavailable. Please try again later.';
+    paymentContainer.appendChild(msg);
   }
 
   ['customer-name', 'customer-email', 'customer-mobile'].forEach(id => {

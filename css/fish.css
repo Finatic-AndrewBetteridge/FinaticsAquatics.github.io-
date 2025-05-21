@@ -1,20 +1,19 @@
-
 /* Fish Grid Layout */
 .fish-grid {
   display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+  grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
   gap: 1rem;
   padding: 1rem;
-  align-items: stretch;
+  justify-content: center;
 }
 
 /* Fish Card Container */
 .fish-card {
+  width: 300px;
+  height: 440px;
   display: flex;
   flex-direction: column;
   justify-content: space-between;
-  height: 100%;
-  width: 100%;
   background: white;
   border: 1px solid #ddd;
   border-radius: 8px;
@@ -35,7 +34,7 @@
 .fish-media-wrapper {
   position: relative;
   width: 100%;
-  aspect-ratio: 4 / 3;
+  height: 180px;
   overflow: hidden;
   margin-bottom: 0.75em;
   flex-shrink: 0;
@@ -60,7 +59,6 @@
   display: flex;
   flex-direction: column;
   justify-content: space-between;
-  height: 100%;
   box-sizing: border-box;
 }
 
@@ -75,20 +73,18 @@
 
 /* Force equal heights visually */
 .fish-grid > * {
-  height: 100%;
   display: flex;
   flex-direction: column;
+  align-items: stretch;
+  justify-content: stretch;
 }
 
-/* Optional Debugging */
-/*
-.fish-card {
-  outline: 2px dashed red;
+/* Cart Section Enhancements */
+#cart-items {
+  margin-bottom: 1.5em;
 }
-.fish-card-content {
-  outline: 2px dashed green;
+
+#payment-options p {
+  margin-top: 1em;
+  font-weight: bold;
 }
-.selector {
-  outline: 2px dashed orange;
-}
-*/
